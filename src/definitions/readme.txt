@@ -1,0 +1,1 @@
+The definitions package is a collection of enums and interfaces used throughout the project. 

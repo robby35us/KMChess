@@ -1,0 +1,1 @@
+The game package holds the core game state and logic for chess. 
