@@ -65,7 +65,7 @@ public class CardArea extends Panel implements ActionListener  {
 		return new Dimension((int)d.getWidth(),(int) (d.getHeight() + 20));
 	}
 	public void paint(Graphics g){
-		super.paint(g);
+		this.getComponent(0).repaint();
 	}
 	/**
 	 * 
@@ -126,11 +126,13 @@ public class CardArea extends Panel implements ActionListener  {
 		//System.out.println("Refreshing the hand.");
 		for(int i = 0; i < HAND_SIZE; i++){
 			if(hand[i].isEmpty()){
-				//System.out.println("Grabing new card for hand!");
+				System.out.println("Grabing new card for hand!");
 				KMCardInfo cInfo = deck.removeCInfo();
 				hand[i].replaceCard(new KMCard(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()), cInfo));
 			}
+			System.out.println(hand[i].getCard().getCInfo().getName());
 		}
+		revalidate();
 		repaint();
 	}
 

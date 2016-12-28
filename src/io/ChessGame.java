@@ -30,7 +30,8 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 
 	private ChessGame(){
 		setLayout(new BorderLayout());
-		this.setSize(MAXIMIZED_HORIZ, MAXIMIZED_VERT);
+		this.setSize(this.getMaximumSize());
+		this.setState(MAXIMIZED_BOTH);
 		
 		this.gs = new GameState();
 		//addComponents(gs.getBoard());
@@ -45,11 +46,12 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 		
 		this.setTitle("Knightmare Chess");
 		this.setVisible(true);
+		//this.setSize(getMaximumSize());
 		this.runGameIntro();
 		System.out.println(playKnightmareMode);
-		if(playKnightmareMode)
+		if(playKnightmareMode){
 			this.refreshHand();
-		else {
+		}else {
 			gs.getCardArea().setEnabled(false);
 		} 
 		
@@ -98,7 +100,7 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {
-		setSize(this.getMaximumSize());
+		//this.setState(MAXIMIZED_BOTH);
 		
 	}
 
@@ -240,6 +242,7 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 	@Override
 	public void refreshHand() {
 		gs.getCardArea().refreshHand();
+		this.repaint();
 	}
 
 	@Override
