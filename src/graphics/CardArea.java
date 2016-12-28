@@ -4,7 +4,6 @@ import java.awt.Button;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Panel;
@@ -75,6 +74,7 @@ public class CardArea extends Panel implements ActionListener  {
 	
 	private volatile KMCard executingCard;
 
+	@SuppressWarnings("unused")
 	private volatile KMCard selectedCard;
 	
 	private volatile boolean noCardPlayed;
@@ -135,7 +135,6 @@ public class CardArea extends Panel implements ActionListener  {
 	}
 
 	public KMCard getExecutingCard() {
-		// TODO Auto-generated method stub
 		return executingCard;
 	}
 

@@ -26,6 +26,7 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 	 */
 	private static final long serialVersionUID = 1L;
 	private GameState gs;
+	private boolean playKnightmareMode;
 
 	private ChessGame(){
 		setLayout(new BorderLayout());
@@ -41,15 +42,21 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 		add(gs.getSelectedCardArea(), BorderLayout.EAST);
 		
 		addWindowListener(this);
-		this.refreshHand();
+		
 		this.setTitle("Knightmare Chess");
 		this.setVisible(true);
 		this.runGameIntro();
+		System.out.println(playKnightmareMode);
+		if(playKnightmareMode)
+			this.refreshHand();
+		else {
+			gs.getCardArea().setEnabled(false);
+		} 
+		
 		try {
 			//System.out.println("Game Started");
 			Start.playGame(this,gs);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -84,6 +91,7 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 	
 	*/
 	public static void main(String[] args){
+		@SuppressWarnings("unused")
 		ChessGame game = new ChessGame();
 		
 	}
@@ -168,7 +176,7 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 	
 	public synchronized void getAfterExecutingCard() {
 		CardArea ca = gs.getCardArea();
-		while(ca.getExecutingCard() == null && !ca.noCardPlayed()){
+		while(playKnightmareMode && ca.getExecutingCard() == null && !ca.noCardPlayed()){
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -186,7 +194,12 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 		gm.repaint();
 		*/
 		infoBox("Welcome to Knightmare Chess!", "Welcome!");
-		
+		String defaultSelection = "Knightmare Chess";
+		String[] selections = {defaultSelection, "Regular Chess"};
+		Object selection = JOptionPane.showInputDialog(this, "Which version of chess would you like to play?", 
+				                    "Choose Which Version", JOptionPane.QUESTION_MESSAGE, 
+				                    null, selections, defaultSelection);
+		playKnightmareMode = selection == defaultSelection;
 	}
 
 
@@ -231,7 +244,6 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 
 	@Override
 	public KMCard getExecutingCard() {
-		// TODO Auto-generated method stub
 		return gs.getCardArea().getExecutingCard();
 	}
 }

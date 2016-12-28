@@ -213,7 +213,8 @@ public class MoveBuilder{
 						&& left != null && left.getType() == PieceType.Pawn
 						&& left.getColor() != move.getInitialSpace().getPiece().getColor()
 						&& (color == PieceColor.White && move.getInitialSpace().getRank() == Rank.Five ||
-							color == PieceColor.Black && move.getInitialSpace().getRank() == Rank.Four))
+							color == PieceColor.Black && move.getInitialSpace().getRank() == Rank.Four)
+						)
 					return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.EnPassantLeft, pieceColor), message);
 				else
 					return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ForwardLeft, pieceColor), message);
