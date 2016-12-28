@@ -3,6 +3,7 @@ import java.util.Scanner;
 import utility.*;
 import definitions.*;
 import game.GameState;
+import knightmare.KMCard;
 
 /*
  * The IOFramework concrete class to use when playing chess when using the 
@@ -87,6 +88,18 @@ public class ConsoleIO implements IOFramework {
 
 	@Override
 	public void refreshHand() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public KMCard getExecutingCard() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void getAfterExecutingCard() {
 		// TODO Auto-generated method stub
 		
 	}

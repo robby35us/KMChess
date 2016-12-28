@@ -2,6 +2,7 @@ package game;
 
 import java.io.IOException;
 
+import cardEffects.ContEffect;
 import components.Board;
 import moves.ActualMove;
 import utility.ErrorMessage;
@@ -9,8 +10,11 @@ import utility.MoveInput;
 import definitions.PieceColor;
 import definitions.IOFramework;
 import definitions.PieceType;
+import definitions.Timing;
 import definitions.Turn;
+import factory.CardEffectFactory;
 import io.ConsoleIO;
+import knightmare.KMCard;
 
 
 /*
@@ -37,7 +41,7 @@ public class Start {
 	 */
 	public static ErrorMessage playGame(IOFramework fw, GameState gs) throws IOException{
 		Board board = gs.getBoard(); 
-		ActualMove move;
+		ActualMove move = null;
 		MoveInput moveInput;
 		board.setTurn(Turn.Player1);
 		ErrorMessage message = new ErrorMessage();
@@ -51,20 +55,28 @@ public class Start {
 			message = new ErrorMessage();
 			//System.out.println("Displaying get move input text");
 			
+			KMCard.CurrentTiming = Timing.Before;
 			// get the input for the next move
 			fw.displayGetMoveInputText(board.getTurn());
 			//System.out.println("Get move input text displayed");
 			moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);
+			KMCard execCard = fw.getExecutingCard();
+			if(execCard != null && (execCard.getCInfo().getTiming() == Timing.Before ||
+			   execCard.getCInfo().getTiming() == Timing.BeforeOrAfter)){
+				gs.getCardArea().completeCardExecution(gs);
+				gs.updateContEffects();
+				moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);
+			}
 			// build the given move, if possible 
-			if(moveInput != null)
+			if(execCard == null && moveInput != null)
 				move = MoveBuilder.buildMoveObject(moveInput.getInit(), moveInput.getDest(), gs, message);
-			else{
+			else {
 				if(message.hasError()){ // signals for new input
 					move = null;
 				}
-				else{ // normal exit, quits the program mid game
-					fw.displayMessage(message);
-					break;
+				else if (execCard != null && execCard.getCInfo().getTiming() == Timing.Instead){
+					gs.getCardArea().completeCardExecution(gs);
+					gs.updateContEffects();
 				}
 			}
 			
@@ -86,8 +98,20 @@ public class Start {
 				
 				// if move was made successfully
 				if(!message.hasError()){
+					
 					move.getDestinationSpace().getPiece().setBeenMoved(true);
+					KMCard.CurrentTiming = Timing.After;
+					if(execCard == null){
+						gs.getCardArea().activateSkipButton();
+						fw.getAfterExecutingCard();
+						execCard = fw.getExecutingCard();
+						gs.getCardArea().resetNoCardButton();
+					}
 					// set to next player
+					if(execCard != null && execCard.getCInfo().getTiming() == Timing.After){
+						gs.getCardArea().completeCardExecution(gs);
+					}
+					gs.updateContEffects();
 					if(board.getTurn() == Turn.Player1)
 						board.setTurn(Turn.Player2);
 					else

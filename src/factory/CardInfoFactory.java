@@ -3,14 +3,14 @@ package factory;
 import definitions.Timing;
 import knightmare.KMCardInfo;
 
-public class CardFactory {
+public class CardInfoFactory {
 	
 	private static String effect;
 	private static Timing timing;
 	private static String continuous;
 	
 	
-	private CardFactory(){
+	private CardInfoFactory(){
 		
 	}
 	

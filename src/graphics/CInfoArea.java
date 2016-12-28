@@ -41,24 +41,28 @@ public class CInfoArea extends Panel {
 		panel1 = new Panel();
 		panel1.setLayout(new GridLayout(3,3, 10, 10));
 		
-		panel1.add(new Label("Title:"));
+		
 		panel1.add(new Label("Unique:"));
+		panel1.add(new Label("Title:"));
 		panel1.add(new Label("Points:"));
 		
-		title = new TextField(defaultTitle);
-		title.setEditable(false);
-		panel1.add(title);
+		
 		
 		isUnique = new TextField(defaultUnique.toString());
 		isUnique.setEditable(false);
 		panel1.add(isUnique);
 		
+		title = new TextField(defaultTitle);
+		title.setEditable(false);
+		panel1.add(title);
+		
 		points = new TextField(defaultPoints);
 		points.setEditable(false);
 		panel1.add(points);
 		
-		panel1.add(new Label("Effect:"));
+		
 		panel1.add(new Label("TimingInfo:"));
+		panel1.add(new Label("Effect:"));
 		panel1.add(new Label("Continuous Effect:"));
 		
 		add(panel1);
@@ -66,17 +70,19 @@ public class CInfoArea extends Panel {
 		panel2 = new Panel();
 		panel2.setLayout(new GridLayout(1, 3, 10, 0));
 		
+		
+		
+	
+		timing = new TextArea(defaultTiming.toString(), 5, 20, TextArea.SCROLLBARS_NONE);
+		timing.setEditable(false);
+		panel2.add(timing);
+		
 		mainEffect = new TextArea(defaultMEffect, 5, 20, TextArea.SCROLLBARS_VERTICAL_ONLY);
 		mainEffect.setEditable(false);
 		panel2.add(mainEffect);
 		
-	
-		timing = new TextArea(defaultTiming.toString(), 5, 20, TextArea.SCROLLBARS_VERTICAL_ONLY);
-		timing.setEditable(false);
-		panel2.add(timing);
 		
-		
-		contEffect = new TextArea(defaultContEffect, 5, 20, TextArea.SCROLLBARS_VERTICAL_ONLY);
+		contEffect = new TextArea(defaultContEffect, 5, 20, TextArea.SCROLLBARS_NONE);
 		contEffect.setEditable(false);
 		panel2.add(contEffect);
 		

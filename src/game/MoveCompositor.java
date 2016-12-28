@@ -1,4 +1,6 @@
 package game;
+import java.util.ArrayList;
+
 import constraints.MoveConstraint;
 import moves.ActualMove;
 import moves.Move;
@@ -19,7 +21,8 @@ public class MoveCompositor {
 	 * if the constraints are not met.
 	 */
 	public static ActualMove compositeMoves(Move lastMove, ActualMove nextMove, ErrorMessage message){
-		MoveConstraint[] constraints = lastMove.getInitialSpace().getPiece().getConstraints(nextMove.getMoveType());
+		ArrayList<MoveConstraint> constraints = lastMove.getInitialSpace().getPiece().getConstraints(nextMove.getMoveType());
+		
 	
 		// verify that the move is a legal movement type for this piece
 		if(constraints == null){

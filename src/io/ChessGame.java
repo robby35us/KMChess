@@ -3,14 +3,17 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import game.Start;
+import graphics.CardArea;
 import knightmare.KMCard;
 import components.Board;
-import definitions.File;
+
 import definitions.IOFramework;
 import definitions.PieceColor;
 import definitions.PieceType;
-import definitions.Rank;
+
 import definitions.Turn;
 import game.GameState;
 import utility.ErrorMessage;
@@ -22,13 +25,6 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Dimension d = new Dimension(15,15);
-	private Label[] rowLabels = new Label[8]; 
-	private Label[] colLabels = new Label[8];
-	private Space[][] buttons = new Space[8][8];
-	
-	
-	private Label cornerLabel;
 	private GameState gs;
 
 	private ChessGame(){
@@ -45,8 +41,10 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 		add(gs.getSelectedCardArea(), BorderLayout.EAST);
 		
 		addWindowListener(this);
-		this.setVisible(true);
 		this.refreshHand();
+		this.setTitle("Knightmare Chess");
+		this.setVisible(true);
+		this.runGameIntro();
 		try {
 			//System.out.println("Game Started");
 			Start.playGame(this,gs);
@@ -92,7 +90,7 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
+		setSize(this.getMaximumSize());
 		
 	}
 
@@ -133,6 +131,11 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 	}
 	
 
+	public static void infoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage,titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
+	
 
 	@Override
 	public void displayBoard() {
@@ -143,28 +146,47 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 	@Override
 	public synchronized MoveInput getMoveInput(PieceColor color, ErrorMessage message) {
 		Board board = gs.getBoard();
-		while(board.getStartSpace() == null || board.getEndSpace() == null){
-			  
+		CardArea ca = gs.getCardArea();
+		while((board.getStartSpace() == null || board.getEndSpace() == null) &&
+			  (ca.getExecutingCard() == null)){
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				continue;
 			}
-		
-		Space start = board.getStartSpace();
-		Space end = board.getEndSpace();
-		board.setStartSpace(null);
-		board.setEndSpace(null);
-		return new MoveInput(start, end);
+		}
+		if(board.getStartSpace() != null && board.getEndSpace() != null){
+			Space start = board.getStartSpace();
+			Space end = board.getEndSpace();
+			board.setStartSpace(null);
+			board.setEndSpace(null);
+			return new MoveInput(start, end);
+		}
+		return null;
+	}
+	
+	public synchronized void getAfterExecutingCard() {
+		CardArea ca = gs.getCardArea();
+		while(ca.getExecutingCard() == null && !ca.noCardPlayed()){
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				continue;
+			}
+		}
 	}
 
 
 	@Override
 	public void runGameIntro() {
+		/*TextArea gm = gs.getGameMessage();
+		gm.setText("Welcome");
+		gm.repaint();
+		*/
+		infoBox("Welcome to Knightmare Chess!", "Welcome!");
 		
-		gs.getGameMessage().setText("Welcome to Chess! Press any key to continue!");
-		try {
-			System.in.read();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 
@@ -181,6 +203,7 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 		TextArea gm = gs.getGameMessage();
 		gm.setText("A pawn has been promoted.");
 		gm.repaint();
+		infoBox("A pawn has been promoted.", "Alert!");
 		return PieceType.Queen;
 	}
 
@@ -206,5 +229,11 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 	@Override
 	public void refreshHand() {
 		gs.getCardArea().refreshHand();
+	}
+
+	@Override
+	public KMCard getExecutingCard() {
+		// TODO Auto-generated method stub
+		return gs.getCardArea().getExecutingCard();
 	}
 }

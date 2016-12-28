@@ -26,6 +26,7 @@ import components.Piece;
 import components.Space;
 import definitions.File;
 import definitions.Rank;
+import definitions.Timing;
 import graphics.CardArea;
 import graphics.CardBorder;
 
@@ -54,6 +55,7 @@ public class KMCard extends Canvas implements MouseListener{
 	private boolean mousedown;
 	private boolean mouseInBounds = false;
 	
+	public static volatile Timing CurrentTiming = Timing.None;
 
 	private static final CardBorder defaultUnarmedBorder =
 	        new CardBorder( false );
@@ -236,7 +238,7 @@ public class KMCard extends Canvas implements MouseListener{
             */
         }
         
-public synchronized void paint( Graphics g ) {
+        public synchronized void paint( Graphics g ) {
     		
     		if(images[buttonState] == null) {
     			super.paint(g);
@@ -288,13 +290,16 @@ public synchronized void paint( Graphics g ) {
 		if(activeCard != null){
 			activeCard.setButtonState(UNARMED);		
 			if(activeCard == this){
+				if((CurrentTiming != Timing.After && activeCard.getCInfo().getTiming() != Timing.After) ||
+				   (CurrentTiming == Timing.After && (activeCard.getCInfo().getTiming() == Timing.After ||
+						   							  activeCard.getCInfo().getTiming() == Timing.BeforeOrAfter)))
+					((CardArea) this.getParent().getParent().getParent()).setExecutingCard(this);
 				activeCard = null;
-				((CardArea) ((KMCardSlot) this.getParent()).getParent()).setExecutingCard(this);
 				return;
 			}
 		}
 		activeCard = this;
-		((CardArea) ((KMCardSlot) this.getParent()).getParent()).setSelectedCard(this);
+		((CardArea) this.getParent().getParent().getParent()).setSelectedCard(this);
 	}
 
 

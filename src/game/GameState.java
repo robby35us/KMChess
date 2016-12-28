@@ -1,9 +1,12 @@
 package game;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Panel;
 import java.awt.TextArea;
 import java.util.ArrayList;
+
+import cardEffects.ContEffect;
 import utility.ErrorMessage;
 import components.*;
 import definitions.*;
@@ -26,12 +29,13 @@ public class GameState {
 	private Board board;
 	private MessageBox messageBox;
 	private TextArea gameMessage;
-	private TextArea contEffects;
+	private TextArea contEffectsArea;
 	private CardArea cardArea;
 	private static final int messageRows = 5;
 	private static final int messageCols = 40;
 	private static final int effectsCols = 5;
 	private static final int effectsRows = 40;
+	private Font textFont;
 	private Player whitePlayer;
 	private Player blackPlayer;
 	private PieceFactory factory;
@@ -39,6 +43,7 @@ public class GameState {
 	private ActualMove prevMove;
 	private CInfoArea cInfoArea;
 	private SelectedCardArea selectedCardArea;
+	private ArrayList<ContEffect> contEffects;
 	
 	
 	/*
@@ -61,13 +66,18 @@ public class GameState {
 		this.messageBox = new MessageBox();
 		this.messageBox.setLayout(new GridLayout(1,2));
 		
-		this.gameMessage = new TextArea("Welcome to Chess! \nPress any key to begin.",
+		this.gameMessage = new TextArea("Welcome to Knightmare Chess!",
 				messageRows, messageCols, TextArea.SCROLLBARS_NONE);
+		this.textFont = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
+		this.gameMessage.setFont(textFont);
 		this.messageBox.add(gameMessage);
 		
-		this.contEffects = new TextArea("There are currently no \ncontinuious Effects",
+		this.contEffectsArea = new TextArea("There are currently no \ncontinuious Effects",
 				effectsRows, effectsCols, TextArea.SCROLLBARS_VERTICAL_ONLY);
-		this.messageBox.add(contEffects);
+		this.contEffectsArea.setFont(textFont);
+		this.messageBox.add(contEffectsArea);
+		
+		this.contEffects = new ArrayList<ContEffect>();
 		
 		this.cardArea = new CardArea(new KMDeck(KMDeck.FULL));
 		
@@ -274,7 +284,7 @@ public class GameState {
 	}
 
 	public TextArea getContEffects() {
-		return contEffects;
+		return contEffectsArea;
 	}
 
 	public CInfoArea getCInfoArea() {
@@ -285,9 +295,22 @@ public class GameState {
 		return selectedCardArea;
 	}
 
-
+	public void addContEffect(ContEffect newContEffect){
+		contEffects.add(newContEffect);
+	}
+	
 /*	public void setEffectsArea(TextArea effectsArea) {
 		this.effectsArea = effectsArea;
 	}
-*/
+*/	
+	public void updateContEffects() {
+		for(ContEffect ce : contEffects){
+			ce.updateContEffect(this);
+			if(ce.endCondMet(this)){
+				ce.endContEffect(this);
+			}
+		}
+	}
+	
+
 }

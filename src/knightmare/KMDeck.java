@@ -1,8 +1,7 @@
 package knightmare;
 
 import java.util.ArrayList;
-
-import factory.CardFactory;
+import factory.CardInfoFactory;
 
 public class KMDeck {
 
@@ -18,10 +17,10 @@ public class KMDeck {
 		this();
 		if(setIdentifier == FULL){
 			for(int i = 0; i < KMCardInfo.set1Size ; i++){
-				this.addCInfo(CardFactory.getCInfo(1, i + 1 ));
+				this.addCInfo(CardInfoFactory.getCInfo(1, i + 1 ));
 			}
 			for(int j = 0; j < KMCardInfo.set2Size; j++){
-				this.addCInfo(CardFactory.getCInfo(1, j + 1));
+				this.addCInfo(CardInfoFactory.getCInfo(1, j + 1));
 			}
 			
 		}
@@ -32,7 +31,10 @@ public class KMDeck {
 	}
 	
 	public KMCardInfo removeCInfo(){
-		return cards.remove(0);
+		if(!cards.isEmpty())
+			return cards.remove(0);
+		else
+			return null;
 	}
 	
 	public boolean isEmpty() {

@@ -25,6 +25,7 @@ import definitions.SpaceColor;
 import definitions.Turn;
 import graphics.ChessImages;
 import graphics.SpaceBorder;
+import io.ChessGame;
 
 
 public class Space extends Canvas implements MouseListener{
@@ -271,7 +272,7 @@ public class Space extends Canvas implements MouseListener{
 	        return buttonState;
 	    }
 
-	    protected void setButtonState( int buttonState ) {
+	    public void setButtonState( int buttonState ) {
 	        if ( buttonState != this.buttonState ) {
 	            this.buttonState = buttonState;
 	            repaint();

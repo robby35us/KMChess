@@ -7,6 +7,7 @@ import definitions.IOFramework;
 import definitions.PieceType;
 import definitions.Turn;
 import game.GameState;
+import knightmare.KMCard;
 
 /*
  * The Test input output framework. Takes a sting in place of user input and 
@@ -83,6 +84,18 @@ public class TestIO implements IOFramework {
 
 	@Override
 	public void refreshHand() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public KMCard getExecutingCard() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void getAfterExecutingCard() {
 		// TODO Auto-generated method stub
 		
 	}

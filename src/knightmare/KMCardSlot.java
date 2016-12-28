@@ -20,7 +20,7 @@ public class KMCardSlot extends Panel {
 		setLayout(new GridLayout(1,1,10,10));
 		setBackground(Color.LIGHT_GRAY);
 		this.setCard(KMCard.getEmpty());
-		this.add(KMCard.getEmpty());
+		this.add(card);
 		this.setIndex(index);
 		this.isEmpty = true;
 	}

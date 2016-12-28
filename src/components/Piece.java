@@ -90,8 +90,11 @@ public class Piece implements PieceSubject, PieceObserver{
 	 * to the Piece's moveTypesAndConstraints. WARNING: BEHAVIOR IS NOT
 	 * GUARANTEED FOR DUPLICATE MOVE TYPES!!
 	 */
-	public void addMove(MoveType moveType, MoveConstraint[] constraints){
-		moveTypesAndConstraints.add(new MoveTypeAndConstraints(moveType,constraints));
+	public void addMove(MoveType moveType, MoveConstraint[] moveConstraints){
+		ArrayList<MoveConstraint> mcs = new ArrayList<MoveConstraint>();
+		for(int i = 0; i < moveConstraints.length; i++)
+			mcs.add(moveConstraints[i]);
+		moveTypesAndConstraints.add(new MoveTypeAndConstraints(moveType, mcs));
 	}
 	
 	/*
@@ -117,7 +120,7 @@ public class Piece implements PieceSubject, PieceObserver{
 	 * to the Piece using the addMove() method. Otherwise,
 	 * returns null;
 	 */
-	public MoveConstraint[] getConstraints(MoveType moveType) {
+	public ArrayList<MoveConstraint> getConstraints(MoveType moveType) {
 		for(int i = 0; i < moveTypesAndConstraints.size(); i++)
 			if(moveTypesAndConstraints.get(i).getMoveType() == moveType)
 				return moveTypesAndConstraints.get(i).getConstraints();
@@ -220,5 +223,13 @@ public class Piece implements PieceSubject, PieceObserver{
 		}
 		// there are no valid moves for this piece.
 		return false;
+	}
+
+	public ArrayList<MoveType> getMoveTypes() {
+		ArrayList<MoveType> types = new ArrayList<MoveType>(moveTypesAndConstraints.size());
+		for(MoveTypeAndConstraints mtac: moveTypesAndConstraints){
+			types.add(mtac.getMoveType());
+		}
+		return types;
 	}
 }

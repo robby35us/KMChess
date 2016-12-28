@@ -1,4 +1,5 @@
 package definitions;
+import knightmare.KMCard;
 import utility.ErrorMessage;
 import utility.MoveInput;
 
@@ -46,4 +47,8 @@ public interface IOFramework {
 	public void displayGetMoveInputText(Turn turn);
 
 	public void refreshHand();
+
+	public KMCard getExecutingCard();
+
+	public void getAfterExecutingCard();
 }

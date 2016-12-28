@@ -4,9 +4,12 @@ import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
 
+import javax.swing.JOptionPane;
+
 import definitions.File;
 import definitions.Rank;
 import definitions.SpaceColor;
+import definitions.Timing;
 import definitions.Turn;
 
 /* Board.java
@@ -132,5 +135,17 @@ public class Board extends Panel {
 
 	public void setTurn(Turn turn) {
 		this.turn = turn;
+	}
+
+	public void infoBox(String infoMessage, String title) {
+		JOptionPane.showMessageDialog(null, infoMessage, title, JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	public boolean playCard(Timing after) {
+		Object defaultValue = new Label("Yes!");
+		Object[] selectionValues = {defaultValue, new Label("No!")};
+		Object selection = JOptionPane.showInputDialog(getParent(), "You have not played a card this round. Would you like a chance to play one now?", "Play a card?", 
+				JOptionPane.QUESTION_MESSAGE, null, selectionValues, defaultValue);
+		return defaultValue == selection;
 	}
 }

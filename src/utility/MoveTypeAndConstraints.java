@@ -1,4 +1,6 @@
 package utility;
+import java.util.ArrayList;
+
 import constraints.MoveConstraint;
 import definitions.MoveType;
 
@@ -7,11 +9,11 @@ import definitions.MoveType;
  */
 public class MoveTypeAndConstraints {
 	private MoveType moveType;
-	private MoveConstraint[] constraints;
+	private ArrayList<MoveConstraint> constraints;
 	
-	public MoveTypeAndConstraints(MoveType moveType, MoveConstraint[] constraints){
+	public MoveTypeAndConstraints(MoveType moveType, ArrayList<MoveConstraint> constraint){
 		this.moveType = moveType;
-		this.constraints = constraints;
+		this.constraints = constraint;
 	}
 	
 	//public getters
@@ -19,7 +21,7 @@ public class MoveTypeAndConstraints {
 		return moveType;
 	}
 	
-	public MoveConstraint[] getConstraints(){
+	public ArrayList<MoveConstraint> getConstraints(){
 		return constraints;
 	}
 }
