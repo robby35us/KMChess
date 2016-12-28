@@ -48,6 +48,9 @@ public class FatalAttraction extends ContEffect {
 				p.getConstraints(type).add(disabled);
 			}
 		}
+		board.infoBox("The " + magnet.getType() + " at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
+						" is now a magnet!. No piece (except a king) that is currently in or enters the eight " + 
+						"adjacent squares can move until the magnet moves or is captured.", "Fatal Attraction");
 		board.setStartSpace(null);
 		Space.activeSpace.setButtonState(Space.UNARMED);
 		Space.activeSpace = null;
@@ -118,15 +121,21 @@ public class FatalAttraction extends ContEffect {
 
 	@Override
 	public void endContEffect(GameState gs) {
-		ArrayList<Piece> adjacent = getAdjacentPieces();
-		for( Piece p : adjacent){
-			ArrayList<MoveType> types = p.getMoveTypes();
-			if(p.getType() == PieceType.King)
-				continue;
-			for(MoveType type : types){
-				p.getConstraints(type).remove(disabled);
+		if(!contEffectEnded){
+			ArrayList<Piece> adjacent = getAdjacentPieces();
+			for( Piece p : adjacent){
+				ArrayList<MoveType> types = p.getMoveTypes();
+				if(p.getType() == PieceType.King)
+					continue;
+				for(MoveType type : types){
+					p.getConstraints(type).remove(disabled);
+				}
 			}
-		}
+			gs.getBoard().infoBox("The magnet at " + magnetSpace.getFile() + magnetSpace.getRank() + 
+							  " has been moved or captured. The pieces in the eight adjacent spaces are now freed."
+							  , "Fatal Attraction");
+		}	
+		contEffectEnded = true;
 	}
 
 	@Override

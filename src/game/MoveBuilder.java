@@ -197,8 +197,8 @@ public class MoveBuilder{
 				if(move.getInitialSpace().getPiece().getType() == PieceType.Pawn && destination.getPiece() == null
 						&& right != null && right.getType() == PieceType.Pawn
 						&& right.getColor() != move.getInitialSpace().getPiece().getColor()
-						&& (color == PieceColor.White && move.getInitialSpace().getRank() == Rank.Five) ||
-							color == PieceColor.Black && move.getInitialSpace().getRank() == Rank.Four)
+						&& (color == PieceColor.White && move.getInitialSpace().getRank() == Rank.Five ||
+							color == PieceColor.Black && move.getInitialSpace().getRank() == Rank.Four))
 					return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.EnPassantRight, pieceColor), message);
 				else
 					return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ForwardRight, pieceColor), message);
@@ -212,8 +212,8 @@ public class MoveBuilder{
 				if(move.getInitialSpace().getPiece().getType() == PieceType.Pawn && destination.getPiece() == null
 						&& left != null && left.getType() == PieceType.Pawn
 						&& left.getColor() != move.getInitialSpace().getPiece().getColor()
-						&& (color == PieceColor.White && move.getInitialSpace().getRank() == Rank.Five) ||
-							color == PieceColor.Black && move.getInitialSpace().getRank() == Rank.Four)
+						&& (color == PieceColor.White && move.getInitialSpace().getRank() == Rank.Five ||
+							color == PieceColor.Black && move.getInitialSpace().getRank() == Rank.Four))
 					return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.EnPassantLeft, pieceColor), message);
 				else
 					return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ForwardLeft, pieceColor), message);

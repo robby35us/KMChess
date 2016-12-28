@@ -192,9 +192,7 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 
 	@Override
 	public void displayMessage(ErrorMessage message) {
-		TextArea gm = gs.getGameMessage();
-		gm.setText(message.toString());
-		gm.repaint();
+		infoBox(message.toString(), "Alert");
 	}
 
 

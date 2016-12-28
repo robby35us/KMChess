@@ -6,5 +6,9 @@ package definitions;
  * Eight signifies the Rank closest to the black player.
  */
 public enum Rank {
-	One, Two, Three, Four, Five, Six, Seven, Eight
+	One, Two, Three, Four, Five, Six, Seven, Eight;
+	
+	public String toString() {
+		return "" + (this.ordinal() + 1);
+	}
 }

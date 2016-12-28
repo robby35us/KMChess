@@ -307,7 +307,7 @@ public class GameState {
 		for(ContEffect ce : contEffects){
 			ce.updateContEffect(this);
 			if(ce.endCondMet(this)){
-				ce.endContEffect(this);
+				ce.endContEffect(this );
 			}
 		}
 	}
