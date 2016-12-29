@@ -1,7 +1,9 @@
 package game;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.List;
 import java.awt.Panel;
 import java.awt.TextArea;
@@ -76,11 +78,18 @@ public class GameState implements ItemListener{
 		this.gameMessage.setFont(textFont);
 		this.messageBox.add(gameMessage);
 		
+		Panel p = new Panel();
+		p.setLayout(new BorderLayout());
+		Label l = new Label("Select a continuous effect to view the effect on the board.");
+		l.setFont(textFont);
+		p.add(l, BorderLayout.NORTH);
+	
 		this.contEffectsArea = new List();
 		this.contEffectsArea.add(noContEffectsItem);
 		this.contEffectsArea.setFont(textFont);
 		this.contEffectsArea.addItemListener(this);
-		this.messageBox.add(contEffectsArea);
+		p.add(contEffectsArea, BorderLayout.CENTER);
+		this.messageBox.add(p);
 	
 		
 		this.contEffects = new ArrayList<ContEffect>();
