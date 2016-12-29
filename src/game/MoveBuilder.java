@@ -101,9 +101,9 @@ public class MoveBuilder{
 			rank = move.getDestinationSpace().getRank();
 			file = move.getDestinationSpace().getFile();
 		}
-		// To support the Swap move type
+		// To support the NonStandard move type
 		if(move.getClass() == Touch.class)
-			move = MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.Swap, pieceToMove.getColor()), message);
+			move = MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.NonStandard, pieceToMove.getColor()), message);
 		
 		return (ActualMove) move;
 	}

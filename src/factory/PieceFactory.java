@@ -65,7 +65,7 @@ public class PieceFactory {
 						newPiece.addMove(MoveType.ForwardTwo, new MoveConstraint[]{singleMove, notBeenMoved, cannotCapture, noPieceBehind});
 						newPiece.addMove(MoveType.EnPassantRight, new MoveConstraint[]{singleMove, canCaptureEnPassantRight});
 						newPiece.addMove(MoveType.EnPassantLeft, new MoveConstraint[]{singleMove, canCaptureEnPassantLeft});
-						newPiece.addMove(MoveType.Swap, new MoveConstraint[]{});
+						newPiece.addMove(MoveType.NonStandard, new MoveConstraint[]{});
 				break;
 			case Knight : newPiece.addMove(MoveType.LForwardLeft, new MoveConstraint[]{singleMove});
 						  newPiece.addMove(MoveType.LForwardRight, new MoveConstraint[]{singleMove});
@@ -75,13 +75,13 @@ public class PieceFactory {
 						  newPiece.addMove(MoveType.LBackwardLeft, new MoveConstraint[]{singleMove});
 						  newPiece.addMove(MoveType.LLeftBackward, new MoveConstraint[]{singleMove});
 						  newPiece.addMove(MoveType.LLeftForward, new MoveConstraint[]{singleMove});
-						  newPiece.addMove(MoveType.Swap, new MoveConstraint[]{});
+						  newPiece.addMove(MoveType.NonStandard, new MoveConstraint[]{});
 				break;
 			case Bishop : newPiece.addMove(MoveType.ForwardLeft, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
 						  newPiece.addMove(MoveType.ForwardRight, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
 						  newPiece.addMove(MoveType.BackwardRight, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
 						  newPiece.addMove(MoveType.BackwardLeft, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
-						  newPiece.addMove(MoveType.Swap, new MoveConstraint[]{});
+						  newPiece.addMove(MoveType.NonStandard, new MoveConstraint[]{});
 				break;
 			case Rook : newPiece.addMove(MoveType.Forward, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
 			  			newPiece.addMove(MoveType.Right, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
@@ -89,7 +89,7 @@ public class PieceFactory {
 			  			newPiece.addMove(MoveType.Left, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
 			  			newPiece.addMove(MoveType.ReverseKingSideCastle, new MoveConstraint[]{singleMove, notBeenMoved});
 			  			newPiece.addMove(MoveType.ReverseQueenSideCastle, new MoveConstraint[]{singleMove, notBeenMoved});
-			  			newPiece.addMove(MoveType.Swap, new MoveConstraint[]{});
+			  			newPiece.addMove(MoveType.NonStandard, new MoveConstraint[]{});
 				break;
 			case Queen : newPiece.addMove(MoveType.ForwardLeft, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
 			  			 newPiece.addMove(MoveType.ForwardRight, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
@@ -99,7 +99,7 @@ public class PieceFactory {
 			  			 newPiece.addMove(MoveType.Right, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
 			  			 newPiece.addMove(MoveType.Backward, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
 			  			 newPiece.addMove(MoveType.Left, new MoveConstraint[]{mustMoveAlike, cannotPassPiece});
-			  			 newPiece.addMove(MoveType.Swap, new MoveConstraint[]{});
+			  			 newPiece.addMove(MoveType.NonStandard, new MoveConstraint[]{});
 				break;
 			case King : newPiece.addMove(MoveType.ForwardLeft, new MoveConstraint[]{singleMove});
  			 			newPiece.addMove(MoveType.ForwardRight, new MoveConstraint[]{singleMove});
@@ -111,7 +111,7 @@ public class PieceFactory {
  			 			newPiece.addMove(MoveType.Left, new MoveConstraint[]{singleMove});
  			 			newPiece.addMove(MoveType.KingSideCastle, new MoveConstraint[]{notBeenMoved, singleMove, canKingCastle});
  			 			newPiece.addMove(MoveType.QueenSideCastle, new MoveConstraint[]{notBeenMoved, singleMove, canQueenCasltle});
- 			 			newPiece.addMove(MoveType.Swap, new MoveConstraint[]{});
+ 			 			newPiece.addMove(MoveType.NonStandard, new MoveConstraint[]{});
 				break;
 		}
 		return newPiece;

@@ -27,7 +27,7 @@ public class Cathedral extends CardEffect {
 		}while(board.getStartSpace().getPiece() == null ||
 			   board.getStartSpace().getPiece().getType() != PieceType.Rook ||
 			   board.getStartSpace().getPiece().getColor() != gs.getBoard().getTurn().getColor() ||
-			   board.getStartSpace().getPiece().getConstraints(MoveType.Swap).contains(DisabledMove.disabled));
+			   board.getStartSpace().getPiece().getConstraints(MoveType.NonStandard).contains(DisabledMove.disabled));
 		do{
 			board.setEndSpace(null);
 			board.infoBox("Now select a bishop to trade it with!", cardName);
@@ -41,7 +41,7 @@ public class Cathedral extends CardEffect {
 		}while(board.getEndSpace().getPiece() == null ||
 			   board.getEndSpace().getPiece().getType() != PieceType.Bishop ||
 			   board.getEndSpace().getPiece().getColor() != gs.getBoard().getTurn().getColor()||
-			   board.getEndSpace().getPiece().getConstraints(MoveType.Swap).contains(DisabledMove.disabled));
+			   board.getEndSpace().getPiece().getConstraints(MoveType.NonStandard).contains(DisabledMove.disabled));
 		Piece rook =  board.getStartSpace().getPiece();
 		Piece bishop = board.getEndSpace().getPiece();
 		
