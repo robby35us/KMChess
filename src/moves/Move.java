@@ -14,14 +14,16 @@ public abstract class Move {
   protected int fileOffset;
   protected Space initialSpace;
   protected Space destinationSpace;
+  protected Space finalDestinationSpace;
   
   /*
    * The super constructor for all Move objects
    */
-  protected Move(int rankOffset, int fileOffset, Space initial){
+  protected Move(int rankOffset, int fileOffset, Space initial, Space finalDest){
 	this.rankOffset = rankOffset;
 	this.fileOffset = fileOffset;
 	initialSpace = initial;
+	finalDestinationSpace = finalDest;
 	setDestination();
   }
   
@@ -72,4 +74,8 @@ public abstract class Move {
   public Space getDestinationSpace() {
 	return destinationSpace;
   }
+
+public Space getFinalDestSpace() {
+	return finalDestinationSpace;
+}
 }

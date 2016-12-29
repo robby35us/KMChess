@@ -34,13 +34,17 @@ public class MoveCompositor {
 		for(MoveConstraint c : constraints)
 			// verify that the constraint is met
 			if(!c.meetsConstraint(lastMove, nextMove)){
-				//System.out.println("The constraint " + c.toString() + " was not met!");
+				/*System.out.println("The constraint " + c.toString() + " for " +
+									lastMove.getInitialSpace().getPiece().getColor() + " piece " 
+								   + lastMove.getInitialSpace().getPiece().getType() + " was not met!");
+				*/
 				message.setConstraintNotMet();
 				return null;
 			}
 		
-		//System.out.println("All constraints for " + nextMove + " for piece " + lastMove.getInitialSpace().getPiece().getType() 
-		//		+ " for the " + lastMove.getInitialSpace().getPiece().getColor() + " player were met.");
+		/*System.out.println("All constraints for " + nextMove + " for piece " + lastMove.getInitialSpace().getPiece().getType() 
+				+ " for the " + lastMove.getInitialSpace().getPiece().getColor() + " player were met.");
+		*/
 		// returns the nextMove wrapped around the lastMove
 		return nextMove.setLastMove(lastMove);
 	}

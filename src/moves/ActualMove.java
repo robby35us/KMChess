@@ -28,7 +28,7 @@ public abstract class ActualMove extends Move{
 		// flip offsets if color is black
 		super(color == PieceColor.White ? moveType.getRankOffset() : -moveType.getRankOffset(), 
 		      color == PieceColor.White ? moveType.getFileOffset() : -moveType.getFileOffset(),
-		      null);
+		      null, null);
 		
 		this.moveType = moveType;
 		
@@ -40,6 +40,7 @@ public abstract class ActualMove extends Move{
 			fileOffset = -fileOffset;
 		}
 	}
+	
     
 	/*
 	 * Wraps the lastMove Move object with this ActualMove object.
@@ -50,6 +51,7 @@ public abstract class ActualMove extends Move{
 		rankOffset += lastMove.getRankOffset();
 		fileOffset += lastMove.getFileOffset();
 		initialSpace = lastMove.getInitialSpace();
+		finalDestinationSpace = lastMove.finalDestinationSpace;
 		setDestination();
 		return this;
 	}

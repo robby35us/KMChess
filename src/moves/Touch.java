@@ -12,7 +12,7 @@ import components.Space;
  */
 
 public class Touch extends Move{
-   public Touch(Space initial){
-     super(0,0, initial);
+   public Touch(Space initial, Space finalDest){
+     super(0,0, initial, finalDest);
    }
 }

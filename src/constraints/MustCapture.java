@@ -30,6 +30,7 @@ public class MustCapture implements MoveConstraint {
 	 */
 	public boolean meetsConstraint(Move lastMove, ActualMove nextMove) {
 		Space initialSpace = lastMove.getInitialSpace();
+		Space finaldestSpace = lastMove.getFinalDestSpace();
 		Space nextSpace = board.getNextSpace(lastMove.getRankOffset() + nextMove.getRankOffset(), 
 						                lastMove.getFileOffset() + nextMove.getFileOffset(), initialSpace);
 		Piece defender = nextSpace.getPiece();

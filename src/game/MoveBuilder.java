@@ -51,7 +51,7 @@ public class MoveBuilder{
 	 * Piece at initial.
 	 */
 	public static ActualMove buildMoveObject(Space initial, Space destination, GameState gs, ErrorMessage message){
-		Move move = new Touch(initial);
+		Move move = new Touch(initial, destination);
 		return (ActualMove) buildMoveObject(move,destination,gs,message);
 	}
 	

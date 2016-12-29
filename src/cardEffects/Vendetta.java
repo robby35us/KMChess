@@ -8,10 +8,12 @@ import components.PlayerSet;
 import components.Space;
 import constraints.MustCapture;
 import definitions.MoveType;
+import definitions.Timing;
 import definitions.Turn;
 import game.GameState;
 import game.MoveBuilder;
 import graphics.SpaceBorder;
+import knightmare.KMCard;
 import utility.ErrorMessage;
 
 public class Vendetta extends ContEffect {
@@ -44,10 +46,11 @@ public class Vendetta extends ContEffect {
 		mc = new MustCapture(gs.getBoard());
 		addMcToAll(gs);
 		resetMovable(gs);
-		gs.getBoard().infoBox("Vendetta is an active card. Each player must now" +
+		/*gs.getBoard().infoBox("Vendetta is an active card. Each player must now" +
 				  "\nuse his move to capture one of his opponent's pieces." +
 				  "\nThis effect lasts until one of the players cannot capture" +
 				  "\nwithout the use of a card.", cardName);
+		*/
 	}
 
 	@Override
@@ -79,13 +82,25 @@ public class Vendetta extends ContEffect {
 
 	private void resetMovable(GameState gs) {
 		movable = new ArrayList<Piece>();
-		PlayerSet current = gs.getPlayerSet(gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
-		PlayerSet other = gs.getPlayerSet(gs.getBoard().getTurn());
+		PlayerSet current;
+		PlayerSet other;
+		if(KMCard.CurrentTiming != Timing.After){
+			current = gs.getPlayerSet(gs.getBoard().getTurn());
+			other = gs.getPlayerSet(gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
+		}
+		else{
+			current = gs.getPlayerSet(gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
+			other = gs.getPlayerSet(gs.getBoard().getTurn());
+		}
+			
 		for(Piece c : current){
+			System.out.println("Checking if " + c.getColor() +  c.getType() + " can attack: ");
 			for(Piece o: other){
+				System.out.println("\tthe " + o.getColor() + o.getType());
 				ErrorMessage message = new ErrorMessage();
 				if(MoveBuilder.buildMoveObject(c.getSpace(), o.getSpace(), gs, message) != null){
 					movable.add(c);
+					System.out.println("Reset Movable: Adding " + c + " to movable.");
 					break;
 				}
 			}
@@ -109,7 +124,11 @@ public class Vendetta extends ContEffect {
 				}
 			}
 		}
-		String player = gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2.toString() : Turn.Player1.toString();
+		String player;
+		if(KMCard.CurrentTiming != Timing.After)
+			player = gs.getBoard().getTurn().toString();
+		else
+			player = gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2.toString() : Turn.Player1.toString();
 		gs.getBoard().infoBox(player + " is not able to make a capture. Vendetta is no longer in affect.", cardName);
 	}
 
