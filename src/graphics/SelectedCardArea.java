@@ -35,7 +35,15 @@ public class SelectedCardArea extends Canvas {
 	}
 	
 	public void setCard(int setNum, int cardNum){
-		selectedCard = KMCardImages.getImage(setNum, cardNum);
+		if(setNum == 0)
+			try {
+				selectedCard = ImageIO.read(new java.io.File("C:\\Users\\robby35us\\Pictures\\KMChess\\Back.jpg"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		else
+			selectedCard = KMCardImages.getImage(setNum, cardNum);
 		this.repaint();
 	}
 	

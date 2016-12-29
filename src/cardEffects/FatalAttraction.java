@@ -21,7 +21,7 @@ public class FatalAttraction extends ContEffect {
 	private DisabledMove disabled;
 	
 	public FatalAttraction(){
-		contEffectName = "Fatal Attraction";
+		cardName = "Fatal Attraction";
 	}
 	
 	@Override
@@ -32,7 +32,7 @@ public class FatalAttraction extends ContEffect {
 	@Override
 	public synchronized void startContEffect(GameState gs) {
 		Board board = gs.getBoard();
-		board.infoBox("Select a piece to become a magnet!", contEffectName);
+		board.infoBox("Select a piece to become a magnet!", cardName);
 		board.setStartSpace(null);
 		board.setEndSpace(null);
 		while(board.getStartSpace() == null){
@@ -45,7 +45,7 @@ public class FatalAttraction extends ContEffect {
 		magnetSpace = board.getStartSpace();
 		magnet = magnetSpace.getPiece();
 		ArrayList<Piece> adjacent = getAdjacentPieces();
-		disabled = new DisabledMove();
+		disabled = DisabledMove.disabled;
 		for( Piece p : adjacent){
 			ArrayList<MoveType> types = p.getMoveTypes();
 			if(p.getType() == PieceType.King)
@@ -145,7 +145,7 @@ public class FatalAttraction extends ContEffect {
 			gs.getBoard().infoBox("The magnet at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
 							  " has been moved or captured." +
 							  "\nThe pieces in the eight adjacent spaces are now freed."
-							  , contEffectName);
+							  , cardName);
 		}	
 		contEffectEnded = true;
 	}
@@ -173,7 +173,7 @@ public class FatalAttraction extends ContEffect {
 		gs.getBoard().infoBox("The " + magnet.getType() + " at the red space " + 
 							  "\n" + magnetSpace.getFile() + 
 							  magnetSpace.getRank() + " is the magenet."
-							  , contEffectName);
+							  , cardName);
 		ArrayList<Space> adjacentSpaces = getAdjacentSpaces();
 		SpaceBorder adjacentBorder = new SpaceBorder(Color.YELLOW);
 		for(Space as: adjacentSpaces){
@@ -183,7 +183,7 @@ public class FatalAttraction extends ContEffect {
 		}
 		gs.getBoard().infoBox("The pieces in the adjacent yellow spaces " +
 							   "\n(except for kings) are stuck until the " + 
-							   "\nmagnet moves or is captured.", contEffectName);
+							   "\nmagnet moves or is captured.", cardName);
 	}
 
 	@Override

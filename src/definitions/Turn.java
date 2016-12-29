@@ -10,5 +10,12 @@ package definitions;
  */
 
 public enum Turn {
-	Player1, Player2
+	Player1, Player2;
+
+	public PieceColor getColor() {
+		if(this == Player1)
+			return PieceColor.White;
+		else
+			return PieceColor.Black;
+	}
 }

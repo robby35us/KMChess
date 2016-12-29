@@ -9,6 +9,7 @@ import moves.Move;
  */
 public interface MoveConstraint {
 	
+
 	/*
 	 * The meetsConstraint method looks at the lastMove object, which is often
 	 * a "non-move" , such as Touch, but can be an ActualMove object, and checks 

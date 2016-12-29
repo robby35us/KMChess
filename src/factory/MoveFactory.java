@@ -39,6 +39,7 @@ public class MoveFactory {
 			case ReverseQueenSideCastle : move = new MoveReverseQueenSideCastle(pieceColor); break; 
 			case KingSideCastle : move = new MoveKingSideCastle(pieceColor); break;
 			case QueenSideCastle : move = new MoveQueenSideCastle(pieceColor); break;
+			case Swap : move = new Swap(pieceColor); break;
 		}
 		return move;
 	}

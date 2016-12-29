@@ -6,7 +6,7 @@ public abstract class ContEffect extends CardEffect {
 	
 	
 	protected boolean contEffectEnded = false;
-	protected String contEffectName;
+	
 	 
 	abstract public void startContEffect(GameState gs);
 	
@@ -16,9 +16,6 @@ public abstract class ContEffect extends CardEffect {
 	
 	abstract public void endContEffect(GameState gs);
 
-	public String getName() {
-		return contEffectName;
-	}
 
 	abstract public void highlightChange(GameState gs);
 

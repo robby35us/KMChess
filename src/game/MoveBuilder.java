@@ -101,6 +101,10 @@ public class MoveBuilder{
 			rank = move.getDestinationSpace().getRank();
 			file = move.getDestinationSpace().getFile();
 		}
+		// To support the Swap move type
+		if(move.getClass() == Touch.class)
+			move = MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.Swap, pieceToMove.getColor()), message);
+		
 		return (ActualMove) move;
 	}
 

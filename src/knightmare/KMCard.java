@@ -62,10 +62,11 @@ public class KMCard extends Canvas implements MouseListener{
 	    private static final CardBorder defaultArmedBorder =
 	        new CardBorder( true );
 	private static KMCard empty;
+	private static final KMCardInfo emptyCInfo = new KMCardInfo(0, 0, null, null, 0, Timing.None, null);
 	    
 	static {
 		try {
-			empty = new KMCard(ImageIO.read(new java.io.File("C:\\Users\\robby35us\\Pictures\\KMChess\\Back.jpg")), null);
+			empty = new KMCard(ImageIO.read(new java.io.File("C:\\Users\\robby35us\\Pictures\\KMChess\\Back.jpg")), emptyCInfo);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -80,8 +80,10 @@ public class CardArea extends Panel implements ActionListener  {
 	private volatile boolean noCardPlayed;
 
 	public void setExecutingCard( KMCard card) {
-		setSelectedCard(card);
-		executingCard = card;
+		if(card.getName() != null){
+			setSelectedCard(card);
+			executingCard = card;
+		}
 	}
 	
 	public void completeCardExecution(GameState gs){
@@ -111,6 +113,7 @@ public class CardArea extends Panel implements ActionListener  {
 		}else{
 			cardSlots.remove(cardSlot);
 			hand[index] = new KMCardSlot(index);
+			hand[index].setEnabled(false);
 			cardSlots.add(hand[index]);
 		}
 		executingCard = null;
