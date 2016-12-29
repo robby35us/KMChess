@@ -54,10 +54,11 @@ public class FatalAttraction extends ContEffect {
 				p.getConstraints(type).add(disabled);
 			}
 		}
-		board.infoBox("The " + magnet.getType() + " at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
-						" is now a magnet!." +
-						"\nNo piece (except a king) that is currently in or enters the eight " + 
-						"\nadjacent squares can move until the magnet moves or is captured.", contEffectName);
+		//board.infoBox("The " + magnet.getType() + " at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
+		//				" is now a magnet!." +
+		//				"\nNo piece (except a king) that is currently in or enters the eight " + 
+		//				"\nadjacent squares can move until the magnet moves or is captured.", contEffectName);
+		
 		board.setStartSpace(null);
 		Space.activeSpace.setButtonState(Space.UNARMED);
 		Space.activeSpace = null;

@@ -307,6 +307,8 @@ public class GameState implements ItemListener{
 			contEffectsArea.removeAll();
 		}
 		contEffectsArea.add(newContEffect.getName());
+		newContEffect.highlightChange(this);
+		newContEffect.endHighlightChange(this);
 	}
 	
 /*	public void setEffectsArea(TextArea effectsArea) {
@@ -318,6 +320,9 @@ public class GameState implements ItemListener{
 		for(ContEffect ce : contEffects){
 			ce.updateContEffect(this);
 			if(ce.endCondMet(this)){
+				
+				if(ce.getName() == contEffectsArea.getSelectedItem())
+					ce.endHighlightChange(this);
 				ce.endContEffect(this );
 				removed.add(ce);
 			}
@@ -340,7 +345,7 @@ public class GameState implements ItemListener{
 				ce.highlightChange(this);
 				contEffectSelected = (Integer) arg0.getItem();
 			} else {
-				//System.out.println("deselecting item");
+				//System.out.println("de-selecting item");
 				ce.endHighlightChange(this);
 				contEffectSelected = null;
 				contEffectsArea.deselect((Integer)arg0.getItem()); 

@@ -114,6 +114,7 @@ public class CardArea extends Panel implements ActionListener  {
 			cardSlots.add(hand[index]);
 		}
 		executingCard = null;
+		revalidate();
 		repaint();
 	}
 
