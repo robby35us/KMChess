@@ -80,7 +80,7 @@ public class CardArea extends Panel implements ActionListener  {
 	private volatile boolean noCardPlayed;
 
 	public void setExecutingCard( KMCard card) {
-		if(card.getName() != null){
+		if(card.getName() != null){// do I need this condition?
 			setSelectedCard(card);
 			executingCard = card;
 		}
