@@ -11,7 +11,7 @@ import definitions.IOFramework;
 import definitions.PieceType;
 import definitions.Timing;
 import definitions.Turn;
-import io.ConsoleIO;
+//import io.ConsoleIO;
 import knightmare.KMCard;
 
 
@@ -24,12 +24,12 @@ public class Start {
 	 * Run the main chess game using the console. Will change to GUI at a 
 	 * later date.
 	 */
-	public static void main(String[] args) throws IOException{
+	/*public static void main(String[] args) throws IOException{
 		GameState gs = new GameState();
 		
 		ErrorMessage message = Start.playGame(new ConsoleIO(gs), gs);
 		System.out.println(message);
-	}
+	}*/
 	
 	
 	/*
@@ -64,25 +64,24 @@ public class Start {
 				gs.getCardArea().completeCardExecution(gs);
 				gs.updateContEffects();
 				moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);
+				
 			}
 			// build the given move, if possible 
-			if(execCard == null && moveInput != null) {
+			if(moveInput != null) {
 				move = MoveBuilder.buildMoveObject(moveInput.getInit(), moveInput.getDest(), gs, message);
-			}else {
-				if(message.hasError()){ // signals for new input
-					move = null;
-				}
-				else if (execCard != null && execCard.getCInfo().getTiming() == Timing.Instead){
+			} else if (execCard != null && execCard.getCInfo().getTiming() == Timing.Instead){
 					gs.getCardArea().completeCardExecution(gs);
 					gs.updateContEffects();
-				}
+					move = null;
+			} else if(message.hasError()){ // signals for new input
+				move = null;
 			}
 			
 			// checks the universal constraints
 			if(move != null && gs.meetsUniversalConstraints(move, board.getTurn(), message)){
 				
 				// actually move the piece
-				gs.makeMove(move, board.getTurn(), message);
+					gs.makeMove(move, board.getTurn(), message);
 				
 				// check for pawnPromotion
 				if(message.getPromotePawn()){
@@ -119,6 +118,34 @@ public class Start {
 					
 					if(gs.checkForMate(board.getTurn(), message).hasError()){
 						// if checkmate, exits the program, with current player in check
+						break;
+					}
+				}
+			}else if (execCard != null && execCard.getCInfo().getTiming() == Timing.Instead){
+				
+				// check for pawnPromotion
+				//NOTE: This code needs to change
+				/*if(message.getPromotePawn()){
+					PieceType pawnPromotionType = fw.promotePawnTo();
+					if(gs.promotePawn(move.getDestinationSpace().getPiece(), pawnPromotionType)){
+						message = new ErrorMessage(); // clear error message
+					}
+					else
+						message.setUnableToPromotePawn();
+				}*/
+				
+				// if move was made successfully
+				if(!message.hasError()){
+					
+					if(board.getTurn() == Turn.Player1)
+						board.setTurn(Turn.Player2);
+					else
+						board.setTurn(Turn.Player1);
+				
+					
+					if(gs.checkForMate(board.getTurn(), message).hasError()){
+						// if checkmate, exits the program, with current player in check
+						fw.displayMessage(message);
 						break;
 					}
 				}
