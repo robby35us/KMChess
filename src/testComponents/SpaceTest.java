@@ -9,6 +9,7 @@ import definitions.File;
 import definitions.Rank;
 import definitions.SpaceColor;
 
+@SuppressWarnings("unused")
 public class SpaceTest{
 
 }

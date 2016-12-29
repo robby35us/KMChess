@@ -30,7 +30,7 @@ import knightmare.KMDeck;
  * provides various operations and methods that involve changing the
  * game state.
  */
-public class GameState implements ItemListener{
+public class GameState implements ItemListener {
 	private Board board;
 	private MessageBox messageBox;
 	private TextArea gameMessage;

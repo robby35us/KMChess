@@ -25,7 +25,6 @@ import definitions.SpaceColor;
 import definitions.Turn;
 import graphics.ChessImages;
 import graphics.SpaceBorder;
-import io.ChessGame;
 
 
 public class Space extends Canvas implements MouseListener{
@@ -48,6 +47,8 @@ public class Space extends Canvas implements MouseListener{
 	private Image[] images = new Image[4];
 	private MediaTracker tracker;
 	private SpaceBorder[] borders = new SpaceBorder[4];
+	
+	@SuppressWarnings("unused")
 	private boolean generatedDisabled;
 	private boolean mousedown;
 	private boolean mouseInBounds = false;

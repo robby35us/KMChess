@@ -2,30 +2,18 @@ package knightmare;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.MediaTracker;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.FilteredImageSource;
-import java.awt.image.ImageFilter;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-
-import components.Board;
-import components.Piece;
-import components.Space;
-import definitions.File;
-import definitions.Rank;
 import definitions.Timing;
 import graphics.CardArea;
 import graphics.CardBorder;
@@ -51,6 +39,8 @@ public class KMCard extends Canvas implements MouseListener{
 	private BufferedImage[] images = new BufferedImage[4];
 	private MediaTracker tracker;
 	private CardBorder[] borders = new CardBorder[4];
+	
+	@SuppressWarnings("unused")
 	private boolean generatedDisabled;
 	private boolean mousedown;
 	private boolean mouseInBounds = false;
@@ -256,8 +246,8 @@ public class KMCard extends Canvas implements MouseListener{
                 }
                 if ( ! tracker.isErrorID( buttonState ) ) {
                     Insets insets = borders[buttonState].getInsets();
-                    int imageWidth = images[buttonState].getWidth( this );
-                    int imageHeight = images[buttonState].getHeight( this );
+                    //int imageWidth = images[buttonState].getWidth( this );
+                    //int imageHeight = images[buttonState].getHeight( this );
                     //int imageWidth = this.getWidth();
                     //int imageHeight = this.getHeight();
                     /*int x = insets.left +
@@ -349,7 +339,6 @@ public class KMCard extends Canvas implements MouseListener{
 	}
 
 	public BufferedImage getImg() {
-		// TODO Auto-generated method stub
 		return images[UNARMED];
 	}
 

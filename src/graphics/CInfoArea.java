@@ -1,7 +1,6 @@
 package graphics;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
@@ -15,6 +14,8 @@ public class CInfoArea extends Panel {
 	
 	private Panel panel1;
 	private Panel panel2;
+	
+	@SuppressWarnings("unused")
 	private KMCardInfo cInfo;
 	private TextField title;
 	private TextField isUnique;

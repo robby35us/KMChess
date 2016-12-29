@@ -2,7 +2,6 @@ package game;
 
 import java.io.IOException;
 
-import cardEffects.ContEffect;
 import components.Board;
 import moves.ActualMove;
 import utility.ErrorMessage;
@@ -12,7 +11,6 @@ import definitions.IOFramework;
 import definitions.PieceType;
 import definitions.Timing;
 import definitions.Turn;
-import factory.CardEffectFactory;
 import io.ConsoleIO;
 import knightmare.KMCard;
 

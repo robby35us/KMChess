@@ -7,10 +7,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import constraints.CanCaptureEnPassantLeft;
-import constraints.CanCaptureEnPassantRight;
-import constraints.CanKingCastle;
-
 @RunWith(Suite.class)
 @SuiteClasses({CanCaptureEnPassantLeftTest.class, 
 			   CanCaptureEnPassantRightTest.class,
