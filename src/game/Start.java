@@ -68,9 +68,9 @@ public class Start {
 				moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);
 			}
 			// build the given move, if possible 
-			if(execCard == null && moveInput != null)
+			if(execCard == null && moveInput != null) {
 				move = MoveBuilder.buildMoveObject(moveInput.getInit(), moveInput.getDest(), gs, message);
-			else {
+			}else {
 				if(message.hasError()){ // signals for new input
 					move = null;
 				}
@@ -100,6 +100,7 @@ public class Start {
 				if(!message.hasError()){
 					
 					move.getDestinationSpace().getPiece().setBeenMoved(true);
+					gs.updateContEffects();
 					KMCard.CurrentTiming = Timing.After;
 					if(execCard == null){
 						gs.getCardArea().activateSkipButton();
@@ -111,7 +112,7 @@ public class Start {
 					if(execCard != null && execCard.getCInfo().getTiming() == Timing.After){
 						gs.getCardArea().completeCardExecution(gs);
 					}
-					gs.updateContEffects();
+					
 					if(board.getTurn() == Turn.Player1)
 						board.setTurn(Turn.Player2);
 					else

@@ -48,7 +48,7 @@ public class ChessGame extends Frame implements WindowListener, IOFramework{
 		this.setVisible(true);
 		//this.setSize(getMaximumSize());
 		this.runGameIntro();
-		System.out.println(playKnightmareMode);
+		//System.out.println(playKnightmareMode);
 		if(playKnightmareMode){
 			this.refreshHand();
 		}else {

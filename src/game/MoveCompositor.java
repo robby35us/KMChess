@@ -23,7 +23,7 @@ public class MoveCompositor {
 	public static ActualMove compositeMoves(Move lastMove, ActualMove nextMove, ErrorMessage message){
 		ArrayList<MoveConstraint> constraints = lastMove.getInitialSpace().getPiece().getConstraints(nextMove.getMoveType());
 		
-		System.out.println(nextMove.getMoveType());
+		//System.out.println(nextMove.getMoveType());
 		// verify that the move is a legal movement type for this piece
 		if(constraints == null){
 			message.setIllegalPattern();

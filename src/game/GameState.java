@@ -2,8 +2,11 @@ package game;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.List;
 import java.awt.Panel;
 import java.awt.TextArea;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import cardEffects.ContEffect;
@@ -25,16 +28,17 @@ import knightmare.KMDeck;
  * provides various operations and methods that involve changing the
  * game state.
  */
-public class GameState {
+public class GameState implements ItemListener{
 	private Board board;
 	private MessageBox messageBox;
 	private TextArea gameMessage;
-	private TextArea contEffectsArea;
+	private List contEffectsArea;
+	private Integer contEffectSelected;
 	private CardArea cardArea;
 	private static final int messageRows = 5;
 	private static final int messageCols = 40;
-	private static final int effectsCols = 5;
-	private static final int effectsRows = 40;
+	
+	private static final String noContEffectsItem = "No Continuous Effects In Play";
 	private Font textFont;
 	private Player whitePlayer;
 	private Player blackPlayer;
@@ -72,10 +76,12 @@ public class GameState {
 		this.gameMessage.setFont(textFont);
 		this.messageBox.add(gameMessage);
 		
-		this.contEffectsArea = new TextArea("There are currently no \ncontinuious Effects",
-				effectsRows, effectsCols, TextArea.SCROLLBARS_VERTICAL_ONLY);
+		this.contEffectsArea = new List();
+		this.contEffectsArea.add(noContEffectsItem);
 		this.contEffectsArea.setFont(textFont);
+		this.contEffectsArea.addItemListener(this);
 		this.messageBox.add(contEffectsArea);
+	
 		
 		this.contEffects = new ArrayList<ContEffect>();
 		
@@ -283,7 +289,7 @@ public class GameState {
 		return gameMessage;
 	}
 
-	public TextArea getContEffects() {
+	public List getContEffects() {
 		return contEffectsArea;
 	}
 
@@ -297,6 +303,10 @@ public class GameState {
 
 	public void addContEffect(ContEffect newContEffect){
 		contEffects.add(newContEffect);
+		if(contEffectsArea.getItems()[0] == noContEffectsItem){
+			contEffectsArea.removeAll();
+		}
+		contEffectsArea.add(newContEffect.getName());
 	}
 	
 /*	public void setEffectsArea(TextArea effectsArea) {
@@ -304,13 +314,39 @@ public class GameState {
 	}
 */	
 	public void updateContEffects() {
+		ArrayList<ContEffect> removed = new ArrayList<ContEffect>();
 		for(ContEffect ce : contEffects){
 			ce.updateContEffect(this);
 			if(ce.endCondMet(this)){
 				ce.endContEffect(this );
+				removed.add(ce);
 			}
 		}
+		for(ContEffect r : removed){
+			if(contEffects.indexOf(r) == contEffectsArea.getSelectedIndex())
+				contEffectSelected = -1;
+			contEffects.remove(r);
+			contEffectsArea.remove(r.getName());
+		}
+		if(contEffectsArea.getItemCount() == 0)
+			contEffectsArea.add(noContEffectsItem);
 	}
-	
 
+	@Override
+	public void itemStateChanged(ItemEvent arg0) {
+		if(contEffects.size() >0){
+			ContEffect ce = contEffects.get((Integer)arg0.getItem());
+			if(!arg0.getItem().equals(contEffectSelected)){
+				ce.highlightChange(this);
+				contEffectSelected = (Integer) arg0.getItem();
+			} else {
+				//System.out.println("deselecting item");
+				ce.endHighlightChange(this);
+				contEffectSelected = null;
+				contEffectsArea.deselect((Integer)arg0.getItem()); 
+			}
+		}else
+			contEffectsArea.deselect((Integer) arg0.getItem());
+	}		
 }
+	

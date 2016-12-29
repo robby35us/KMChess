@@ -126,11 +126,11 @@ public class CardArea extends Panel implements ActionListener  {
 		//System.out.println("Refreshing the hand.");
 		for(int i = 0; i < HAND_SIZE; i++){
 			if(hand[i].isEmpty()){
-				System.out.println("Grabing new card for hand!");
+				//System.out.println("Grabing new card for hand!");
 				KMCardInfo cInfo = deck.removeCInfo();
 				hand[i].replaceCard(new KMCard(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()), cInfo));
 			}
-			System.out.println(hand[i].getCard().getCInfo().getName());
+			//System.out.println(hand[i].getCard().getCInfo().getName());
 		}
 		revalidate();
 		repaint();
@@ -146,7 +146,7 @@ public class CardArea extends Panel implements ActionListener  {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		System.out.println("Button Clicked");
+		//System.out.println("Button Clicked");
 		noCardPlayed = true;
 	}
 

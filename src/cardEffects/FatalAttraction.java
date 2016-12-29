@@ -1,5 +1,6 @@
 package cardEffects;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import components.Board;
@@ -11,12 +12,17 @@ import definitions.MoveType;
 import definitions.PieceType;
 import definitions.Rank;
 import game.GameState;
+import graphics.SpaceBorder;
 
 public class FatalAttraction extends ContEffect {
 
 	private Piece magnet;
 	private Space magnetSpace;
 	private DisabledMove disabled;
+	
+	public FatalAttraction(){
+		contEffectName = "Fatal Attraction";
+	}
 	
 	@Override
 	public void initiateImmediateEffect(GameState gs) {
@@ -26,7 +32,7 @@ public class FatalAttraction extends ContEffect {
 	@Override
 	public synchronized void startContEffect(GameState gs) {
 		Board board = gs.getBoard();
-		board.infoBox("Select a piece to become a magnet!", "Fatal Attraction");
+		board.infoBox("Select a piece to become a magnet!", contEffectName);
 		board.setStartSpace(null);
 		board.setEndSpace(null);
 		while(board.getStartSpace() == null){
@@ -49,8 +55,9 @@ public class FatalAttraction extends ContEffect {
 			}
 		}
 		board.infoBox("The " + magnet.getType() + " at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
-						" is now a magnet!. No piece (except a king) that is currently in or enters the eight " + 
-						"adjacent squares can move until the magnet moves or is captured.", "Fatal Attraction");
+						" is now a magnet!." +
+						"\nNo piece (except a king) that is currently in or enters the eight " + 
+						"\nadjacent squares can move until the magnet moves or is captured.", contEffectName);
 		board.setStartSpace(null);
 		Space.activeSpace.setButtonState(Space.UNARMED);
 		Space.activeSpace = null;
@@ -58,6 +65,16 @@ public class FatalAttraction extends ContEffect {
 		
 	private ArrayList<Piece> getAdjacentPieces() {
 		ArrayList<Piece> pieces = new ArrayList<Piece>();
+		ArrayList<Space> spaces = getAdjacentSpaces();
+		for(Space s : spaces){
+			if(s.getPiece() != null)
+				pieces.add(s.getPiece());
+		}
+		return pieces;
+	}
+
+	private ArrayList<Space> getAdjacentSpaces() {
+		ArrayList<Space> spaces = new ArrayList<Space>();
 		Rank mRank = magnetSpace.getRank();
 		File mFile = magnetSpace.getFile();
 		Space adjacentSpace;
@@ -66,52 +83,45 @@ public class FatalAttraction extends ContEffect {
 		if(mRank != Rank.Eight){
 			//get top middle
 			adjacentSpace = magnetSpace.getSpaceForward();
-			if(adjacentSpace.getPiece() != null)
-				pieces.add(adjacentSpace.getPiece());
+			spaces.add(adjacentSpace);
 			if(mFile != File.A){
 				// get top left
 				Space left = adjacentSpace.getSpaceLeft();
-				if(left.getPiece() != null)
-					pieces.add(left.getPiece());
+				spaces.add(left);
 			}
 			if(mFile != File.H){
 				// get top right
 				Space right = adjacentSpace.getSpaceRight();
-				if(right.getPiece() != null)
-					pieces.add(right.getPiece());
+				spaces.add(right);
 			}
 		}
 		// get middle row pieces
 		if(mFile != File.A){
 			adjacentSpace = magnetSpace.getSpaceLeft();
-			if(adjacentSpace.getPiece() != null)
-				pieces.add(adjacentSpace.getPiece());
+			spaces.add(adjacentSpace);
 		}
 		if(mFile != File.H) {
 			adjacentSpace = magnetSpace.getSpaceRight();
-			if(adjacentSpace.getPiece() != null)
-				pieces.add(adjacentSpace.getPiece());
+			spaces.add(adjacentSpace);
 		}
 		// get bottom row pieces
 		if(mRank != Rank.One){
 			//get top middle
 			adjacentSpace = magnetSpace.getSpaceBackward();
-			if(adjacentSpace.getPiece() != null)
-				pieces.add(adjacentSpace.getPiece());
+			
+			spaces.add(adjacentSpace);
 			if(mFile != File.A){
 				// get top left
 				Space left = adjacentSpace.getSpaceLeft();
-				if(left.getPiece() != null)
-					pieces.add(left.getPiece());
+				spaces.add(left);
 			}
 			if(mFile != File.H){
 				// get top right
 				Space right = adjacentSpace.getSpaceRight();
-				if(right.getPiece() != null)
-					pieces.add(right.getPiece());
+				spaces.add(right);
 			}
 		}
-		return pieces;
+		return spaces;
 	}
 
 	@Override
@@ -131,9 +141,10 @@ public class FatalAttraction extends ContEffect {
 					p.getConstraints(type).remove(disabled);
 				}
 			}
-			gs.getBoard().infoBox("The magnet at " + magnetSpace.getFile() + magnetSpace.getRank() + 
-							  " has been moved or captured. The pieces in the eight adjacent spaces are now freed."
-							  , "Fatal Attraction");
+			gs.getBoard().infoBox("The magnet at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
+							  " has been moved or captured." +
+							  "\nThe pieces in the eight adjacent spaces are now freed."
+							  , contEffectName);
 		}	
 		contEffectEnded = true;
 	}
@@ -152,4 +163,38 @@ public class FatalAttraction extends ContEffect {
 		}		
 	}
 
+	@Override
+	public void highlightChange(GameState gs) {
+		SpaceBorder magnetBorder = new SpaceBorder(Color.RED);
+		magnetSpace.setArmedBorder(magnetBorder);
+		magnetSpace.setUnarmedBorder(magnetBorder);
+		magnetSpace.repaint();
+		gs.getBoard().infoBox("The " + magnet.getType() + " at the red space " + 
+							  "\n" + magnetSpace.getFile() + 
+							  magnetSpace.getRank() + " is the magenet."
+							  , contEffectName);
+		ArrayList<Space> adjacentSpaces = getAdjacentSpaces();
+		SpaceBorder adjacentBorder = new SpaceBorder(Color.YELLOW);
+		for(Space as: adjacentSpaces){
+			as.setArmedBorder(adjacentBorder);
+			as.setUnarmedBorder(adjacentBorder);
+			as.repaint();
+		}
+		gs.getBoard().infoBox("The pieces in the adjacent yellow spaces " +
+							   "\n(except for kings) are stuck until the " + 
+							   "\nmagnet moves or is captured.", contEffectName);
+	}
+
+	@Override
+	public void endHighlightChange(GameState gs) {
+		magnetSpace.setArmedBorder(Space.defaultArmedBorder);
+		magnetSpace.setUnarmedBorder(Space.defaultUnarmedBorder);
+		magnetSpace.repaint();
+		ArrayList<Space> adjacentSpaces = getAdjacentSpaces();
+		for(Space as: adjacentSpaces) {
+			as.setArmedBorder(Space.defaultArmedBorder);
+			as.setUnarmedBorder(Space.defaultUnarmedBorder);
+			as.repaint();
+		}
+	}
 }

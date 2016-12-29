@@ -14,6 +14,14 @@ public class SpaceBorder extends Border {
 		this.display = display;
 	}
 	
+	public SpaceBorder(Color color) {
+		this.setBorder(color);
+		this.setBorderThickness(5);
+		this.setType(LINE);
+		this.setMargins(3);
+		this.display = true;
+	}
+
 	public void paint(Graphics g, Color background, int x, int y, int width, int height){
 		if(display == true){
 			super.paint(g, background, x, y, width, height);

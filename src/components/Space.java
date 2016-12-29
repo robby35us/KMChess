@@ -59,9 +59,9 @@ public class Space extends Canvas implements MouseListener{
 	private Board board;
 
 	
-	private static final SpaceBorder defaultUnarmedBorder =
+	public static final SpaceBorder defaultUnarmedBorder =
 	        new SpaceBorder( false );
-	    private static final SpaceBorder defaultArmedBorder =
+	public static final SpaceBorder defaultArmedBorder =
 	        new SpaceBorder( true );
 	    
 	    
@@ -87,13 +87,13 @@ public class Space extends Canvas implements MouseListener{
 			this.board = board;
 	 }
 
-	    private void setArmedBorder(SpaceBorder border) {
+	    public void setArmedBorder(SpaceBorder border) {
 	    	borders[ARMED] = border;
 	    	borders[OVER] = border;
 		
 	}
 
-		private void setUnarmedBorder(SpaceBorder border) {
+		public void setUnarmedBorder(SpaceBorder border) {
 			borders[UNARMED] = border;
 			borders[DISABLED] = border;
 		
