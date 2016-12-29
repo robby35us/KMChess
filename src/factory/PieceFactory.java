@@ -13,38 +13,40 @@ import game.GameState;
 public class PieceFactory {
 	
 	// Constraints for this PieceFactory
-	private SingleMove singleMove;
-	private MustCapture mustCapture;
-	private MustMoveAlike mustMoveAlike;
+	public static SingleMove singleMove;
+	public static MustCapture mustCapture;
+	public static MustMoveAlike mustMoveAlike;
 	//private MustBeenMoved mustBeenMoved;
-	private NotBeenMoved notBeenMoved;
+	public static NotBeenMoved notBeenMoved;
 	//private DoubleMove doubleMove;
-	private CannotCapture cannotCapture;
-	private CanKingCastle canKingCastle;
-	private CanQueenCastle canQueenCasltle;
-	private CannotPassPiece cannotPassPiece;
-	private NoPieceBehind noPieceBehind;
-	private CanCaptureEnPassantLeft canCaptureEnPassantLeft;
-	private CanCaptureEnPassantRight canCaptureEnPassantRight;
+	public static CannotCapture cannotCapture;
+	public static CanKingCastle canKingCastle;
+	public static CanQueenCastle canQueenCasltle;
+	public static CannotPassPiece cannotPassPiece;
+	public static NoPieceBehind noPieceBehind;
+	public static CanCaptureEnPassantLeft canCaptureEnPassantLeft;
+	public static CanCaptureEnPassantRight canCaptureEnPassantRight;
 		
 	/*
 	 * Takes a copy of the Board state the GameState object and uses them to 
 	 * initialize the various constraints. 
 	 */
 	public PieceFactory(Board board, GameState gs){
-		singleMove = new SingleMove();
-		mustCapture = new MustCapture(board);
-		mustMoveAlike = new MustMoveAlike();
-		//mustBeenMoved = new MustBeenMoved();
-		notBeenMoved = new NotBeenMoved();
-		//doubleMove = new DoubleMove();
-		cannotCapture = new CannotCapture(board);
-		canKingCastle = new CanKingCastle();
-		canQueenCasltle = new CanQueenCastle();
-		cannotPassPiece = new CannotPassPiece();
-		noPieceBehind = new NoPieceBehind(board);
-		canCaptureEnPassantLeft = new CanCaptureEnPassantLeft(gs);
-		canCaptureEnPassantRight = new CanCaptureEnPassantRight(gs);
+		if(singleMove == null){
+			singleMove = new SingleMove();
+			mustCapture = new MustCapture(board);
+			mustMoveAlike = new MustMoveAlike();
+			//mustBeenMoved = new MustBeenMoved();
+			notBeenMoved = new NotBeenMoved();
+			//doubleMove = new DoubleMove();
+			cannotCapture = new CannotCapture(board);
+			canKingCastle = new CanKingCastle();
+			canQueenCasltle = new CanQueenCastle();
+			cannotPassPiece = new CannotPassPiece();
+			noPieceBehind = new NoPieceBehind(board);
+			canCaptureEnPassantLeft = new CanCaptureEnPassantLeft(gs);
+			canCaptureEnPassantRight = new CanCaptureEnPassantRight(gs);
+		}
 	}
 	
 	/*
@@ -52,12 +54,12 @@ public class PieceFactory {
 	 * and a Color and produces the appropriate piece with all of the
 	 * appropriate MoveTypes and Constraints.
 	 */
-	public Piece makePiece(PieceType type, PieceColor color){
+	public Piece makePiece(PieceType type, PieceType display, PieceColor color){
 		Piece newPiece;
 		if(type == PieceType.King) // NOTE: there could possibly be multiple types that count as kings
-			newPiece = new King(type, color);
+			newPiece = new King(type, display, color);
 		else
-			newPiece = new Piece(type, color);
+			newPiece = new Piece(type, display, color);
 		switch(type){
 			case Pawn : newPiece.addMove(MoveType.Forward, new MoveConstraint[]{singleMove, cannotCapture}); 
 						newPiece.addMove(MoveType.ForwardLeft, new MoveConstraint[]{singleMove, mustCapture});

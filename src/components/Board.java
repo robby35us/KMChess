@@ -86,6 +86,10 @@ public class Board extends Panel {
 	}
 	
 	public void setStartSpace(Space space){
+		if(startSpace != null)
+			startSpace.setButtonState(Space.UNARMED);
+		if(space != null)
+			space.setButtonState(Space.ARMED);
 		startSpace = space;
 	}
 	
@@ -94,6 +98,10 @@ public class Board extends Panel {
 	}
 	
 	public void setEndSpace(Space space){
+		if(endSpace != null)
+			endSpace.setButtonState(Space.UNARMED);
+		if(space != null)
+			space.setButtonState(Space.ARMED);
 		endSpace = space;
 	}
 

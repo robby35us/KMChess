@@ -18,8 +18,8 @@ public class King extends Piece implements KingSubject, KingObserver {
 	private ArrayList<PieceObserver> opposingObservers;
 	
 	// Note: there could possibly be multiple types that count as kings
-	public King(PieceType type, PieceColor color) {
-		super(type, color);
+	public King(PieceType type, PieceType display, PieceColor color) {
+		super(type, display, color);
 		opposingObservers = new ArrayList<PieceObserver>();
 	}
 

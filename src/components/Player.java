@@ -81,4 +81,9 @@ public class Player {
 		if(isMate)
 			message.setMate();
 	}
+	
+	public PlayerSet getPlayerSet(){
+		return set;
+		
+	}
 }

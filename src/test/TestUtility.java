@@ -21,7 +21,7 @@ public class TestUtility {
 		for(int i = 0; i < info.length; i++){
 			Space space = board.getSpace(info[i].getRank(), info[i].getFile());
 			if(space.getPiece() == null) // verify space is empty
-				space.changePiece(factory.makePiece(info[i].getType(), info[i].getColor()), true);
+				space.changePiece(factory.makePiece(info[i].getType(), info[i].getType(), info[i].getColor()), true);
 			else
 				return null;
 		}

@@ -108,6 +108,7 @@ public class Start {
 					// set to next player
 					if(execCard != null && execCard.getCInfo().getTiming() == Timing.After){
 						gs.getCardArea().completeCardExecution(gs);
+						gs.updateContEffects();
 					}
 					
 					if(board.getTurn() == Turn.Player1)

@@ -24,10 +24,6 @@ public class FatalAttraction extends ContEffect {
 		cardName = "Fatal Attraction";
 	}
 	
-	@Override
-	public void initiateImmediateEffect(GameState gs) {
-		// intentionally left empty
-	}
 
 	@Override
 	public synchronized void startContEffect(GameState gs) {

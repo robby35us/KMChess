@@ -24,19 +24,19 @@ public class PlayerSet implements Iterable<Piece>{
 	public PlayerSet(PieceFactory factory, PieceColor color){
 		this.color = color;
 		this.factory = factory;
-		this.king = (King) factory.makePiece(PieceType.King, color);
+		this.king = (King) factory.makePiece(PieceType.King, PieceType.King, color);
 		
 		pieces = new ArrayList<Piece>();
-		pieces.add(factory.makePiece(PieceType.Rook, color));
-		pieces.add(factory.makePiece(PieceType.Knight, color));
-		pieces.add(factory.makePiece(PieceType.Bishop, color));
-		pieces.add(factory.makePiece(PieceType.Queen, color));
+		pieces.add(factory.makePiece(PieceType.Rook, PieceType.Rook, color));
+		pieces.add(factory.makePiece(PieceType.Knight, PieceType.Knight, color));
+		pieces.add(factory.makePiece(PieceType.Bishop, PieceType.Bishop, color));
+		pieces.add(factory.makePiece(PieceType.Queen, PieceType.Queen, color));
 		pieces.add(king);
-		pieces.add(factory.makePiece(PieceType.Bishop, color));
-		pieces.add(factory.makePiece(PieceType.Knight, color));
-		pieces.add(factory.makePiece(PieceType.Rook, color));
+		pieces.add(factory.makePiece(PieceType.Bishop, PieceType.Bishop, color));
+		pieces.add(factory.makePiece(PieceType.Knight, PieceType.Knight, color));
+		pieces.add(factory.makePiece(PieceType.Rook, PieceType.Rook, color));
 		for(int i = 0; i < 8; i++)
-			pieces.add(factory.makePiece(PieceType.Pawn, color));
+			pieces.add(factory.makePiece(PieceType.Pawn, PieceType.Pawn, color));
 	
 		// the king is registered as an observer of each piece
 		setKingObserver(king);
@@ -71,8 +71,8 @@ public class PlayerSet implements Iterable<Piece>{
 	 * adds it to the set. Returns the new Piece
 	 * object.
 	 */
-	public Piece addPiece(PieceType pieceType){
-		Piece newPiece = factory.makePiece(pieceType, color) ;
+	public Piece addPiece(PieceType pieceType, PieceType display){
+		Piece newPiece = factory.makePiece(pieceType, display, color) ;
 		pieces.add(newPiece);
 		return newPiece;
 	}

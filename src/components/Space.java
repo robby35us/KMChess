@@ -23,7 +23,6 @@ import definitions.PieceColor;
 import definitions.Rank;
 import definitions.SpaceColor;
 import definitions.Turn;
-import graphics.ChessImages;
 import graphics.SpaceBorder;
 
 
@@ -148,7 +147,7 @@ public class Space extends Canvas implements MouseListener{
 			if(newPiece != null){
 				piece.setSpace(this);
 				
-				Image img = ChessImages.getImage(piece.getType(), piece.color, this.color);
+				Image img = piece.getImage(this.getColor());
 				setUnarmedImage(img);
 				setArmedImage(img);
 				setOverImage(img);

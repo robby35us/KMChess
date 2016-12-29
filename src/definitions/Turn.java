@@ -18,4 +18,11 @@ public enum Turn {
 		else
 			return PieceColor.Black;
 	}
+	
+	public String toString() {
+		if(this == Player1)
+			return "Player 1";
+		else
+			return "Player 2";
+	}
 }

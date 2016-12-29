@@ -3,7 +3,11 @@ package cardEffects;
 import game.GameState;
 
 public abstract class ContEffect extends CardEffect {
-	
+	@Override
+	//ContEffect classes only need to override as needed
+	public void initiateImmediateEffect(GameState gs) {
+
+	}
 	
 	protected boolean contEffectEnded = false;
 	

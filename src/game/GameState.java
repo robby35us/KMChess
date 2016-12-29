@@ -177,7 +177,7 @@ public class GameState implements ItemListener {
 	public boolean promotePawn(Piece moving, PieceType promotionType) {
 		PieceColor color = moving.getColor();
 		Player player = color == PieceColor.White ? whitePlayer : blackPlayer;
-		Piece newPiece = (factory.makePiece(promotionType, color));
+		Piece newPiece = (factory.makePiece(promotionType, promotionType, color));
 		moving.getSpace().changePiece(newPiece, true);
 		player.losePiece(moving);
 		player.addPiece(newPiece);
@@ -361,6 +361,13 @@ public class GameState implements ItemListener {
 			}
 		}else
 			contEffectsArea.deselect((Integer) arg0.getItem());
-	}		
+	}	
+	
+	public PlayerSet getPlayerSet(Turn turn){
+		if(turn == Turn.Player1)
+			return this.whitePlayer.getPlayerSet();
+		else
+			return this.blackPlayer.getPlayerSet();
+	}
 }
 	

@@ -28,6 +28,7 @@ import definitions.*;
  */
 public class Piece implements PieceSubject, PieceObserver{
 	protected PieceType type;
+	protected PieceType displayType;
 	protected PieceColor color;
 	protected Space space;
 	protected Image whiteImg;
@@ -52,11 +53,12 @@ public class Piece implements PieceSubject, PieceObserver{
 		Piece.gs = gs;
 	}
 	
-	public Piece(PieceType type, PieceColor color){
+	public Piece(PieceType type, PieceType display, PieceColor color){
 		this.type = type;
+		this.displayType = display;
 		this.color = color;
-		this.whiteImg = ChessImages.getImage(this.type, this.color, SpaceColor.White);
-		this.greyImg = ChessImages.getImage(this.type, this.color, SpaceColor.Gray);
+		this.whiteImg = ChessImages.getImage(display, this.color, SpaceColor.White);
+		this.greyImg = ChessImages.getImage(display, this.color, SpaceColor.Gray);
 		moveTypesAndConstraints = new ArrayList<MoveTypeAndConstraints>();
 		kings = new ArrayList<KingObserver>();
 	}
@@ -231,5 +233,17 @@ public class Piece implements PieceSubject, PieceObserver{
 			types.add(mtac.getMoveType());
 		}
 		return types;
+	}
+
+	public void setDisplayType(PieceType type2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Image getImage(SpaceColor color){
+		if(color == SpaceColor.White)
+			return whiteImg;
+		else
+			return greyImg;
 	}
 }
