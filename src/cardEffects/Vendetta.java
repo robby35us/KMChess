@@ -43,7 +43,7 @@ public class Vendetta extends ContEffect {
 	
 	@Override
 	public void startContEffect(GameState gs) {
-		mc = new MustCapture(gs.getBoard());
+		mc = new MustCapture();
 		addMcToAll(gs);
 		resetMovable(gs);
 		/*gs.getBoard().infoBox("Vendetta is an active card. Each player must now" +
@@ -94,13 +94,13 @@ public class Vendetta extends ContEffect {
 		}
 			
 		for(Piece c : current){
-			System.out.println("Checking if " + c.getColor() +  c.getType() + " can attack: ");
+			//System.out.println("Checking if " + c.getColor() +  c.getType() + " can attack: ");
 			for(Piece o: other){
 				System.out.println("\tthe " + o.getColor() + o.getType());
 				ErrorMessage message = new ErrorMessage();
 				if(MoveBuilder.buildMoveObject(c.getSpace(), o.getSpace(), gs, message) != null){
 					movable.add(c);
-					System.out.println("Reset Movable: Adding " + c + " to movable.");
+					//System.out.println("Reset Movable: Adding " + c + " to movable.");
 					break;
 				}
 			}
@@ -109,6 +109,7 @@ public class Vendetta extends ContEffect {
 
 	@Override
 	public boolean endCondMet(GameState gs) {
+		resetMovable(gs);
 		return movable.isEmpty();
 	}
 

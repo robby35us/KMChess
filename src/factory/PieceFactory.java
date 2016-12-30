@@ -34,7 +34,7 @@ public class PieceFactory {
 	public PieceFactory(Board board, GameState gs){
 		if(singleMove == null){
 			singleMove = new SingleMove();
-			mustCapture = new MustCapture(board);
+			mustCapture = new MustCapture();
 			mustMoveAlike = new MustMoveAlike();
 			//mustBeenMoved = new MustBeenMoved();
 			notBeenMoved = new NotBeenMoved();

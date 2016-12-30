@@ -118,6 +118,8 @@ public class Start {
 				
 					
 					if(gs.checkForMate(board.getTurn(), message).hasError()){
+						System.out.println("Checkmate happening");
+						
 						// if checkmate, exits the program, with current player in check
 						break;
 					}

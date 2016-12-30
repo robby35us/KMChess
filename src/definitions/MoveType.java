@@ -1,5 +1,7 @@
 package definitions;
 
+import utility.RankAndFileOffsets;
+
 /*
  * This enum holds the information about the Rank(or row) and File (or Column) 
  * offsets for each move type from the white player's perspective. For each 
@@ -37,5 +39,11 @@ public enum MoveType {
 	 */
 	public int getFileOffset(){
 		return fileOffset;
+	}
+
+	public RankAndFileOffsets times(int times) {
+		System.out.println("MoveType.times called using : " + times);
+		return new RankAndFileOffsets(this.rankOffset * times,
+								 	  this.fileOffset * times);
 	}
 }

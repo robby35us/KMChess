@@ -20,10 +20,10 @@ public class MoveBuilder{
 	 * can be created. NOTE: THERE MAY BE AWAY TO CALL MoveCompositor.compositeMoves() DIRECTLY FROM THIS 
 	 * FUNCTION.
 	 */
-	public static ActualMove buildMoveObject(Space space, MoveType moveType, GameState gs, ErrorMessage message) {
+	public static ActualMove buildMoveObject(Space space, MoveType moveType, int times, GameState gs, ErrorMessage message) {
 		PieceColor color = space.getPiece().getColor();
-		int rankOffset = moveType.getRankOffset();
-		int fileOffset = moveType.getFileOffset();
+		int rankOffset = moveType.times(times).getRankOffset();
+		int fileOffset = moveType.times(times).getFileOffset();
 		
 		// flip offset if the piece is black, except in the case of certain MoveTypes
 		if(moveType != MoveType.KingSideCastle && moveType != MoveType.ReverseKingSideCastle &&

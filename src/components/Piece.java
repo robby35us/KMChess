@@ -6,8 +6,11 @@ import graphics.ChessImages;
 import java.awt.Image;
 import java.util.ArrayList;
 import moves.ActualMove;
+import moves.NonStandard;
 import utility.*;
 import constraints.MoveConstraint;
+import constraints.MustCapture;
+import constraints.SingleMove;
 import definitions.*;
 
 /*
@@ -191,39 +194,74 @@ public class Piece implements PieceSubject, PieceObserver{
 	 */
 	public boolean checkForValidMove() {
 		// for each MoveType that this piece can make
+		System.out.println("In method \"checkForValidMove()\" for " + this.getColor() + " piece " + this.getType()); 
 		for(MoveTypeAndConstraints mAndC : moveTypesAndConstraints){
+			if(mAndC.getMoveType() == MoveType.NonStandard)
+				continue;
+			ArrayList<MoveConstraint> constraints = mAndC.getConstraints();
+			boolean mustCapture = false;
+			boolean notSingleMove = true;
+			for(MoveConstraint c : constraints){
+				if(c.getClass() == MustCapture.class)
+					mustCapture = true;
+				if(c.getClass() == SingleMove.class)
+					notSingleMove = false;
+			}
+			boolean checkDistantSpaces = mustCapture && notSingleMove;
+			System.out.println("CheckDistantSpaces = " + checkDistantSpaces);
 			
+			int times = 1;
+			Space finalDest = ((Board)this.getSpace().getParent())
+								.getNextSpace(mAndC.getMoveType().times(times).getRankOffset(),
+											  mAndC.getMoveType().times(times++).getFileOffset(),
+											  this.getSpace());
+			System.out.println("FinalDest == " + finalDest);
 			// reset message
 			ErrorMessage message = new ErrorMessage();
 			
 			// get the Move object
-			ActualMove move = MoveBuilder.buildMoveObject(space, mAndC.getMoveType(), gs, message);
-			
-			while(move != null && gs.meetsUniversalConstraints(move, 
+			// if checkDistantMoves is true, then check each move past the first one
+			// whether or not the first one was valid
+			ActualMove move;
+			for(; finalDest != null; times++){
+				move = MoveBuilder.buildMoveObject(space, finalDest, gs, message);
+				System.out.println(move);
+				if(move != null && gs.meetsUniversalConstraints(move, 
 					(this.getColor() == PieceColor.White) ? Turn.Player1 : Turn.Player2, 
 							message)){
 				
-				Piece captured = GameState.movePiece(move, false);
+					Piece captured = GameState.movePiece(move, false);
 
-				// check for self-check
-				for(KingObserver k : kings){	
-					// if not self-check, this move is valid
-					if(k.updateKing()){
-					GameState.undoMove(move, captured, false);
+					// check for self-check
+					for(KingObserver k : kings){	
+						// if not self-check, this move is valid
+						if(k.updateKing()){
+							GameState.undoMove(move, captured, false);
 						
-						// we have found a valid move
-						return true;
+							// we have found a valid move
+							System.out.println("found a valid move");
+							return true;
+						}
 					}
+					GameState.undoMove(move, captured, false);
 				}
-				GameState.undoMove(move, captured, false);
-				
-				// repeat the move on top of the last move
 				// NOTE: this code assume only same move combinations!!
-				// also, this code seems to work by accident, it should be changed
-				move = MoveBuilder.buildMoveObject(move, mAndC.getMoveType(), gs, message);
-			}	
+				if(checkDistantSpaces){
+					finalDest = ((Board)this.getSpace().getParent())
+						.getNextSpace(mAndC.getMoveType().times(times).getRankOffset(),
+									  mAndC.getMoveType().times(times).getFileOffset(),
+									  this.space);
+					System.out.println(mAndC.getMoveType().times(times).getRankOffset());
+					System.out.println(mAndC.getMoveType().times(times).getFileOffset());
+					System.out.println("checking distant spaces : times == " + times);
+				}else
+					finalDest = null;
+				System.out.println(finalDest);
+			}
 		}
+	
 		// there are no valid moves for this piece.
+		System.out.println("There are no valid moves for this piece");
 		return false;
 	}
 
@@ -232,14 +270,15 @@ public class Piece implements PieceSubject, PieceObserver{
 		for(MoveTypeAndConstraints mtac: moveTypesAndConstraints){
 			types.add(mtac.getMoveType());
 		}
+		
 		return types;
 	}
-
+/*
 	public void setDisplayType(PieceType type2) {
 		// TODO Auto-generated method stub
 		
 	}
-
+*/
 	public Image getImage(SpaceColor color){
 		if(color == SpaceColor.White)
 			return whiteImg;
