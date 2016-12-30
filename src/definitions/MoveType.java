@@ -42,7 +42,7 @@ public enum MoveType {
 	}
 
 	public RankAndFileOffsets times(int times) {
-		System.out.println("MoveType.times called using : " + times);
+		//System.out.println("MoveType.times called using : " + times);
 		return new RankAndFileOffsets(this.rankOffset * times,
 								 	  this.fileOffset * times);
 	}

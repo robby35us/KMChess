@@ -57,9 +57,7 @@ public class Vendetta extends ContEffect {
 	@Override
 	public void updateContEffect(GameState gs) {
 		addMcToAll(gs);
-		
 		resetMovable(gs);
-		updateHighlighting(gs);
 	}
 
 	public void updateHighlighting(GameState gs){
@@ -70,6 +68,7 @@ public class Vendetta extends ContEffect {
 					s.setArmedBorder(highlight);
 					s.setUnarmedBorder(highlight);
 					s.setButtonState(Space.ARMED);
+					s.repaint();
 				}
 			}
 			ArrayList<Space> unHighlight = new ArrayList<Space>();
@@ -79,23 +78,15 @@ public class Vendetta extends ContEffect {
 					s.setUnarmedBorder(Space.defaultUnarmedBorder);
 					s.setButtonState(Space.UNARMED);
 					unHighlight.add(s);
+					s.repaint();
 				}
 			}
 			for(Space s : unHighlight){
 				highlighted.remove(s);
 			}
-			gs.getBoard().repaint();
 		}
 	}
 	private void resetMovable(GameState gs) {
-		if(movable != null){
-			for(Space s : movable){
-				s.setArmedBorder(Space.defaultArmedBorder);
-				s.setUnarmedBorder(Space.defaultUnarmedBorder);
-				s.setButtonState(Space.UNARMED);
-			}
-			gs.getBoard().repaint();
-		}
 		movable = new ArrayList<Space>();
 		PlayerSet current, other;
 		if(KMCard.CurrentTiming == Timing.Before){
@@ -108,7 +99,7 @@ public class Vendetta extends ContEffect {
 		for(Piece c : current){
 			//System.out.println("Checking if " + c.getColor() +  c.getType() + " can attack: ");
 			for(Piece o: other){
-				System.out.println("\tthe " + o.getColor() + o.getType());
+				//System.out.println("\tthe " + o.getColor() + o.getType());
 				ErrorMessage message = new ErrorMessage();
 				if(MoveBuilder.buildMoveObject(c.getSpace(), o.getSpace(), gs, message) != null){
 					movable.add(c.getSpace());
@@ -122,13 +113,11 @@ public class Vendetta extends ContEffect {
 	@Override
 	public boolean endCondMet(GameState gs) {
 		resetMovable(gs);
-		updateHighlighting(gs);
 		return movable.isEmpty();
 	}
 
 	@Override
 	public void endContEffect(GameState gs) {
-		endHighlightChange(gs);
 		for(Turn turn : Turn.values()){
 			PlayerSet set = gs.getPlayerSet(turn);
 			for(Piece p : set){
@@ -155,8 +144,8 @@ public class Vendetta extends ContEffect {
 			space.setUnarmedBorder(highlight);
 			space.setButtonState(Space.ARMED);
 			highlighted.add(space);
+			space.repaint();
 		}
-		gs.getBoard().repaint();
 		gs.getBoard().infoBox("Vendetta is an active card. Each player must now" +
 				  "\nuse his move to capture one of his opponent's pieces." +
 				  "\nThis effect lasts until one of the players cannot capture" +
@@ -170,9 +159,9 @@ public class Vendetta extends ContEffect {
 			s.setArmedBorder(Space.defaultArmedBorder);
 			s.setUnarmedBorder(Space.defaultUnarmedBorder);
 			s.setButtonState(Space.UNARMED);
+			s.repaint();
 		}
 		highlighted.clear();
-		gs.getBoard().repaint();
 	}
 
 	

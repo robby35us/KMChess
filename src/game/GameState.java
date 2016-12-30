@@ -334,6 +334,8 @@ public class GameState implements ItemListener {
 					ce.endHighlightChange(this);
 				ce.endContEffect(this );
 				removed.add(ce);
+			}else if(ce.getName() == contEffectsArea.getSelectedItem()){
+				ce.updateHighlighting(this);
 			}
 		}
 		for(ContEffect r : removed){
@@ -348,9 +350,15 @@ public class GameState implements ItemListener {
 
 	@Override
 	public void itemStateChanged(ItemEvent arg0) {
+		//System.out.println("Item " + arg0.getItem().toString() + "'s state changed to " + (ItemEvent.SELECTED  == arg0.getStateChange() ? " Selected." : "Deseclected")); 
 		if(contEffects.size() >0){
 			ContEffect ce = contEffects.get((Integer)arg0.getItem());
 			if(!arg0.getItem().equals(contEffectSelected)){
+				for(ContEffect other : contEffects){
+					if(other != ce){
+						other.endHighlightChange(this);
+					}
+				}
 				ce.highlightChange(this);
 				contEffectSelected = (Integer) arg0.getItem();
 			} else {

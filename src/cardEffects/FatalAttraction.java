@@ -194,4 +194,11 @@ public class FatalAttraction extends ContEffect {
 			as.repaint();
 		}
 	}
+
+
+	@Override
+	public void updateHighlighting(GameState gs) {
+		// TODO Auto-generated method stub
+		
+	}
 }

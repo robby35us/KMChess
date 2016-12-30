@@ -193,7 +193,7 @@ public class Piece implements PieceSubject, PieceObserver{
 	 */
 	public boolean checkForValidMove() {
 		// for each MoveType that this piece can make
-		System.out.println("In method \"checkForValidMove()\" for " + this.getColor() + " piece " + this.getType()); 
+		//System.out.println("In method \"checkForValidMove()\" for " + this.getColor() + " piece " + this.getType()); 
 		for(MoveTypeAndConstraints mAndC : moveTypesAndConstraints){
 			if(mAndC.getMoveType() == MoveType.NonStandard)
 				continue;
@@ -207,14 +207,14 @@ public class Piece implements PieceSubject, PieceObserver{
 					notSingleMove = false;
 			}
 			boolean checkDistantSpaces = mustCapture && notSingleMove;
-			System.out.println("CheckDistantSpaces = " + checkDistantSpaces);
+			//System.out.println("CheckDistantSpaces = " + checkDistantSpaces);
 			
 			int times = 1;
 			Space finalDest = ((Board)this.getSpace().getParent())
 								.getNextSpace(mAndC.getMoveType().times(times).getRankOffset(),
 											  mAndC.getMoveType().times(times++).getFileOffset(),
 											  this.getSpace());
-			System.out.println("FinalDest == " + finalDest);
+			//System.out.println("FinalDest == " + finalDest);
 			// reset message
 			ErrorMessage message = new ErrorMessage();
 			
@@ -224,7 +224,7 @@ public class Piece implements PieceSubject, PieceObserver{
 			ActualMove move;
 			for(; finalDest != null; times++){
 				move = MoveBuilder.buildMoveObject(space, finalDest, gs, message);
-				System.out.println(move);
+				//System.out.println(move);
 				if(move != null && gs.meetsUniversalConstraints(move, 
 					(this.getColor() == PieceColor.White) ? Turn.Player1 : Turn.Player2, 
 							message)){
@@ -238,7 +238,7 @@ public class Piece implements PieceSubject, PieceObserver{
 							GameState.undoMove(move, captured, false);
 						
 							// we have found a valid move
-							System.out.println("found a valid move");
+							//System.out.println("found a valid move");
 							return true;
 						}
 					}
@@ -250,17 +250,17 @@ public class Piece implements PieceSubject, PieceObserver{
 						.getNextSpace(mAndC.getMoveType().times(times).getRankOffset(),
 									  mAndC.getMoveType().times(times).getFileOffset(),
 									  this.space);
-					System.out.println(mAndC.getMoveType().times(times).getRankOffset());
-					System.out.println(mAndC.getMoveType().times(times).getFileOffset());
-					System.out.println("checking distant spaces : times == " + times);
+					//System.out.println(mAndC.getMoveType().times(times).getRankOffset());
+					//System.out.println(mAndC.getMoveType().times(times).getFileOffset());
+					//System.out.println("checking distant spaces : times == " + times);
 				}else
 					finalDest = null;
-				System.out.println(finalDest);
+				//System.out.println(finalDest);
 			}
 		}
 	
 		// there are no valid moves for this piece.
-		System.out.println("There are no valid moves for this piece");
+		//System.out.println("There are no valid moves for this piece");
 		return false;
 	}
 
