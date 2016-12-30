@@ -6,7 +6,6 @@ import graphics.ChessImages;
 import java.awt.Image;
 import java.util.ArrayList;
 import moves.ActualMove;
-import moves.NonStandard;
 import utility.*;
 import constraints.MoveConstraint;
 import constraints.MustCapture;
@@ -275,7 +274,6 @@ public class Piece implements PieceSubject, PieceObserver{
 	}
 /*
 	public void setDisplayType(PieceType type2) {
-		// TODO Auto-generated method stub
 		
 	}
 */

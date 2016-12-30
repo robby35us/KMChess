@@ -20,9 +20,10 @@ public class Vendetta extends ContEffect {
 	
 	private MustCapture mc;
 	
-	private ArrayList<Piece> movable;
+	private ArrayList<Space> movable;
 	private ArrayList<Space> highlighted;
 	private SpaceBorder highlight;
+	private boolean	highlightingOn;
 	public Vendetta () {
 		cardName = "Vendetta";
 		highlight  = new SpaceBorder(Color.GREEN);
@@ -58,48 +59,59 @@ public class Vendetta extends ContEffect {
 		addMcToAll(gs);
 		
 		resetMovable(gs);
-		if(!highlighted.isEmpty()){
-			for(Piece p : movable){
-				if(!highlighted.contains(p.getSpace())){
-					highlighted.add(p.getSpace());
-					p.getSpace().setArmedBorder(highlight);
-					p.getSpace().setUnarmedBorder(highlight);
+		updateHighlighting(gs);
+	}
+
+	public void updateHighlighting(GameState gs){
+		if(highlightingOn){
+			for(Space s : movable){
+				if(!highlighted.contains(s)){
+					highlighted.add(s);
+					s.setArmedBorder(highlight);
+					s.setUnarmedBorder(highlight);
+					s.setButtonState(Space.ARMED);
 				}
 			}
 			ArrayList<Space> unHighlight = new ArrayList<Space>();
 			for(Space s : highlighted){
-				if(!movable.contains(s.getPiece())){
+				if(!movable.contains(s)){
 					s.setArmedBorder(Space.defaultArmedBorder);
 					s.setUnarmedBorder(Space.defaultUnarmedBorder);
+					s.setButtonState(Space.UNARMED);
 					unHighlight.add(s);
 				}
 			}
 			for(Space s : unHighlight){
 				highlighted.remove(s);
 			}
+			gs.getBoard().repaint();
 		}
 	}
-
 	private void resetMovable(GameState gs) {
-		movable = new ArrayList<Piece>();
-		PlayerSet current;
-		PlayerSet other;
-		if(KMCard.CurrentTiming != Timing.After){
+		if(movable != null){
+			for(Space s : movable){
+				s.setArmedBorder(Space.defaultArmedBorder);
+				s.setUnarmedBorder(Space.defaultUnarmedBorder);
+				s.setButtonState(Space.UNARMED);
+			}
+			gs.getBoard().repaint();
+		}
+		movable = new ArrayList<Space>();
+		PlayerSet current, other;
+		if(KMCard.CurrentTiming == Timing.Before){
 			current = gs.getPlayerSet(gs.getBoard().getTurn());
 			other = gs.getPlayerSet(gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
-		}
-		else{
-			current = gs.getPlayerSet(gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
+		}else{ 
 			other = gs.getPlayerSet(gs.getBoard().getTurn());
+			current = gs.getPlayerSet(gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
 		}
-			
 		for(Piece c : current){
 			//System.out.println("Checking if " + c.getColor() +  c.getType() + " can attack: ");
 			for(Piece o: other){
 				System.out.println("\tthe " + o.getColor() + o.getType());
 				ErrorMessage message = new ErrorMessage();
 				if(MoveBuilder.buildMoveObject(c.getSpace(), o.getSpace(), gs, message) != null){
-					movable.add(c);
+					movable.add(c.getSpace());
 					//System.out.println("Reset Movable: Adding " + c + " to movable.");
 					break;
 				}
@@ -110,6 +122,7 @@ public class Vendetta extends ContEffect {
 	@Override
 	public boolean endCondMet(GameState gs) {
 		resetMovable(gs);
+		updateHighlighting(gs);
 		return movable.isEmpty();
 	}
 
@@ -126,7 +139,7 @@ public class Vendetta extends ContEffect {
 			}
 		}
 		String player;
-		if(KMCard.CurrentTiming != Timing.After)
+		if(KMCard.CurrentTiming == Timing.Before)
 			player = gs.getBoard().getTurn().toString();
 		else
 			player = gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2.toString() : Turn.Player1.toString();
@@ -135,12 +148,12 @@ public class Vendetta extends ContEffect {
 
 	@Override
 	public void highlightChange(GameState gs) {
-		
+		highlightingOn = true;
 		highlighted = new ArrayList<Space>();
-		for(Piece p: movable){
-			Space space = p.getSpace();
+		for(Space space: movable){
 			space.setArmedBorder(highlight);
 			space.setUnarmedBorder(highlight);
+			space.setButtonState(Space.ARMED);
 			highlighted.add(space);
 		}
 		gs.getBoard().repaint();
@@ -152,11 +165,14 @@ public class Vendetta extends ContEffect {
 
 	@Override
 	public void endHighlightChange(GameState gs) {
+		highlightingOn = false;
 		for(Space s : highlighted){
 			s.setArmedBorder(Space.defaultArmedBorder);
 			s.setUnarmedBorder(Space.defaultUnarmedBorder);
+			s.setButtonState(Space.UNARMED);
 		}
 		highlighted.clear();
+		gs.getBoard().repaint();
 	}
 
 	

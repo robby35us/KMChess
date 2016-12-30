@@ -53,7 +53,7 @@ public class Start {
 			message = new ErrorMessage();
 			//System.out.println("Displaying get move input text");
 			
-			KMCard.CurrentTiming = Timing.Before;
+			
 			// get the input for the next move
 			fw.displayGetMoveInputText(board.getTurn());
 			//System.out.println("Get move input text displayed");
@@ -97,8 +97,8 @@ public class Start {
 				if(!message.hasError()){
 					
 					move.getDestinationSpace().getPiece().setBeenMoved(true);
-					gs.updateContEffects();
 					KMCard.CurrentTiming = Timing.After;
+					gs.updateContEffects();
 					if(execCard == null){
 						gs.getCardArea().activateSkipButton();
 						fw.getAfterExecutingCard();
@@ -108,15 +108,15 @@ public class Start {
 					// set to next player
 					if(execCard != null && execCard.getCInfo().getTiming() == Timing.After){
 						gs.getCardArea().completeCardExecution(gs);
-						gs.updateContEffects();
+						
 					}
 					
 					if(board.getTurn() == Turn.Player1)
 						board.setTurn(Turn.Player2);
 					else
 						board.setTurn(Turn.Player1);
-				
-					
+					KMCard.CurrentTiming = Timing.Before;
+					gs.updateContEffects();
 					if(gs.checkForMate(board.getTurn(), message).hasError()){
 						System.out.println("Checkmate happening");
 						
@@ -144,8 +144,8 @@ public class Start {
 						board.setTurn(Turn.Player2);
 					else
 						board.setTurn(Turn.Player1);
-				
-					
+					KMCard.CurrentTiming = Timing.Before;
+					gs.updateContEffects();
 					if(gs.checkForMate(board.getTurn(), message).hasError()){
 						// if checkmate, exits the program, with current player in check
 						fw.displayMessage(message);
