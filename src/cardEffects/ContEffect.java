@@ -22,4 +22,7 @@ public abstract class ContEffect extends CardEffect {
 
 	abstract public void updateHighlighting(GameState gs);
 	
+	public void initiateImmediateEffect(GameState gs) {
+		//do nothing
+	}
 }

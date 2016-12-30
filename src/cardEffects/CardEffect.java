@@ -10,5 +10,6 @@ public abstract class CardEffect {
 		return cardName;
 	}
 	
-	abstract public boolean initiateImmediateEffect(GameState gs);
+	abstract public void initiateImmediateEffect(GameState gs);
+	abstract public boolean playable(GameState gs);
 }

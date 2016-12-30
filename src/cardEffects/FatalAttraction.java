@@ -204,7 +204,7 @@ public class FatalAttraction extends ContEffect {
 
 
 	@Override
-	public boolean initiateImmediateEffect(GameState gs) {
+	public boolean playable(GameState gs) {
 		// TODO Auto-generated method stub
 		return true;
 	}

@@ -2,6 +2,7 @@ package game;
 
 import java.io.IOException;
 
+import cardEffects.CardEffect;
 import components.Board;
 import moves.ActualMove;
 import utility.ErrorMessage;
@@ -11,6 +12,7 @@ import definitions.IOFramework;
 import definitions.PieceType;
 import definitions.Timing;
 import definitions.Turn;
+import factory.CardEffectFactory;
 //import io.ConsoleIO;
 import knightmare.KMCard;
 
@@ -52,19 +54,24 @@ public class Start {
 				gs.getMessages().add(message);
 			message = new ErrorMessage();
 			//System.out.println("Displaying get move input text");
+			KMCard execCard = null;
+			CardEffect effect = null;
 			
-			
-			// get the input for the next move
-			fw.displayGetMoveInputText(board.getTurn());
-			//System.out.println("Get move input text displayed");
-			moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);
-			KMCard execCard = fw.getExecutingCard();
+			do{
+				// get the input for the next move
+				fw.displayGetMoveInputText(board.getTurn());
+				//System.out.println("Get move input text displayed");
+				moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);
+				execCard = fw.getExecutingCard();
+				if(execCard != null)
+					effect = CardEffectFactory.getCEffect(execCard.getCInfo().getSetNumber(),
+						  execCard.getCInfo().getCardNum());
+			}while(execCard != null && !effect.playable(gs));
 			if(execCard != null && (execCard.getCInfo().getTiming() == Timing.Before ||
 			   execCard.getCInfo().getTiming() == Timing.BeforeOrAfter)){
 				gs.getCardArea().completeCardExecution(gs);
 				gs.updateContEffects();
-				moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);
-				
+				moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);					
 			}
 			// build the given move, if possible 
 			if(moveInput != null) {
@@ -100,9 +107,14 @@ public class Start {
 					KMCard.CurrentTiming = Timing.After;
 					gs.updateContEffects();
 					if(execCard == null){
-						gs.getCardArea().activateSkipButton();
-						fw.getAfterExecutingCard();
-						execCard = fw.getExecutingCard();
+						do{
+							gs.getCardArea().activateSkipButton();
+							fw.getAfterExecutingCard();
+							execCard = fw.getExecutingCard();
+							if(execCard != null)
+								effect = CardEffectFactory.getCEffect(execCard.getCInfo().getSetNumber(),
+									  execCard.getCInfo().getCardNum());
+						}while(execCard != null && !effect.playable(gs));
 						gs.getCardArea().resetNoCardButton();
 					}
 					// set to next player
@@ -157,8 +169,6 @@ public class Start {
 			if(message.hasError())
 				fw.displayMessage(message);
 		}while(true); // cycles until the game ends or is ended
-		
-		
 		return message;
 	}
 

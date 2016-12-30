@@ -15,30 +15,7 @@ import utility.ErrorMessage;
 public class Cathedral extends CardEffect {
 
 	@Override
-	public boolean initiateImmediateEffect(GameState gs) {
-		
-		PlayerSet set = gs.getPlayerSet(gs.getBoard().getTurn());
-		ArrayList<Piece> rooks = set.getPieces(PieceType.Rook);
-		ArrayList<Piece> bishops = set.getPieces(PieceType.Bishop);
-		
-		boolean hasSwapableRook = false;
-		for(Piece r : rooks){
-			if(MoveBuilder.buildMoveObject(r.getSpace(), MoveType.NonStandard, 1, gs, new ErrorMessage())!= null){
-				hasSwapableRook = true;
-				break;
-			}
-		}
-		if(!hasSwapableRook)
-			return false;
-		boolean hasSwapableBishop = false;
-		for(Piece b : bishops){
-			if(MoveBuilder.buildMoveObject(b.getSpace(), MoveType.NonStandard, 1, gs, new ErrorMessage())!= null){
-				hasSwapableBishop = true;
-				break;
-			}
-		}
-		if(!hasSwapableBishop)
-			return false;
+	public void initiateImmediateEffect(GameState gs) {
 		
 		Board board = gs.getBoard();
 		board.setStartSpace(null);
@@ -77,7 +54,31 @@ public class Cathedral extends CardEffect {
 		board.getStartSpace().changePiece(bishop, true);
 		board.getEndSpace().changePiece(rook, true);
 		board.repaint();
-		return true;
 	}
 
+	public boolean playable(GameState gs){
+		PlayerSet set = gs.getPlayerSet(gs.getBoard().getTurn());
+		ArrayList<Piece> rooks = set.getPieces(PieceType.Rook);
+		ArrayList<Piece> bishops = set.getPieces(PieceType.Bishop);
+	
+		boolean hasSwapableRook = false;
+		for(Piece r : rooks){
+			if(MoveBuilder.buildMoveObject(r.getSpace(), MoveType.NonStandard, 1, gs, new ErrorMessage())!= null){
+				hasSwapableRook = true;
+				break;
+			}
+		}
+		if(!hasSwapableRook)
+			return false;
+		boolean hasSwapableBishop = false;
+		for(Piece b : bishops){
+			if(MoveBuilder.buildMoveObject(b.getSpace(), MoveType.NonStandard, 1, gs, new ErrorMessage())!= null){
+				hasSwapableBishop = true;
+				break;
+			}
+		}
+		if(!hasSwapableBishop)
+			return false;
+		return true;
+	}
 }
