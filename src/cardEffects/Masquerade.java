@@ -21,7 +21,7 @@ public class Masquerade extends CardEffect {
 	}
 	
 	@Override
-	public void initiateImmediateEffect(GameState gs) {
+	public boolean initiateImmediateEffect(GameState gs) {
 		Board board = gs.getBoard();	
 		ErrorMessage message = new ErrorMessage();
 		Space startSpace = null;
@@ -83,6 +83,7 @@ public class Masquerade extends CardEffect {
 		
 		startSpace.changePiece(null, true);
 		board.getEndSpace().changePiece(selected, true);
+		return true;
 	}	
 
 }

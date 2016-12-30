@@ -13,12 +13,14 @@ import definitions.PieceColor;
  */
 public class Player {
 	PieceColor color;
-	PlayerSet set;
+	PlayerSet aliveSet;
+	PlayerSet capturedSet;
 	private King opposingKing;
 	
 	public Player(PlayerSet set, PieceColor color, King opposingKing){
 		this.color = color;
-		this.set = set;
+		this.aliveSet = set;
+		this.capturedSet = new PlayerSet(color);
 		this.opposingKing = opposingKing;
 		
 		// All pieces register with the OpposingKing as an
@@ -45,8 +47,9 @@ public class Player {
 	 */
 	public void addPiece(Piece piece) {
 		opposingKing.registerOpposingPieceObserver(piece);
-		piece.registerKingObserver(set.getKing());
-		set.addPiece(piece);
+		piece.registerKingObserver(aliveSet.getKing());
+		aliveSet.addPiece(piece);
+		capturedSet.removePiece(piece);
 	}
 	
 	/*
@@ -58,8 +61,9 @@ public class Player {
 	 */
 	public boolean losePiece(Piece piece){
 		opposingKing.removeOpposingPieceObserver(piece);
-		piece.removeKingObserver(set.getKing());
-		return set.removePiece(piece);
+		piece.removeKingObserver(aliveSet.getKing());
+		capturedSet.addPiece(piece);
+		return aliveSet.removePiece(piece);
 	}
 	
 	/*
@@ -71,7 +75,7 @@ public class Player {
 	 */
 	public void checkForMate(ErrorMessage message) {
 		boolean isMate = true;
-		for(Piece p : set){
+		for(Piece p : aliveSet){
 			if(p.checkForValidMove()){
 				// if this is piece has a valid move, then it's not check mate
 				isMate = false;
@@ -83,7 +87,10 @@ public class Player {
 	}
 	
 	public PlayerSet getPlayerSet(){
-		return set;
-		
+		return aliveSet;
+	}
+	
+	public PlayerSet getCapturedSet(){
+		return capturedSet;
 	}
 }

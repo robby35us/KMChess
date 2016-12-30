@@ -42,6 +42,12 @@ public class PlayerSet implements Iterable<Piece>{
 		setKingObserver(king);
 	}
 
+	public PlayerSet(PieceColor color) {
+		this.color = color;
+		this.king = null;
+		pieces = new ArrayList<Piece>();
+	}
+
 	/*
 	 * Registers the given king as an observer for each
 	 * piece in the set.
@@ -101,6 +107,15 @@ public class PlayerSet implements Iterable<Piece>{
 
 	public King getKing() {
 		return king;
+	}
+
+	public ArrayList<Piece> getPieces(PieceType type) {
+		ArrayList<Piece> subset = new ArrayList<Piece>();
+		for(Piece p: pieces){
+			if(p.getType() == type)
+				subset.add(p);
+		}
+		return subset;
 	}
 
 

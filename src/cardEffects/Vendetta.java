@@ -164,6 +164,11 @@ public class Vendetta extends ContEffect {
 		highlighted.clear();
 	}
 
+	@Override
+	public boolean initiateImmediateEffect(GameState gs) {
+		return true;
+	}
+
 	
 
 }

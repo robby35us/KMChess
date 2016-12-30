@@ -10,5 +10,5 @@ public abstract class CardEffect {
 		return cardName;
 	}
 	
-	abstract public void initiateImmediateEffect(GameState gs);
+	abstract public boolean initiateImmediateEffect(GameState gs);
 }
