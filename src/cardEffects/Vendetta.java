@@ -34,7 +34,7 @@ public class Vendetta extends ContEffect {
 			for(Piece p : set){
 				ArrayList<MoveType> mts = p.getMoveTypes();
 				for(MoveType mt : mts){
-					if(!p.getConstraints(mt).contains(mc))
+					if(mt != MoveType.NonStandard && !p.getConstraints(mt).contains(mc))
 						p.getConstraints(mt).add(mc);
 				}
 			}
