@@ -281,9 +281,9 @@ public class KMCard extends Canvas implements MouseListener{
 		if(activeCard != null){
 			activeCard.setButtonState(UNARMED);		
 			if(activeCard == this){
-				if((CurrentTiming != Timing.After && activeCard.getCInfo().getTiming() != Timing.After) ||
-				   (CurrentTiming == Timing.After && (activeCard.getCInfo().getTiming() == Timing.After ||
-						   							  activeCard.getCInfo().getTiming() == Timing.BeforeOrAfter)))
+				//if((CurrentTiming != Timing.After && activeCard.getCInfo().getTiming() != Timing.After) ||
+				//   (CurrentTiming == Timing.After && (activeCard.getCInfo().getTiming() == Timing.After ||
+				//		   							  activeCard.getCInfo().getTiming() == Timing.BeforeOrAfter)))
 					((CardArea) this.getParent().getParent().getParent()).setExecutingCard(this);
 				activeCard = null;
 				return;

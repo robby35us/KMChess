@@ -56,17 +56,24 @@ public class Start {
 			//System.out.println("Displaying get move input text");
 			KMCard execCard = null;
 			CardEffect effect = null;
-			
+			boolean playable = true;
 			do{
+				if(!playable){
+					gs.getBoard().infoBox("You cannot play " + execCard.getCInfo().getName() + " at this time.", "Choose another option");
+					gs.getCardArea().setExecutingCard(null);
+				}
 				// get the input for the next move
 				fw.displayGetMoveInputText(board.getTurn());
 				//System.out.println("Get move input text displayed");
 				moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);
 				execCard = fw.getExecutingCard();
-				if(execCard != null)
+				if(execCard != null){
 					effect = CardEffectFactory.getCEffect(execCard.getCInfo().getSetNumber(),
 						  execCard.getCInfo().getCardNum());
-			}while(execCard != null && !effect.playable(gs));
+					playable = effect != null && effect.playable(gs) &&
+							execCard.getCInfo().getTiming() != Timing.After;
+				}
+			}while(execCard != null && !playable);
 			if(execCard != null && (execCard.getCInfo().getTiming() == Timing.Before ||
 			   execCard.getCInfo().getTiming() == Timing.BeforeOrAfter)){
 				gs.getCardArea().completeCardExecution(gs);
@@ -107,14 +114,23 @@ public class Start {
 					KMCard.CurrentTiming = Timing.After;
 					gs.updateContEffects();
 					if(execCard == null){
+						playable = true;
 						do{
+							if(!playable){
+								gs.getBoard().infoBox("You cannot play " + execCard.getCInfo().getName() + " at this time. \nPlease choose another option.", "Choose another option!");
+								gs.getCardArea().setExecutingCard(null);
+							}
 							gs.getCardArea().activateSkipButton();
 							fw.getAfterExecutingCard();
 							execCard = fw.getExecutingCard();
-							if(execCard != null)
+							if(execCard != null){
 								effect = CardEffectFactory.getCEffect(execCard.getCInfo().getSetNumber(),
 									  execCard.getCInfo().getCardNum());
-						}while(execCard != null && !effect.playable(gs));
+								playable = effect != null && effect.playable(gs) && 
+											(execCard.getCInfo().getTiming() == Timing.After ||
+											 execCard.getCInfo().getTiming() == Timing.BeforeOrAfter);
+							}
+						}while(execCard != null && !playable);
 						gs.getCardArea().resetNoCardButton();
 					}
 					// set to next player
