@@ -124,22 +124,19 @@ public class Fatal_Attraction extends ContEffect {
 
 	@Override
 	public void endContEffect(GameState gs) {
-		if(!contEffectEnded){
-			ArrayList<Piece> adjacent = getAdjacentPieces();
-			for( Piece p : adjacent){
-				ArrayList<MoveType> types = p.getMoveTypes();
-				if(p.getType() == PieceType.King)
-					continue;
-				for(MoveType type : types){
-					p.getConstraints(type).remove(disabled);
-				}
+		ArrayList<Piece> adjacent = getAdjacentPieces();
+		for( Piece p : adjacent){
+			ArrayList<MoveType> types = p.getMoveTypes();
+			if(p.getType() == PieceType.King)
+				continue;
+			for(MoveType type : types){
+				p.getConstraints(type).remove(disabled);
 			}
-			gs.getBoard().infoBox("The magnet at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
-							  " has been moved or captured." +
-							  "\nThe pieces in the eight adjacent spaces are now freed."
-							  , getName());
-		}	
-		contEffectEnded = true;
+		}
+		gs.getBoard().infoBox("The magnet at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
+						  " has been moved or captured." +
+						  "\nThe pieces in the adjacent spaces are now freed."
+						  , getName());
 	}
 
 	@Override
