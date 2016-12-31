@@ -16,9 +16,6 @@ import utility.ErrorMessage;
 
 public class Masquerade extends CardEffect {
 
-	public Masquerade () {
-		cardName = "Masquerade";
-	}
 	
 	@Override
 	public void initiateImmediateEffect(GameState gs) {
@@ -28,8 +25,8 @@ public class Masquerade extends CardEffect {
 		Piece selected = null;
 		do{
 			if(message.hasError())
-				board.infoBox(message.toString(), cardName);
-			board.infoBox("Select a piece (not a pawn) to move as if it were a queen.", cardName);
+				board.infoBox(message.toString(), getName());
+			board.infoBox("Select a piece (not a pawn) to move as if it were a queen.", getName());
 			if(startSpace != null){
 				startSpace.changePiece(selected, true);
 			}
@@ -57,11 +54,11 @@ public class Masquerade extends CardEffect {
 			message = new ErrorMessage();
 			board.infoBox("Now choose a space to move the selected " +
 					  selected.getType() + " to." +
-					  "\nThis move cannot make a capture.", cardName);
+					  "\nThis move cannot make a capture.", getName());
 			while(board.getEndSpace() == null || 
 				  board.getEndSpace().getPiece() != null){
 				if(board.getEndSpace() != null && board.getEndSpace().getPiece() != null){ 
-					board.infoBox("This move cannot make a capture. Try again!", cardName);
+					board.infoBox("This move cannot make a capture. Try again!", getName());
 					board.setEndSpace(null);
 					board.setStartSpace(null);
 				}

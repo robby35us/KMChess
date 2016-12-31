@@ -45,7 +45,7 @@ public class CardInfoFactory {
 				return new KMCardInfo(set,cardNum, "Masquerade", effect, 5, timing, continuous);
 			
 			case 4: 
-				effect = "\tEach player must npw use his move"
+				effect = "\tEach player must now use his move"
 					+ "\nto capture one of his opponent's pieces, if he"
 					+ "\ncan do so. This effects lasts until one of"
 					+ "\nthe players cannot make a capture. You"
@@ -74,7 +74,7 @@ public class CardInfoFactory {
 					+ "\na forward move, this card lets ift capture"
 					+ "\nwith a diagonal move instead.";
 				timing = Timing.Instead;
-				return new KMCardInfo(set,cardNum, "Breakthourh", effect, 6, timing, continuous);
+				return new KMCardInfo(set,cardNum, "Breakthrough", effect, 6, timing, continuous);
 			case 7: return new KMCardInfo(set,cardNum, "Mystic Shield", effect, 0, timing, continuous);
 			case 8: return new KMCardInfo(set,cardNum, "Treason", effect, 0, timing, continuous);
 			case 9: return new KMCardInfo(set,cardNum, "Hostage", effect, 0, timing, continuous);

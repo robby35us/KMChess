@@ -14,21 +14,17 @@ import definitions.Rank;
 import game.GameState;
 import graphics.SpaceBorder;
 
-public class FatalAttraction extends ContEffect {
+public class Fatal_Attraction extends ContEffect {
 
 	private Piece magnet;
 	private Space magnetSpace;
 	private DisabledMove disabled;
 	
-	public FatalAttraction(){
-		cardName = "Fatal Attraction";
-	}
-	
 
 	@Override
 	public synchronized void startContEffect(GameState gs) {
 		Board board = gs.getBoard();
-		board.infoBox("Select a piece to become a magnet!", cardName);
+		board.infoBox("Select a piece to become a magnet!", getName());
 		board.setStartSpace(null);
 		board.setEndSpace(null);
 		while(board.getStartSpace() == null){
@@ -141,7 +137,7 @@ public class FatalAttraction extends ContEffect {
 			gs.getBoard().infoBox("The magnet at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
 							  " has been moved or captured." +
 							  "\nThe pieces in the eight adjacent spaces are now freed."
-							  , cardName);
+							  , getName());
 		}	
 		contEffectEnded = true;
 	}
@@ -169,7 +165,7 @@ public class FatalAttraction extends ContEffect {
 		gs.getBoard().infoBox("The " + magnet.getType() + " at the red space " + 
 							  "\n" + magnetSpace.getFile() + 
 							  magnetSpace.getRank() + " is the magenet."
-							  , cardName);
+							  , getName());
 		ArrayList<Space> adjacentSpaces = getAdjacentSpaces();
 		SpaceBorder adjacentBorder = new SpaceBorder(Color.YELLOW);
 		for(Space as: adjacentSpaces){
@@ -179,7 +175,7 @@ public class FatalAttraction extends ContEffect {
 		}
 		gs.getBoard().infoBox("The pieces in the adjacent yellow spaces " +
 							   "\n(except for kings) are stuck until the " + 
-							   "\nmagnet moves or is captured.", cardName);
+							   "\nmagnet moves or is captured.", getName());
 	}
 
 	@Override
@@ -205,7 +201,6 @@ public class FatalAttraction extends ContEffect {
 
 	@Override
 	public boolean playable(GameState gs) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 }

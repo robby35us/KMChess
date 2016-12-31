@@ -25,7 +25,6 @@ public class Vendetta extends ContEffect {
 	private SpaceBorder highlight;
 	private boolean	highlightingOn;
 	public Vendetta () {
-		cardName = "Vendetta";
 		highlight  = new SpaceBorder(Color.GREEN);
 	}
 
@@ -132,7 +131,7 @@ public class Vendetta extends ContEffect {
 			player = gs.getBoard().getTurn().toString();
 		else
 			player = gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2.toString() : Turn.Player1.toString();
-		gs.getBoard().infoBox(player + " is not able to make a capture. Vendetta is no longer in affect.", cardName);
+		gs.getBoard().infoBox(player + " is not able to make a capture. Vendetta is no longer in affect.", getName());
 	}
 
 	@Override
@@ -149,7 +148,7 @@ public class Vendetta extends ContEffect {
 		gs.getBoard().infoBox("Vendetta is an active card. Each player must now" +
 				  "\nuse his move to capture one of his opponent's pieces." +
 				  "\nThis effect lasts until one of the players cannot capture" +
-				  "\nwithout the use of a card.", cardName);
+				  "\nwithout the use of a card.", getName());
 	}
 
 	@Override

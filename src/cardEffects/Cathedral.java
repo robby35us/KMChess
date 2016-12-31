@@ -22,7 +22,7 @@ public class Cathedral extends CardEffect {
 		board.setEndSpace(null);
 		do{
 			board.setStartSpace(null);
-			board.infoBox("Select one of your Rooks.", cardName);
+			board.infoBox("Select one of your Rooks.", getName());
 			while(board.getStartSpace() == null){
 				try {
 					Thread.sleep(100);
@@ -36,7 +36,7 @@ public class Cathedral extends CardEffect {
 			   board.getStartSpace().getPiece().getConstraints(MoveType.NonStandard).contains(DisabledMove.disabled));
 		do{
 			board.setEndSpace(null);
-			board.infoBox("Now select a bishop to trade it with!", cardName);
+			board.infoBox("Now select a bishop to trade it with!", getName());
 			while(board.getEndSpace() == null){
 				try {
 					Thread.sleep(100);
