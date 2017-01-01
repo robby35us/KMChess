@@ -11,17 +11,19 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-import cardEffects.ContEffect;
-import utility.ErrorMessage;
-import components.*;
-import definitions.*;
-import factory.PieceFactory;
-import graphics.CInfoArea;
-import graphics.CardArea;
-import graphics.MessageBox;
-import graphics.SelectedCardArea;
-import moves.*;
-import knightmare.KMDeck;
+import abstractClasses.ActualMove;
+import abstractClasses.ContEffect;
+import cards.KMDeck;
+import enums.*;
+import gameComponents.*;
+import guiComponent.CInfoArea;
+import guiComponent.CardArea;
+import guiComponent.MessageBox;
+import guiComponent.SelectedCardArea;
+import pieces.Piece;
+import pieces.PieceFactory;
+import standardMoves.*;
+import utilityContainers.ErrorMessage;
 
 /*
  * As advertised, this class keeps track of the game state. It holds
@@ -118,7 +120,7 @@ public class GameState implements ItemListener {
 		whitePlayer = new Player(sets[0], PieceColor.White, sets[1].getKing());
 		blackPlayer = new Player(sets[1], PieceColor.Black, sets[0].getKing());
 		
-		Setup.setupChessBoard(sets[0], sets[1], board);
+		BoardSetup.setupChessBoard(sets[0], sets[1], board);
 	}
 
 	/*

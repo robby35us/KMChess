@@ -1,10 +1,10 @@
 package constraints;
-import components.Board;
-import components.Piece;
-import components.Space;
-
-import moves.ActualMove;
-import moves.Move;
+import abstractClasses.ActualMove;
+import abstractClasses.Move;
+import gameComponents.Board;
+import gameComponents.Space;
+import interfaces.MoveConstraint;
+import pieces.Piece;
 
 /*
  * Verifies that a the move will not result in a capture.

@@ -3,11 +3,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import java.util.ArrayList;
-import components.Board;
-import components.Space;
-import definitions.File;
-import definitions.Rank;
-import definitions.SpaceColor;
+
+import enums.File;
+import enums.Rank;
+import enums.SpaceColor;
+import gameComponents.Board;
+import gameComponents.Space;
 
 @SuppressWarnings("unused")
 public class SpaceTest{

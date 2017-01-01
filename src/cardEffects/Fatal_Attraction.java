@@ -3,16 +3,17 @@ package cardEffects;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import components.Board;
-import components.Piece;
-import components.Space;
+import abstractClasses.ContEffect;
 import constraints.DisabledMove;
-import definitions.File;
-import definitions.MoveType;
-import definitions.PieceType;
-import definitions.Rank;
+import enums.File;
+import enums.MoveType;
+import enums.PieceType;
+import enums.Rank;
 import game.GameState;
+import gameComponents.Board;
+import gameComponents.Space;
 import graphics.SpaceBorder;
+import pieces.Piece;
 
 public class Fatal_Attraction extends ContEffect {
 
@@ -191,8 +192,7 @@ public class Fatal_Attraction extends ContEffect {
 
 	@Override
 	public void updateHighlighting(GameState gs) {
-		// TODO Auto-generated method stub
-		
+		//intentionally left blank
 	}
 
 

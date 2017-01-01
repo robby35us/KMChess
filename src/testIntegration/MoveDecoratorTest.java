@@ -1,11 +1,12 @@
 package testIntegration;
-import moves.Move;
 import test.TestUtility;
 
 import org.junit.Test;
-import definitions.PieceColor;
-import definitions.MoveType;
-import factory.MoveFactory;
+
+import abstractClasses.Move;
+import enums.MoveType;
+import enums.PieceColor;
+import standardMoves.MoveFactory;
 
 
 public class MoveDecoratorTest {

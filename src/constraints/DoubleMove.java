@@ -1,6 +1,7 @@
 package constraints;
-import moves.ActualMove;
-import moves.Move;
+import abstractClasses.ActualMove;
+import abstractClasses.Move;
+import interfaces.MoveConstraint;
 
 // NOTE: This constraint does not currently guarantee that
 // two moves were made. Changes need to be made to 

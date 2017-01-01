@@ -3,18 +3,19 @@ package cardEffects;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import components.Piece;
-import components.PlayerSet;
-import components.Space;
+import abstractClasses.ContEffect;
+import cards.KMCard;
 import constraints.MustCapture;
-import definitions.MoveType;
-import definitions.Timing;
-import definitions.Turn;
+import enums.MoveType;
+import enums.Timing;
+import enums.Turn;
 import game.GameState;
 import game.MoveBuilder;
+import gameComponents.PlayerSet;
+import gameComponents.Space;
 import graphics.SpaceBorder;
-import knightmare.KMCard;
-import utility.ErrorMessage;
+import pieces.Piece;
+import utilityContainers.ErrorMessage;
 
 public class Vendetta extends ContEffect {
 	

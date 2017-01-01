@@ -1,8 +1,12 @@
 package constraints;
-import moves.*;
-import components.*;
-import definitions.*;
+import abstractClasses.ActualMove;
+import abstractClasses.Move;
+import enums.*;
 import game.GameState;
+import gameComponents.*;
+import interfaces.MoveConstraint;
+import pieces.Piece;
+import standardMoves.*;
 
 /*
  * Verifies that a piece(pawn) can move En Passant to the Left

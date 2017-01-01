@@ -2,15 +2,16 @@ package cardEffects;
 
 import java.util.ArrayList;
 
-import components.Board;
-import components.Piece;
-import components.PlayerSet;
+import abstractClasses.CardEffect;
 import constraints.DisabledMove;
-import definitions.MoveType;
-import definitions.PieceType;
+import enums.MoveType;
+import enums.PieceType;
 import game.GameState;
 import game.MoveBuilder;
-import utility.ErrorMessage;
+import gameComponents.Board;
+import gameComponents.PlayerSet;
+import pieces.Piece;
+import utilityContainers.ErrorMessage;
 
 public class Cathedral extends CardEffect {
 

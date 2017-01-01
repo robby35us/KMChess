@@ -2,17 +2,18 @@ package cardEffects;
 
 import java.util.ArrayList;
 
-import components.Board;
-import components.Piece;
-import components.Space;
+import abstractClasses.CardEffect;
 import constraints.CannotCapture;
-import constraints.MoveConstraint;
-import definitions.MoveType;
-import definitions.PieceType;
-import factory.PieceFactory;
+import enums.MoveType;
+import enums.PieceType;
 import game.GameState;
 import game.MoveBuilder;
-import utility.ErrorMessage;
+import gameComponents.Board;
+import gameComponents.Space;
+import interfaces.MoveConstraint;
+import pieces.Piece;
+import pieces.PieceFactory;
+import utilityContainers.ErrorMessage;
 
 public class Masquerade extends CardEffect {
 

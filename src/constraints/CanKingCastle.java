@@ -1,9 +1,11 @@
 package constraints;
-import components.King;
-import components.Piece;
-import components.Space;
-import definitions.PieceType;
-import moves.*;
+import abstractClasses.ActualMove;
+import abstractClasses.Move;
+import enums.PieceType;
+import gameComponents.Space;
+import interfaces.MoveConstraint;
+import pieces.King;
+import pieces.Piece;
 
 /*
  * Verifies that the piece(king) can castle to the king side of the board.

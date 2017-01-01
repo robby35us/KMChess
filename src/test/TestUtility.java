@@ -1,17 +1,17 @@
 package test;
-import moves.Move;
 import testIntegration.PieceInfo;
 
 import org.junit.Assert;
 
-import components.Board;
-import components.Piece;
-import components.Space;
-import definitions.PieceColor;
-import definitions.File;
-import definitions.Rank;
-import factory.PieceFactory;
+import abstractClasses.Move;
+import enums.File;
+import enums.PieceColor;
+import enums.Rank;
 import game.GameState;
+import gameComponents.Board;
+import gameComponents.Space;
+import pieces.Piece;
+import pieces.PieceFactory;
 
 public class TestUtility {
 	

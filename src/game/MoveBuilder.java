@@ -1,9 +1,14 @@
 package game;
-import moves.*;
-import utility.ErrorMessage;
-import components.*;
-import definitions.*;
-import factory.MoveFactory;
+import java.util.ArrayList;
+
+import abstractClasses.ActualMove;
+import abstractClasses.Move;
+import enums.*;
+import gameComponents.*;
+import interfaces.MoveConstraint;
+import pieces.Piece;
+import standardMoves.*;
+import utilityContainers.ErrorMessage;
 
 /*
  * This class is used to construct complete, fully wrapped, move objects
@@ -17,7 +22,7 @@ public class MoveBuilder{
 	 * Takes an Space object, the moveType of the move to create, the GameState object for this game,
 	 * and an ErrorMessage for returning error results. Returns a new ActualMove of the given type 
 	 * initiated from the given space. Returns null if there is no Piece to move or if no legal move
-	 * can be created. NOTE: THERE MAY BE AWAY TO CALL MoveCompositor.compositeMoves() DIRECTLY FROM THIS 
+	 * can be created. NOTE: THERE MAY BE AWAY TO CALLcompositeMoves() DIRECTLY FROM THIS 
 	 * FUNCTION.
 	 */
 	public static ActualMove buildMoveObject(Space space, MoveType moveType, int times, GameState gs, ErrorMessage message) {
@@ -34,7 +39,7 @@ public class MoveBuilder{
 		}
 		
 		/* should be able to run this code, but can't for some reason */
-		//return MoveCompositor.compositeMoves(new Touch(space), MoveFactory.makeMoveObject(moveType, color), message);
+		//returncompositeMoves(new Touch(space), MoveFactory.makeMoveObject(moveType, color), message);
 		
 		/* The less efficient version */
 		Space destination = gs.getBoard().getNextSpace(rankOffset, fileOffset, space);
@@ -59,7 +64,7 @@ public class MoveBuilder{
 	 * Takes an ActualMoveObject, the moveType of the move to create, the GameState object for this game,
 	 * and an ErrorMessage for returning error results. Returns a new ActualMove of the given type and wraps 
 	 * it around the given ActualMove. Returns null if there is no Piece to move or if no legal move
-	 * can be created. NOTE: THERE MAY BE AWAY TO CALL MoveCompositor.compositeMoves() DIRECTLY FROM THIS 
+	 * can be created. NOTE: THERE MAY BE AWAY TO CALLcompositeMoves() DIRECTLY FROM THIS 
 	 * FUNCTION, BUT WHEN I TRIED IT THE CODE BROKE. SO, I CHANGED IT BACK.
 	 */
 	public static ActualMove buildMoveObject(ActualMove move, MoveType moveType, GameState gs, ErrorMessage message) {
@@ -103,7 +108,7 @@ public class MoveBuilder{
 		}
 		// To support the NonStandard move type
 		if(move.getClass() == Touch.class)
-			move = MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.NonStandard, pieceToMove.getColor()), message);
+			move =compositeMoves(move, MoveFactory.makeMoveObject(MoveType.NonStandard, pieceToMove.getColor()), message);
 		
 		return (ActualMove) move;
 	}
@@ -152,27 +157,27 @@ public class MoveBuilder{
 		}
 		if(rankOffset == 2) // 2 spaces forward
 			if(fileOffset == 1) // 1 space right
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LForwardRight, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LForwardRight, pieceColor), message);
 			else if(fileOffset == -1) // 1 space left
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LForwardLeft, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LForwardLeft, pieceColor), message);
 		
 		if(rankOffset == -2) // 2 spaces back
 			if(fileOffset == 1) // 1 space right
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LBackwardRight, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LBackwardRight, pieceColor), message);
 			else if(fileOffset == -1) // 1 space left
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LBackwardLeft, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LBackwardLeft, pieceColor), message);
 		
 		if(fileOffset == 2) // 2 spaces right
 			if(rankOffset == 1) // 1 space forward
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LRightForward, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LRightForward, pieceColor), message);
 			else if(rankOffset == -1) // 1 space back
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LRightBackward, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LRightBackward, pieceColor), message);
 			
 		if(fileOffset == -2) // 2 spaces left
 			if(rankOffset == 1) // 1 space forward
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LLeftForward, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LLeftForward, pieceColor), message);
 			else if(rankOffset == -1) // 1 space back
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LLeftBackward, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.LLeftBackward, pieceColor), message);
 		
 		// not an L-shaped move
 		return null;
@@ -203,9 +208,9 @@ public class MoveBuilder{
 						&& right.getColor() != move.getInitialSpace().getPiece().getColor()
 						&& (color == PieceColor.White && move.getInitialSpace().getRank() == Rank.Five ||
 							color == PieceColor.Black && move.getInitialSpace().getRank() == Rank.Four))
-					return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.EnPassantRight, pieceColor), message);
+					return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.EnPassantRight, pieceColor), message);
 				else
-					return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ForwardRight, pieceColor), message);
+					return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ForwardRight, pieceColor), message);
 			}else {// fileOffset < 0, left
 				Piece left;
 				PieceColor color = move.getInitialSpace().getPiece().getColor();
@@ -219,14 +224,14 @@ public class MoveBuilder{
 						&& (color == PieceColor.White && move.getInitialSpace().getRank() == Rank.Five ||
 							color == PieceColor.Black && move.getInitialSpace().getRank() == Rank.Four)
 						)
-					return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.EnPassantLeft, pieceColor), message);
+					return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.EnPassantLeft, pieceColor), message);
 				else
-					return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ForwardLeft, pieceColor), message);
+					return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ForwardLeft, pieceColor), message);
 		}else // rankOffset < 0, back
 			if(fileOffset > 0) // right
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.BackwardRight, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.BackwardRight, pieceColor), message);
 			else // fileOffset < 0, left 
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.BackwardLeft, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.BackwardLeft, pieceColor), message);
 	}
 
 	/*
@@ -247,11 +252,11 @@ public class MoveBuilder{
 		if(//!move.getInitialSpace().getPiece().beenMoved() &&
 			move.getInitialSpace().getPiece().getType() == PieceType.Pawn && 
 			rankOffset == 2) // a pawn's first move
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ForwardTwo, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ForwardTwo, pieceColor), message);
 		if(rankOffset > 0) // forward
-			return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.Forward, pieceColor), message);
+			return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.Forward, pieceColor), message);
 		else // rankOffset < 0, back
-			return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.Backward, pieceColor), message);
+			return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.Backward, pieceColor), message);
 	}
 
 	/*
@@ -269,7 +274,7 @@ public class MoveBuilder{
 		// check for castling
 		if(initial.getPiece().getType() == PieceType.King && Math.abs(fileOffset) == 2){
 			if(fileOffset == 2){ //king side castle
-				ActualMove result = MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.KingSideCastle, pieceColor), message);
+				ActualMove result =compositeMoves(move, MoveFactory.makeMoveObject(MoveType.KingSideCastle, pieceColor), message);
 				if(result != null){
 					// move the rook
 					Space rookDest = initial.getSpaceRight();
@@ -280,7 +285,7 @@ public class MoveBuilder{
 				return result; 
 			}
 			else if(fileOffset == -2){ // queen side castle
-				ActualMove result =MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.QueenSideCastle, pieceColor), message);
+				ActualMove result = compositeMoves(move, MoveFactory.makeMoveObject(MoveType.QueenSideCastle, pieceColor), message);
 				if(result != null){
 					// move  the rook
 					Space rookDest = initial.getSpaceLeft();
@@ -298,7 +303,7 @@ public class MoveBuilder{
 		else if(initial.getPiece().getType() == PieceType.Rook && 
 			    gs.getPreviousMove().getClass() == MoveKingSideCastle.class){
 			if(fileOffset == -2)
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ReverseKingSideCastle, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ReverseKingSideCastle, pieceColor), message);
 			else{
 				return null;
 			}
@@ -306,7 +311,7 @@ public class MoveBuilder{
 		else if(initial.getPiece().getType() == PieceType.Rook &&
 				gs.getPreviousMove().getClass() == MoveQueenSideCastle.class){
 			if(fileOffset == 3)
-				return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ReverseQueenSideCastle, pieceColor), message);
+				return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.ReverseQueenSideCastle, pieceColor), message);
 			else
 				return null;
 		}
@@ -315,8 +320,41 @@ public class MoveBuilder{
 		if(pieceColor == PieceColor.Black)
 			fileOffset = -fileOffset;
 		if(fileOffset > 0) // right
-			return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.Right, pieceColor), message);
+			return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.Right, pieceColor), message);
 		else // fileOffset < 0, left
-			return MoveCompositor.compositeMoves(move, MoveFactory.makeMoveObject(MoveType.Left, pieceColor), message);
+			return compositeMoves(move, MoveFactory.makeMoveObject(MoveType.Left, pieceColor), message);
+	}
+	/*
+	 * lastMove is the previous move to wrap, nextMove is the wrapping move, and message is
+	 * ErrorMessage object used for reporting any errors. Returns the composited move, or null
+	 * if the constraints are not met.
+	 */
+	public static ActualMove compositeMoves(Move lastMove, ActualMove nextMove, ErrorMessage message){
+		ArrayList<MoveConstraint> constraints = lastMove.getInitialSpace().getPiece().getConstraints(nextMove.getMoveType());
+		
+		//System.out.println(nextMove.getMoveType());
+		// verify that the move is a legal movement type for this piece
+		if(constraints == null){
+			message.setIllegalPattern();
+			return null;
+		}
+		
+		// for each constraint....
+		for(MoveConstraint c : constraints)
+			// verify that the constraint is met
+			if(!c.meetsConstraint(lastMove, nextMove)){
+				/*System.out.println("The constraint " + c.toString() + " for " +
+									lastMove.getInitialSpace().getPiece().getColor() + " piece " 
+								   + lastMove.getInitialSpace().getPiece().getType() + " was not met!");
+				*/
+				message.setConstraintNotMet();
+				return null;
+			}
+		
+		/*System.out.println("All constraints for " + nextMove + " for piece " + lastMove.getInitialSpace().getPiece().getType() 
+				+ " for the " + lastMove.getInitialSpace().getPiece().getColor() + " player were met.");
+		*/
+		// returns the nextMove wrapped around the lastMove
+		return nextMove.setLastMove(lastMove);
 	}
 }
