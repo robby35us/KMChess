@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import abstractClasses.CardEffect;
 import constraints.CannotCapture;
+import control.BoardControl;
+import control.SpaceControl;
 import enums.MoveType;
 import enums.PieceType;
 import game.GameState;
+import game.GameWindow;
 import game.MoveBuilder;
-import gameComponents.BoardPresentation;
-import gameComponents.SpacePresentation;
 import interfaces.MoveConstraint;
 import pieces.Piece;
 import pieces.PieceFactory;
@@ -20,14 +21,14 @@ public class Masquerade extends CardEffect {
 	
 	@Override
 	public void initiateImmediateEffect(GameState gs) {
-		BoardPresentation board = gs.getBoard();	
+		BoardControl board = gs.getBoard();	
 		ErrorMessage message = new ErrorMessage();
-		SpacePresentation startSpace = null;
+		SpaceControl startSpace = null;
 		Piece selected = null;
 		do{
 			if(message.hasError())
-				board.infoBox(message.toString(), getName());
-			board.infoBox("Select a piece (not a pawn) to move as if it were a queen.", getName());
+				GameWindow.globalGW.infoBox(message.toString(), getName());
+			GameWindow.globalGW.infoBox("Select a piece (not a pawn) to move as if it were a queen.", getName());
 			if(startSpace != null){
 				startSpace.changePiece(selected, true);
 			}
@@ -45,7 +46,7 @@ public class Masquerade extends CardEffect {
 			
 			startSpace = board.getStartSpace();
 			selected = startSpace.getPiece();
-			Piece modifiedQueen = (new PieceFactory(board, gs)).makePiece(PieceType.Queen, selected.getType(), board.getTurn().getColor());
+			Piece modifiedQueen = (new PieceFactory(board, gs)).makePiece(PieceType.Queen, selected.getType(), gs.getTurn().getColor());
 			ArrayList<MoveType> moves = modifiedQueen.getMoveTypes();
 			for(MoveType mt : moves){
 				ArrayList<MoveConstraint> constraints = modifiedQueen.getConstraints(mt);
@@ -53,13 +54,13 @@ public class Masquerade extends CardEffect {
 			}
 			startSpace.changePiece(modifiedQueen, false);
 			message = new ErrorMessage();
-			board.infoBox("Now choose a space to move the selected " +
+			GameWindow.globalGW.infoBox("Now choose a space to move the selected " +
 					  selected.getType() + " to." +
 					  "\nThis move cannot make a capture.", getName());
 			while(board.getEndSpace() == null || 
 				  board.getEndSpace().getPiece() != null){
 				if(board.getEndSpace() != null && board.getEndSpace().getPiece() != null){ 
-					board.infoBox("This move cannot make a capture. Try again!", getName());
+					GameWindow.globalGW.infoBox("This move cannot make a capture. Try again!", getName());
 					board.setEndSpace(null);
 					board.setStartSpace(null);
 				}

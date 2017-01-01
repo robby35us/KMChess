@@ -54,4 +54,6 @@ public interface IOFramework {
 	public KMCard getExecutingCard();
 
 	public void getAfterExecutingCard();
+
+	public void infoBox(String message, String title);
 }

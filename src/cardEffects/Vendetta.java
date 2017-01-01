@@ -10,19 +10,21 @@ import enums.MoveType;
 import enums.Timing;
 import enums.Turn;
 import game.GameState;
+import game.GameWindow;
 import game.MoveBuilder;
 import gameComponents.PlayerSet;
-import gameComponents.SpacePresentation;
 import graphics.SpaceBorder;
 import pieces.Piece;
+import presentation.SpacePresentation;
+import control.SpaceControl;
 import utilityContainers.ErrorMessage;
 
 public class Vendetta extends ContEffect {
 	
 	private MustCapture mc;
 	
-	private ArrayList<SpacePresentation> movable;
-	private ArrayList<SpacePresentation> highlighted;
+	private ArrayList<SpaceControl> movable;
+	private ArrayList<SpaceControl> highlighted;
 	private SpaceBorder highlight;
 	private boolean	highlightingOn;
 	public Vendetta () {
@@ -62,39 +64,39 @@ public class Vendetta extends ContEffect {
 
 	public void updateHighlighting(GameState gs){
 		if(highlightingOn){
-			for(SpacePresentation s : movable){
+			for(SpaceControl s : movable){
 				if(!highlighted.contains(s)){
 					highlighted.add(s);
-					s.setArmedBorder(highlight);
-					s.setUnarmedBorder(highlight);
-					s.setButtonState(SpacePresentation.ARMED);
-					s.repaint();
+					s.getSpacePres().setArmedBorder(highlight);
+					s.getSpacePres().setUnarmedBorder(highlight);
+					s.armSpace();
+					s.getSpacePres().repaint();
 				}
 			}
-			ArrayList<SpacePresentation> unHighlight = new ArrayList<SpacePresentation>();
-			for(SpacePresentation s : highlighted){
+			ArrayList<SpaceControl> unHighlight = new ArrayList<SpaceControl>();
+			for(SpaceControl s : highlighted){
 				if(!movable.contains(s)){
-					s.setArmedBorder(SpacePresentation.defaultArmedBorder);
-					s.setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
-					s.setButtonState(SpacePresentation.UNARMED);
+					s.getSpacePres().setArmedBorder(SpacePresentation.defaultArmedBorder);
+					s.getSpacePres().setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
+					s.unarmSpace();
 					unHighlight.add(s);
-					s.repaint();
+					s.getSpacePres().repaint();
 				}
 			}
-			for(SpacePresentation s : unHighlight){
+			for(SpaceControl s : unHighlight){
 				highlighted.remove(s);
 			}
 		}
 	}
 	private void resetMovable(GameState gs) {
-		movable = new ArrayList<SpacePresentation>();
+		movable = new ArrayList<SpaceControl>();
 		PlayerSet current, other;
 		if(KMCard.CurrentTiming == Timing.Before){
-			current = gs.getPlayerSet(gs.getBoard().getTurn());
-			other = gs.getPlayerSet(gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
+			current = gs.getPlayerSet(gs.getTurn());
+			other = gs.getPlayerSet(gs.getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
 		}else{ 
-			other = gs.getPlayerSet(gs.getBoard().getTurn());
-			current = gs.getPlayerSet(gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
+			other = gs.getPlayerSet(gs.getTurn());
+			current = gs.getPlayerSet(gs.getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
 		}
 		for(Piece c : current){
 			//System.out.println("Checking if " + c.getColor() +  c.getType() + " can attack: ");
@@ -129,24 +131,24 @@ public class Vendetta extends ContEffect {
 		}
 		String player;
 		if(KMCard.CurrentTiming == Timing.Before)
-			player = gs.getBoard().getTurn().toString();
+			player = gs.getTurn().toString();
 		else
-			player = gs.getBoard().getTurn() == Turn.Player1 ? Turn.Player2.toString() : Turn.Player1.toString();
-		gs.getBoard().infoBox(player + " is not able to make a capture. Vendetta is no longer in affect.", getName());
+			player = gs.getTurn() == Turn.Player1 ? Turn.Player2.toString() : Turn.Player1.toString();
+		GameWindow.globalGW.infoBox(player + " is not able to make a capture. Vendetta is no longer in affect.", getName());
 	}
 
 	@Override
 	public void highlightChange(GameState gs) {
 		highlightingOn = true;
-		highlighted = new ArrayList<SpacePresentation>();
-		for(SpacePresentation space: movable){
-			space.setArmedBorder(highlight);
-			space.setUnarmedBorder(highlight);
-			space.setButtonState(SpacePresentation.ARMED);
+		highlighted = new ArrayList<SpaceControl>();
+		for(SpaceControl space: movable){
+			space.getSpacePres().setArmedBorder(highlight);
+			space.getSpacePres().setUnarmedBorder(highlight);
+			space.armSpace();
 			highlighted.add(space);
-			space.repaint();
+			space.getSpacePres().repaint();
 		}
-		gs.getBoard().infoBox("Vendetta is an active card. Each player must now" +
+		GameWindow.globalGW.infoBox("Vendetta is an active card. Each player must now" +
 				  "\nuse his move to capture one of his opponent's pieces." +
 				  "\nThis effect lasts until one of the players cannot capture" +
 				  "\nwithout the use of a card.", getName());
@@ -155,11 +157,12 @@ public class Vendetta extends ContEffect {
 	@Override
 	public void endHighlightChange(GameState gs) {
 		highlightingOn = false;
-		for(SpacePresentation s : highlighted){
-			s.setArmedBorder(SpacePresentation.defaultArmedBorder);
-			s.setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
-			s.setButtonState(SpacePresentation.UNARMED);
-			s.repaint();
+		for(SpaceControl s : highlighted){
+			s.getSpacePres().setArmedBorder(SpacePresentation.defaultArmedBorder);
+			s.getSpacePres().setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
+			s.unarmSpace();
+			s.getSpacePres()
+			.repaint();
 		}
 		highlighted.clear();
 	}

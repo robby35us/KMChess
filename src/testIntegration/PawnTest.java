@@ -9,7 +9,7 @@ import enums.PieceColor;
 import enums.PieceType;
 import enums.Rank;
 import game.*;
-import gameComponents.BoardPresentation;
+import presentation.BoardPresentation;
 import test.TestIO;
 import test.TestUtility;
 

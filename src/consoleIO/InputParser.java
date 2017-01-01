@@ -6,8 +6,8 @@ import enums.File;
 import enums.PieceColor;
 import enums.PieceType;
 import enums.Rank;
-import gameComponents.BoardPresentation;
-import gameComponents.SpacePresentation;
+import presentation.BoardPresentation;
+import presentation.SpacePresentation;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
 

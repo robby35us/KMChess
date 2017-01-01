@@ -2,9 +2,9 @@ package constraints;
 
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
+import control.BoardControl;
+import control.SpaceControl;
 import enums.PieceColor;
-import gameComponents.BoardPresentation;
-import gameComponents.SpacePresentation;
 import interfaces.MoveConstraint;
 
 /*
@@ -13,9 +13,9 @@ import interfaces.MoveConstraint;
  * point of view after the move.
  */
 public class NoPieceBehind implements MoveConstraint {
-	private BoardPresentation board;
+	private BoardControl board;
 	
-	public NoPieceBehind(BoardPresentation board){
+	public NoPieceBehind(BoardControl board){
 		this.board = board;
 	}
 
@@ -28,10 +28,10 @@ public class NoPieceBehind implements MoveConstraint {
 	 * is moving, or rather, the initial space of the proposed move.
 	 */
 	public boolean meetsConstraint(Move lastMove, ActualMove nextMove) {
-		SpacePresentation destination = board.getNextSpace(lastMove.getRankOffset() + nextMove.getRankOffset(), 
+		SpaceControl destination = board.getNextSpace(lastMove.getRankOffset() + nextMove.getRankOffset(), 
 				                          lastMove.getFileOffset() + nextMove.getFileOffset(), 
 				                          lastMove.getInitialSpace());
-		SpacePresentation behind = lastMove.getInitialSpace().getPiece().getColor() == PieceColor.White ? destination.getSpaceBackward()
+		SpaceControl behind = lastMove.getInitialSpace().getPiece().getColor() == PieceColor.White ? destination.getSpaceBackward()
 				                                                    : destination.getSpaceForward();
 		return !behind.hasPiece();
 	}

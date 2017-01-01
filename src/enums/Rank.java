@@ -11,4 +11,5 @@ public enum Rank {
 	public String toString() {
 		return "" + (this.ordinal() + 1);
 	}
+	
 }

@@ -3,6 +3,8 @@ package consoleIO;
 import enums.*;
 import gameComponents.*;
 import pieces.Piece;
+import presentation.BoardPresentation;
+import presentation.SpacePresentation;
 import utilityContainers.ErrorMessage;
 
 /*

@@ -5,27 +5,29 @@ import java.util.ArrayList;
 
 import abstractClasses.ContEffect;
 import constraints.DisabledMove;
+import control.BoardControl;
+import control.SpaceControl;
 import enums.File;
 import enums.MoveType;
 import enums.PieceType;
 import enums.Rank;
 import game.GameState;
-import gameComponents.BoardPresentation;
-import gameComponents.SpacePresentation;
+import game.GameWindow;
 import graphics.SpaceBorder;
 import pieces.Piece;
+import presentation.SpacePresentation;
 
 public class Fatal_Attraction extends ContEffect {
 
 	private Piece magnet;
-	private SpacePresentation magnetSpace;
+	private SpaceControl magnetSpace;
 	private DisabledMove disabled;
 	
 
 	@Override
 	public synchronized void startContEffect(GameState gs) {
-		BoardPresentation board = gs.getBoard();
-		board.infoBox("Select a piece to become a magnet!", getName());
+		BoardControl board = gs.getBoard();
+		GameWindow.globalGW.infoBox("Select a piece to become a magnet!", getName());
 		board.setStartSpace(null);
 		board.setEndSpace(null);
 		while(board.getStartSpace() == null){
@@ -53,25 +55,25 @@ public class Fatal_Attraction extends ContEffect {
 		//				"\nadjacent squares can move until the magnet moves or is captured.", contEffectName);
 		
 		board.setStartSpace(null);
-		SpacePresentation.activeSpace.setButtonState(SpacePresentation.UNARMED);
-		SpacePresentation.activeSpace = null;
+		board.activeSpace.unarmSpace();
+		board.activeSpace = null;
 	}
 		
 	private ArrayList<Piece> getAdjacentPieces() {
 		ArrayList<Piece> pieces = new ArrayList<Piece>();
-		ArrayList<SpacePresentation> spaces = getAdjacentSpaces();
-		for(SpacePresentation s : spaces){
+		ArrayList<SpaceControl> spaces = getAdjacentSpaces();
+		for(SpaceControl s : spaces){
 			if(s.getPiece() != null)
 				pieces.add(s.getPiece());
 		}
 		return pieces;
 	}
 
-	private ArrayList<SpacePresentation> getAdjacentSpaces() {
-		ArrayList<SpacePresentation> spaces = new ArrayList<SpacePresentation>();
+	private ArrayList<SpaceControl> getAdjacentSpaces() {
+		ArrayList<SpaceControl> spaces = new ArrayList<SpaceControl>();
 		Rank mRank = magnetSpace.getRank();
 		File mFile = magnetSpace.getFile();
-		SpacePresentation adjacentSpace;
+		SpaceControl adjacentSpace;
 		
 		// get top row pieces
 		if(mRank != Rank.Eight){
@@ -80,12 +82,12 @@ public class Fatal_Attraction extends ContEffect {
 			spaces.add(adjacentSpace);
 			if(mFile != File.A){
 				// get top left
-				SpacePresentation left = adjacentSpace.getSpaceLeft();
+				SpaceControl left = adjacentSpace.getSpaceLeft();
 				spaces.add(left);
 			}
 			if(mFile != File.H){
 				// get top right
-				SpacePresentation right = adjacentSpace.getSpaceRight();
+				SpaceControl right = adjacentSpace.getSpaceRight();
 				spaces.add(right);
 			}
 		}
@@ -106,12 +108,12 @@ public class Fatal_Attraction extends ContEffect {
 			spaces.add(adjacentSpace);
 			if(mFile != File.A){
 				// get top left
-				SpacePresentation left = adjacentSpace.getSpaceLeft();
+				SpaceControl left = adjacentSpace.getSpaceLeft();
 				spaces.add(left);
 			}
 			if(mFile != File.H){
 				// get top right
-				SpacePresentation right = adjacentSpace.getSpaceRight();
+				SpaceControl right = adjacentSpace.getSpaceRight();
 				spaces.add(right);
 			}
 		}
@@ -134,7 +136,7 @@ public class Fatal_Attraction extends ContEffect {
 				p.getConstraints(type).remove(disabled);
 			}
 		}
-		gs.getBoard().infoBox("The magnet at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
+		GameWindow.globalGW.infoBox("The magnet at space " + magnetSpace.getFile() + magnetSpace.getRank() + 
 						  " has been moved or captured." +
 						  "\nThe pieces in the adjacent spaces are now freed."
 						  , getName());
@@ -157,35 +159,35 @@ public class Fatal_Attraction extends ContEffect {
 	@Override
 	public void highlightChange(GameState gs) {
 		SpaceBorder magnetBorder = new SpaceBorder(Color.RED);
-		magnetSpace.setArmedBorder(magnetBorder);
-		magnetSpace.setUnarmedBorder(magnetBorder);
-		magnetSpace.repaint();
-		gs.getBoard().infoBox("The " + magnet.getType() + " at the red space " + 
+		magnetSpace.getSpacePres().setArmedBorder(magnetBorder);
+		magnetSpace.getSpacePres().setUnarmedBorder(magnetBorder);
+		magnetSpace.getSpacePres().repaint();
+		GameWindow.globalGW.infoBox("The " + magnet.getType() + " at the red space " + 
 							  "\n" + magnetSpace.getFile() + 
 							  magnetSpace.getRank() + " is the magenet."
 							  , getName());
-		ArrayList<SpacePresentation> adjacentSpaces = getAdjacentSpaces();
+		ArrayList<SpaceControl> adjacentSpaces = getAdjacentSpaces();
 		SpaceBorder adjacentBorder = new SpaceBorder(Color.YELLOW);
-		for(SpacePresentation as: adjacentSpaces){
-			as.setArmedBorder(adjacentBorder);
-			as.setUnarmedBorder(adjacentBorder);
-			as.repaint();
+		for(SpaceControl as: adjacentSpaces){
+			as.getSpacePres().setArmedBorder(adjacentBorder);
+			as.getSpacePres().setUnarmedBorder(adjacentBorder);
+			as.getSpacePres().repaint();
 		}
-		gs.getBoard().infoBox("The pieces in the adjacent yellow spaces " +
+		GameWindow.globalGW.infoBox("The pieces in the adjacent yellow spaces " +
 							   "\n(except for kings) are stuck until the " + 
 							   "\nmagnet moves or is captured.", getName());
 	}
 
 	@Override
 	public void endHighlightChange(GameState gs) {
-		magnetSpace.setArmedBorder(SpacePresentation.defaultArmedBorder);
-		magnetSpace.setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
-		magnetSpace.repaint();
-		ArrayList<SpacePresentation> adjacentSpaces = getAdjacentSpaces();
-		for(SpacePresentation as: adjacentSpaces) {
-			as.setArmedBorder(SpacePresentation.defaultArmedBorder);
-			as.setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
-			as.repaint();
+		magnetSpace.getSpacePres().setArmedBorder(SpacePresentation.defaultArmedBorder);
+		magnetSpace.getSpacePres().setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
+		magnetSpace.getSpacePres().repaint();
+		ArrayList<SpaceControl> adjacentSpaces = getAdjacentSpaces();
+		for(SpaceControl as: adjacentSpaces) {
+			as.getSpacePres().setArmedBorder(SpacePresentation.defaultArmedBorder);
+			as.getSpacePres().setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
+			as.getSpacePres().repaint();
 		}
 	}
 

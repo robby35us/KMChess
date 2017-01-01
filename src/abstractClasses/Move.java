@@ -1,5 +1,7 @@
 package abstractClasses;
-import gameComponents.SpacePresentation;
+
+import control.SpaceControl;
+
 
 /* Move.java 
  * This class is the base class type for a chess move. 
@@ -12,14 +14,14 @@ import gameComponents.SpacePresentation;
 public abstract class Move {
   protected int rankOffset;
   protected int fileOffset;
-  protected SpacePresentation initialSpace;
-  protected SpacePresentation destinationSpace;
-  protected SpacePresentation finalDestinationSpace;
+  protected SpaceControl initialSpace;
+  protected SpaceControl destinationSpace;
+  protected SpaceControl finalDestinationSpace;
   
   /*
    * The super constructor for all Move objects
    */
-  protected Move(int rankOffset, int fileOffset, SpacePresentation initial, SpacePresentation finalDest){
+  protected Move(int rankOffset, int fileOffset, SpaceControl initial, SpaceControl finalDest){
 	this.rankOffset = rankOffset;
 	this.fileOffset = fileOffset;
 	initialSpace = initial;
@@ -34,7 +36,7 @@ public abstract class Move {
   protected void setDestination() {
 	int ro = rankOffset;
 	int fo = fileOffset;
-	SpacePresentation space = initialSpace;
+	SpaceControl space = initialSpace;
 	while(space != null && (ro != 0 || fo != 0 )){
 		if(ro > 0){ 
 			space = space.getSpaceForward();
@@ -66,16 +68,16 @@ public abstract class Move {
 	return fileOffset;
   }
   
-  public SpacePresentation getInitialSpace(){
+  public SpaceControl getInitialSpace(){
 	return initialSpace;
   } 
   
 
-  public SpacePresentation getDestinationSpace() {
+  public SpaceControl getDestinationSpace() {
 	return destinationSpace;
   }
 
-public SpacePresentation getFinalDestSpace() {
+public SpaceControl getFinalDestSpace() {
 	return finalDestinationSpace;
 }
 }

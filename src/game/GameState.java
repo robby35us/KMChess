@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import abstractClasses.ActualMove;
 import abstractClasses.ContEffect;
 import cards.KMDeck;
+import control.BoardControl;
+import control.SpaceControl;
 import enums.*;
 import gameComponents.*;
 import guiComponent.CInfoArea;
@@ -34,7 +36,7 @@ import utilityContainers.ErrorMessage;
  * game state.
  */
 public class GameState implements ItemListener {
-	private BoardPresentation board;
+	private BoardControl board;
 	private MessageBox messageBox;
 	private TextArea gameMessage;
 	private List contEffectsArea;
@@ -53,7 +55,9 @@ public class GameState implements ItemListener {
 	private CInfoArea cInfoArea;
 	private SelectedCardArea selectedCardArea;
 	private ArrayList<ContEffect> contEffects;
+	volatile private Turn turn = null;
 	
+	public static GameState globalGS;
 	
 	/*
 	 * This constructor sets up a regular game, and initializes the Board
@@ -61,14 +65,15 @@ public class GameState implements ItemListener {
 	 */
 	public GameState() {
 		this(null);
-		setupGameState(); // sets the Board 
+		setupGameState(); // sets the Board
+		globalGS = this;
 	}
 	
 	/*
 	 * This constructor is used for testing with a irregular board. It 
 	 * does not place pieces on the given Board or create Player objects.
 	 */
-	public GameState(BoardPresentation board) {
+	public GameState(BoardControl board) {
 		Piece.setGameState(this);
 		this.board = board;
 		
@@ -111,7 +116,7 @@ public class GameState implements ItemListener {
 	 * factory.
 	 */
 	public void setupGameState() {
-		board = new BoardPresentation();
+		board = new BoardControl();
 		factory = new PieceFactory(board, this);
 		
 		PlayerSet [] sets = new PlayerSet[2];
@@ -124,6 +129,14 @@ public class GameState implements ItemListener {
 		BoardSetup.setupChessBoard(sets[0], sets[1], board);
 	}
 
+	public Turn getTurn() {
+		return turn;
+	}
+
+	public void setTurn(Turn turn) {
+		this.turn = turn;
+	}
+	
 	/*
 	 * Moves the piece to it's new positions, using the information provided
 	 * in move and turn to get the initial and destination location and for
@@ -147,7 +160,7 @@ public class GameState implements ItemListener {
 		if(!moving.notifyKingObservers()){
 			
 			// reset everything to how it was before the move.
-			SpacePresentation capturedSpace = undoMove(move, captured, true);
+			SpaceControl capturedSpace = undoMove(move, captured, true);
 			if(captured != null){
 				opposite = captured.getColor() == PieceColor.White ? whitePlayer : blackPlayer;
 				if(opposite != null)
@@ -195,8 +208,8 @@ public class GameState implements ItemListener {
 		Piece moving = move.getInitialSpace().getPiece();
 		
 		// set space variables
-		SpacePresentation capturedSpace;
-		SpacePresentation dest = move.getDestinationSpace();
+		SpaceControl capturedSpace;
+		SpaceControl dest = move.getDestinationSpace();
 		if(move.getClass() == MoveEnPassantRight.class || move.getClass() == MoveEnPassantLeft.class)
 			capturedSpace = (moving.getColor() == PieceColor.White) ? dest.getSpaceBackward() : dest.getSpaceForward();
 		else
@@ -218,12 +231,12 @@ public class GameState implements ItemListener {
 	/*
 	 * Set's everything back to the way it was before the last move.
 	 */
-	public static SpacePresentation undoMove(ActualMove move, Piece captured, Boolean repaint){
+	public static SpaceControl undoMove(ActualMove move, Piece captured, Boolean repaint){
 		Piece moving = move.getDestinationSpace().getPiece();
 		
 		// set spaces
-		SpacePresentation capturedSpace;
-		SpacePresentation dest = move.getDestinationSpace();
+		SpaceControl capturedSpace;
+		SpaceControl dest = move.getDestinationSpace();
 		if(move.getClass() == MoveEnPassantRight.class || move.getClass() == MoveEnPassantLeft.class)
 			capturedSpace = (moving.getColor() == PieceColor.White) ? dest.getSpaceBackward() : dest.getSpaceForward();
 		else
@@ -243,8 +256,8 @@ public class GameState implements ItemListener {
 	 * the opposite color. 
 	 */
 	public boolean meetsUniversalConstraints(ActualMove move, Turn turn, ErrorMessage message) {
-		SpacePresentation init = move.getInitialSpace();
-		SpacePresentation dest = move.getDestinationSpace();
+		SpaceControl init = move.getInitialSpace();
+		SpaceControl dest = move.getDestinationSpace();
 		Piece moving = init.getPiece();
 		Piece captured = dest.getPiece();
 		
@@ -272,7 +285,7 @@ public class GameState implements ItemListener {
 	}
 
 	// public getters
-	public BoardPresentation getBoard() {
+	public BoardControl getBoard() {
 		return board;
 	}
 	

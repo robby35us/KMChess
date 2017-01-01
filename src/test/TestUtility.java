@@ -8,10 +8,10 @@ import enums.File;
 import enums.PieceColor;
 import enums.Rank;
 import game.GameState;
-import gameComponents.BoardPresentation;
-import gameComponents.SpacePresentation;
 import pieces.Piece;
 import pieces.PieceFactory;
+import presentation.BoardPresentation;
+import presentation.SpacePresentation;
 
 public class TestUtility {
 	

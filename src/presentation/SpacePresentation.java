@@ -1,4 +1,4 @@
-package gameComponents;
+package presentation;
 
 import java.awt.Canvas;
 
@@ -12,12 +12,10 @@ import java.awt.MediaTracker;
 
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
-
-import enums.MoveType;
 import enums.SpaceColor;
-import gameComponents.SpacePresentation;
 import graphics.SpaceBorder;
 import pieces.Piece;
+import presentation.SpacePresentation;
 
 
 public class SpacePresentation extends Canvas{
@@ -31,10 +29,9 @@ public class SpacePresentation extends Canvas{
     public static final int ARMED = 1;
     public static final int OVER = 2;
     public static final int DISABLED = 3;
-    //public static final Dimension MINIMUM_SIZE = new Dimension(50,50);
-    //public static final Dimension MAXIMUM_SIZE = new Dimension(100,100);
-    public static SpacePresentation activeSpace = null;
-   
+    public static final Dimension MINIMUM_SIZE = new Dimension(50,50);
+    public static final Dimension MAXIMUM_SIZE = new Dimension(100,100);
+    
     
     private int buttonState = UNARMED;
 	private Image[] images = new Image[4];
@@ -43,10 +40,6 @@ public class SpacePresentation extends Canvas{
 	
 	@SuppressWarnings("unused")
 	private boolean generatedDisabled;
-	
-	
-	
-	private BoardAbstraction board;
 
 	
 	public static final SpaceBorder defaultUnarmedBorder =
@@ -70,8 +63,8 @@ public class SpacePresentation extends Canvas{
 	        setUnarmedBorder( defaultUnarmedBorder );
 	        setArmedBorder( defaultArmedBorder );
 	        
-	        //this.setMinimumSize(MINIMUM_SIZE);
-	        //this.setMaximumSize(MAXIMUM_SIZE);        
+	        this.setMinimumSize(MINIMUM_SIZE);
+	        this.setMaximumSize(MAXIMUM_SIZE);        
 	 }
 
 	    public void setArmedBorder(SpaceBorder border) {
@@ -101,47 +94,7 @@ public class SpacePresentation extends Canvas{
 				repaint();
 		}
 		
-		/*
-		 * Returns the Space on the board to the left of this one, or 
-		 * rather, the Space on the same Rank one file less. Returns 
-		 * null if no such Space exists
-		 */
-		public SpacePresentation getSpaceLeft(){
-			return board.getNextSpace(MoveType.Left.getRankOffset(), 
-					                  MoveType.Left.getFileOffset(),this);
-		}
-		
-		/*
-		 * Returns the Space on the board to the right of this one, or
-		 * rather, the Space on the same Rank one file greater. Returns
-		 * null if no such Space exists.
-		 */
-		public SpacePresentation getSpaceRight(){
-			return board.getNextSpace(MoveType.Right.getRankOffset(), 
-	                				  MoveType.Right.getFileOffset(),this);
-		}
-		
-		/*
-		 * Returns the Space on the board in front of or above this one, or
-		 * rather, the Space on the same File one Rank greater. Returns null
-		 * if no such Space exists.
-		 */
-		public SpacePresentation getSpaceForward(){
-			return board.getNextSpace(MoveType.Forward.getRankOffset(), 
-	                				  MoveType.Forward.getFileOffset(),this);
-		}
-		
-		/*
-		 * Returns the Space on the board behind or below this one, or rather,
-		 * the Space on the Same File one Rank lesser. Returns null if no such 
-		 * Space exists.
-		 */
-		public SpacePresentation getSpaceBackward(){
-			return board.getNextSpace(MoveType.Backward.getRankOffset(), 
-	                				  MoveType.Backward.getFileOffset(),this);
-			
-		}
-	 
+		 
 	 	public void setUnarmedImage( Image image ) {
 	        if (image != null)
 	        	image = image.getScaledInstance((int)this.getMinimumSize().getWidth(), (int)this.getMinimumSize().getHeight(),Image.SCALE_DEFAULT);

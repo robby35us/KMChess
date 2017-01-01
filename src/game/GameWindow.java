@@ -5,14 +5,14 @@ import java.awt.event.*;
 import javax.swing.JOptionPane;
 
 import cards.KMCard;
+import control.BoardControl;
+import control.SpaceControl;
 import interfaces.IOFramework;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
 import enums.PieceColor;
 import enums.PieceType;
 import enums.Turn;
-import gameComponents.BoardPresentation;
-import gameComponents.SpacePresentation;
 import guiComponent.CardArea;
 
 public class GameWindow extends Frame implements WindowListener, IOFramework{
@@ -22,6 +22,7 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 	private static final long serialVersionUID = 1L;
 	private GameState gs;
 	private boolean playKnightmareMode;
+	public static GameWindow globalGW;
 
 	public GameWindow(GameState gs){
 		setLayout(new BorderLayout());
@@ -32,7 +33,7 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 		//addComponents(gs.getBoard());
 		add(gs.getMessageBox(), BorderLayout.NORTH);
 		gs.getMessageBox().setSize(this.getWidth(), this.getHeight()/5);
-		add(gs.getBoard(), BorderLayout.CENTER);
+		add(gs.getBoard().getPresentation(), BorderLayout.CENTER);
 		add(gs.getCInfoArea(), BorderLayout.SOUTH);
 		add(gs.getCardArea(), BorderLayout.WEST);
 		add(gs.getSelectedCardArea(), BorderLayout.EAST);
@@ -49,6 +50,7 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 		}else {
 			gs.getCardArea().setEnabled(false);
 		} 
+		globalGW = this;
 	}
 
 	@Override
@@ -94,7 +96,7 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 	}
 	
 
-	public static void infoBox(String infoMessage, String titleBar)
+	public void infoBox(String infoMessage, String titleBar)
     {
         JOptionPane.showMessageDialog(null, infoMessage,titleBar, JOptionPane.INFORMATION_MESSAGE);
     }
@@ -102,13 +104,13 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 
 	@Override
 	public void displayBoard() {
-		gs.getBoard().repaint();
+		gs.getBoard().getPresentation().repaint();
 	}
 
 
 	@Override
 	public synchronized MoveInput getMoveInput(PieceColor color, ErrorMessage message) {
-		BoardPresentation board = gs.getBoard();
+		BoardControl board = gs.getBoard();
 		CardArea ca = gs.getCardArea();
 		while((board.getStartSpace() == null || board.getEndSpace() == null) &&
 			  (ca.getExecutingCard() == null)){
@@ -120,8 +122,8 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 			}
 		}
 		if(board.getStartSpace() != null && board.getEndSpace() != null){
-			SpacePresentation start = board.getStartSpace();
-			SpacePresentation end = board.getEndSpace();
+			SpaceControl start = board.getStartSpace();
+			SpaceControl end = board.getEndSpace();
 			board.setStartSpace(null);
 			board.setEndSpace(null);
 			return new MoveInput(start, end);

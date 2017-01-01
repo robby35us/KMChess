@@ -1,9 +1,9 @@
 package constraints;
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
+import control.SpaceControl;
 import enums.*;
 import game.GameState;
-import gameComponents.*;
 import interfaces.MoveConstraint;
 import pieces.Piece;
 import standardMoves.*;
@@ -30,7 +30,7 @@ public class CanCaptureEnPassantLeft implements MoveConstraint {
 	 * is moving, or rather, the initial space of the proposed move.
 	 */
 	public boolean meetsConstraint(Move lastMove, ActualMove nextMove) {
-		SpacePresentation initial = lastMove.getInitialSpace();
+		SpaceControl initial = lastMove.getInitialSpace();
 		Piece moving = initial.getPiece();
 		
 		// verify piece is a pawn
@@ -49,7 +49,7 @@ public class CanCaptureEnPassantLeft implements MoveConstraint {
 		}
 		Move prevMove = gs.getPreviousMove();
 		//System.out.println(prevMove);
-		SpacePresentation toLeft = prevMove.getDestinationSpace();
+		SpaceControl toLeft = prevMove.getDestinationSpace();
 		
 		// verify that the adjacent space is the one that was just moved to
 		if((color == PieceColor.White && toLeft != initial.getSpaceLeft()) ||

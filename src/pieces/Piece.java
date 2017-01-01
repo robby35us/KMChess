@@ -1,8 +1,6 @@
 package pieces;
 import game.GameState;
 import game.MoveBuilder;
-import gameComponents.BoardPresentation;
-import gameComponents.SpacePresentation;
 import interfaces.KingObserver;
 import interfaces.MoveConstraint;
 import interfaces.PieceObserver;
@@ -15,6 +13,7 @@ import java.util.ArrayList;
 import abstractClasses.ActualMove;
 import constraints.MustCapture;
 import constraints.SingleMove;
+import control.SpaceControl;
 import enums.*;
 
 /*
@@ -37,7 +36,7 @@ public class Piece implements PieceSubject, PieceObserver{
 	protected PieceType type;
 	protected PieceType displayType;
 	protected PieceColor color;
-	protected SpacePresentation space;
+	protected SpaceControl space;
 	protected Image whiteImg;
 	protected Image greyImg;
 	
@@ -85,12 +84,12 @@ public class Piece implements PieceSubject, PieceObserver{
 		else
 			return java.awt.Color.BLACK;
 	}
-	public SpacePresentation getSpace(){
+	public SpaceControl getSpace(){
 		return space;
 	}
 	
 	// public setters
-	public void setSpace(SpacePresentation space){
+	public void setSpace(SpaceControl space){
 		this.space = space;
 	}
 	
@@ -144,7 +143,7 @@ public class Piece implements PieceSubject, PieceObserver{
 	 * location of the opposing King. Returns true if it
 	 * cannot capture the king, false otherwise.
 	 */
-	public boolean updateOpposingPiece(SpacePresentation destination) {
+	public boolean updateOpposingPiece(SpaceControl destination) {
 		ErrorMessage message = new ErrorMessage();
 		Turn turn = color == PieceColor.White ? Turn.Player1 : Turn.Player2;
 		ActualMove move = MoveBuilder.buildMoveObject(space, destination, gs, message);
@@ -215,7 +214,7 @@ public class Piece implements PieceSubject, PieceObserver{
 			//System.out.println("CheckDistantSpaces = " + checkDistantSpaces);
 			
 			int times = 1;
-			SpacePresentation finalDest = ((BoardPresentation)this.getSpace().getParent())
+			SpaceControl finalDest = this.getSpace().getParent()
 								.getNextSpace(mAndC.getMoveType().times(times).getRankOffset(),
 											  mAndC.getMoveType().times(times++).getFileOffset(),
 											  this.getSpace());
@@ -251,7 +250,7 @@ public class Piece implements PieceSubject, PieceObserver{
 				}
 				// NOTE: this code assume only same move combinations!!
 				if(checkDistantSpaces){
-					finalDest = ((BoardPresentation)this.getSpace().getParent())
+					finalDest = this.getSpace().getParent()
 						.getNextSpace(mAndC.getMoveType().times(times).getRankOffset(),
 									  mAndC.getMoveType().times(times).getFileOffset(),
 									  this.space);

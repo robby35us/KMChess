@@ -1,5 +1,6 @@
 package interfaces;
-import gameComponents.SpacePresentation;
+
+import control.SpaceControl;
 
 
 /*
@@ -26,5 +27,5 @@ public interface KingSubject {
 	 * been placed in check, provided the king were to be placed
 	 * at the given destination.
 	 */
-	public boolean notifyOpposingPieceObservers(SpacePresentation dest);
+	public boolean notifyOpposingPieceObservers(SpaceControl dest);
 }

@@ -1,25 +1,26 @@
 package utilityContainers;
-import gameComponents.SpacePresentation;
+
+import control.SpaceControl;
 
 /*
  * A transporter object used to return information about the
  * initial Space and destination space for a proposed move.
  */
 public class MoveInput {
-	private SpacePresentation init;
-	private SpacePresentation dest;
+	private SpaceControl init;
+	private SpaceControl dest;
 	
-	public MoveInput(SpacePresentation init, SpacePresentation dest){
+	public MoveInput(SpaceControl init, SpaceControl dest){
 		this.init = init;
 		this.dest = dest;
 	}
 	
 	// public getters
-	public SpacePresentation getInit(){
+	public SpaceControl getInit(){
 		return init;
 	}
 	
-	public SpacePresentation getDest(){
+	public SpaceControl getDest(){
 		return dest;
 	}
 }

@@ -10,7 +10,6 @@ import enums.PieceColor;
 import enums.PieceType;
 import enums.Timing;
 import enums.Turn;
-import gameComponents.BoardPresentation;
 import interfaces.IOFramework;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
@@ -32,17 +31,18 @@ public class Play {
 		System.out.println(message);
 	}*/
 	
+	public static GameState gs;
 	
 	/*
 	 * The primary logic for running a chess game. Requires an Input/Output Framework and
 	 * a GameState object to track the board and player statuses throughout the game. Can 
 	 * through uncaught IOException.
 	 */
-	public static ErrorMessage playGame(IOFramework fw, GameState gs) throws IOException{
-		BoardPresentation board = gs.getBoard(); 
+	public static ErrorMessage playGame(IOFramework fw, GameState gs) throws IOException{ 
+		Play.gs = gs;
 		ActualMove move = null;
 		MoveInput moveInput;
-		board.setTurn(Turn.Player1);
+		gs.setTurn(Turn.Player1);
 		ErrorMessage message = new ErrorMessage();
 		do{ // until the game ends
 
@@ -58,13 +58,13 @@ public class Play {
 			boolean playable = true;
 			do{
 				if(!playable){
-					gs.getBoard().infoBox("You cannot play " + execCard.getCInfo().getName() + " at this time.", "Choose another option");
+					fw.infoBox("You cannot play " + execCard.getCInfo().getName() + " at this time.", "Choose another option");
 					gs.getCardArea().setExecutingCard(null);
 				}
 				// get the input for the next move
-				fw.displayGetMoveInputText(board.getTurn());
+				fw.displayGetMoveInputText(gs.getTurn());
 				//System.out.println("Get move input text displayed");
-				moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);
+				moveInput = fw.getMoveInput(PieceColor.values()[gs.getTurn().ordinal()], message);
 				execCard = fw.getExecutingCard();
 				if(execCard != null){
 					effect = CardEffectFactory.getCEffect(execCard.getCInfo().getSetNumber(),
@@ -77,7 +77,7 @@ public class Play {
 			   execCard.getCInfo().getTiming() == Timing.BeforeOrAfter)){
 				gs.getCardArea().completeCardExecution(gs);
 				gs.updateContEffects();
-				moveInput = fw.getMoveInput(PieceColor.values()[board.getTurn().ordinal()], message);					
+				moveInput = fw.getMoveInput(PieceColor.values()[gs.getTurn().ordinal()], message);					
 			}
 			// build the given move, if possible 
 			if(moveInput != null) {
@@ -91,10 +91,10 @@ public class Play {
 			}
 			
 			// checks the universal constraints
-			if(move != null && gs.meetsUniversalConstraints(move, board.getTurn(), message)){
+			if(move != null && gs.meetsUniversalConstraints(move, gs.getTurn(), message)){
 				
 				// actually move the piece
-					gs.makeMove(move, board.getTurn(), message);
+					gs.makeMove(move, gs.getTurn(), message);
 				
 				// check for pawnPromotion
 				if(message.getPromotePawn()){
@@ -116,7 +116,7 @@ public class Play {
 						playable = true;
 						do{
 							if(!playable){
-								gs.getBoard().infoBox("You cannot play " + execCard.getCInfo().getName() + " at this time. \nPlease choose another option.", "Choose another option!");
+								fw.infoBox("You cannot play " + execCard.getCInfo().getName() + " at this time. \nPlease choose another option.", "Choose another option!");
 								gs.getCardArea().setExecutingCard(null);
 							}
 							gs.getCardArea().activateSkipButton();
@@ -138,13 +138,13 @@ public class Play {
 						
 					}
 					
-					if(board.getTurn() == Turn.Player1)
-						board.setTurn(Turn.Player2);
+					if(gs.getTurn() == Turn.Player1)
+						gs.setTurn(Turn.Player2);
 					else
-						board.setTurn(Turn.Player1);
+						gs.setTurn(Turn.Player1);
 					KMCard.CurrentTiming = Timing.Before;
 					gs.updateContEffects();
-					if(gs.checkForMate(board.getTurn(), message).hasError()){
+					if(gs.checkForMate(gs.getTurn(), message).hasError()){
 						
 						// if checkmate, exits the program, with current player in check
 						break;
@@ -166,13 +166,13 @@ public class Play {
 				// if move was made successfully
 				if(!message.hasError()){
 					
-					if(board.getTurn() == Turn.Player1)
-						board.setTurn(Turn.Player2);
+					if(gs.getTurn() == Turn.Player1)
+						gs.setTurn(Turn.Player2);
 					else
-						board.setTurn(Turn.Player1);
+						gs.setTurn(Turn.Player1);
 					KMCard.CurrentTiming = Timing.Before;
 					gs.updateContEffects();
-					if(gs.checkForMate(board.getTurn(), message).hasError()){
+					if(gs.checkForMate(gs.getTurn(), message).hasError()){
 						// if checkmate, exits the program, with current player in check
 						fw.displayMessage(message);
 						break;
