@@ -50,37 +50,6 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 			gs.getCardArea().setEnabled(false);
 		} 
 	}
-	
-	/*
-	private void addComponents(Board board){
-		for(int i = 0; i < buttons.length; i++){
-			rowLabels[i] = new Label("" + (8 - i), Label.CENTER);
-			rowLabels[i].setSize(d);
-			add(rowLabels[i]);
-			
-			for(int j = 0; j < buttons[i].length; j++){
-				Rank r = Rank.values()[7-i];
-				File f = File.values()[j];
-				
-				Space space = board.getSpace(r, f);
-				space.setSize(d);
-				add(board.getSpace(r, f));
-				
-			}	
-		}
-		cornerLabel = new Label();
-		cornerLabel.setSize(d);
-		add(cornerLabel);
-		for(int i = 0; i < colLabels.length; i++){
-			colLabels[i] = new Label("" + (char)('a' + i), Label.CENTER);
-			colLabels[i].setSize(d);
-			add(colLabels[i]);
-		}
-		repaint();
-	}
-	
-	*/
-
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {

@@ -3,7 +3,6 @@ import game.GameState;
 import game.MoveBuilder;
 import gameComponents.Board;
 import gameComponents.Space;
-import graphics.PieceImages;
 import interfaces.KingObserver;
 import interfaces.MoveConstraint;
 import interfaces.PieceObserver;
