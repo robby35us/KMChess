@@ -6,8 +6,8 @@ import enums.File;
 import enums.PieceColor;
 import enums.PieceType;
 import enums.Rank;
-import gameComponents.Board;
-import gameComponents.Space;
+import gameComponents.BoardPresentation;
+import gameComponents.SpacePresentation;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
 
@@ -20,12 +20,12 @@ public class InputParser {
 	 * inputed move on the board. Returns null if either of the entered codes is invalid, or
 	 * if the exit condition is inputed as the fist result.
 	 */
-	public static MoveInput getMoveInput(PieceColor color, Scanner in, Board board, ErrorMessage message) {
+	public static MoveInput getMoveInput(PieceColor color, Scanner in, BoardPresentation board, ErrorMessage message) {
 		String input = null;
 		
 		// get the initial Space
 		input = in.next();
-		Space init = getSpace(input, board);
+		SpacePresentation init = getSpace(input, board);
 		if(init == null){
 			if(!exitCondition(input)){
 				message.setInvalidInput();
@@ -35,7 +35,7 @@ public class InputParser {
 		
 		// get the destination Space
 		input = in.next();
-		Space dest = getSpace(input, board);
+		SpacePresentation dest = getSpace(input, board);
 		if(dest == null){
 			message.setInvalidInput();
 			return null;
@@ -81,7 +81,7 @@ public class InputParser {
 	 * A helper method to translate Space input into a Space object.
 	 * Returns null if the input is invalid.
 	 */
-	private static Space getSpace(String input, Board board) {
+	private static SpacePresentation getSpace(String input, BoardPresentation board) {
 		if(input == null || input.length() != 2)
 			return null;
 		char fileInput = input.toLowerCase().charAt(0);

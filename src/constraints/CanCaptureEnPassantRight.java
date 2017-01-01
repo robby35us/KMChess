@@ -30,7 +30,7 @@ public class CanCaptureEnPassantRight implements MoveConstraint {
 	 * is moving, or rather, the initial space of the proposed move.
 	 */
 	public boolean meetsConstraint(Move lastMove, ActualMove nextMove) {
-		Space initial = lastMove.getInitialSpace();
+		SpacePresentation initial = lastMove.getInitialSpace();
 		Piece moving = initial.getPiece();
 		
 		// verify that the piece is a pawn
@@ -48,7 +48,7 @@ public class CanCaptureEnPassantRight implements MoveConstraint {
 			return false;
 		}
 		Move prevMove = gs.getPreviousMove();
-		Space toRight = prevMove.getDestinationSpace();
+		SpacePresentation toRight = prevMove.getDestinationSpace();
 		
 		// verify that the adjacent space is the space last moved to
 		if((color == PieceColor.White && toRight != initial.getSpaceRight()) ||

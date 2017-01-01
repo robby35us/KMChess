@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import enums.File;
 import enums.Rank;
 import enums.SpaceColor;
-import gameComponents.Board;
-import gameComponents.Space;
+import gameComponents.BoardPresentation;
+import gameComponents.SpacePresentation;
 
 @SuppressWarnings("unused")
 public class SpaceTest{

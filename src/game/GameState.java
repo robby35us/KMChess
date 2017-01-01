@@ -34,7 +34,7 @@ import utilityContainers.ErrorMessage;
  * game state.
  */
 public class GameState implements ItemListener {
-	private Board board;
+	private BoardPresentation board;
 	private MessageBox messageBox;
 	private TextArea gameMessage;
 	private List contEffectsArea;
@@ -68,7 +68,7 @@ public class GameState implements ItemListener {
 	 * This constructor is used for testing with a irregular board. It 
 	 * does not place pieces on the given Board or create Player objects.
 	 */
-	public GameState(Board board) {
+	public GameState(BoardPresentation board) {
 		Piece.setGameState(this);
 		this.board = board;
 		
@@ -111,7 +111,7 @@ public class GameState implements ItemListener {
 	 * factory.
 	 */
 	public void setupGameState() {
-		board = new Board();
+		board = new BoardPresentation();
 		factory = new PieceFactory(board, this);
 		
 		PlayerSet [] sets = new PlayerSet[2];
@@ -147,7 +147,7 @@ public class GameState implements ItemListener {
 		if(!moving.notifyKingObservers()){
 			
 			// reset everything to how it was before the move.
-			Space capturedSpace = undoMove(move, captured, true);
+			SpacePresentation capturedSpace = undoMove(move, captured, true);
 			if(captured != null){
 				opposite = captured.getColor() == PieceColor.White ? whitePlayer : blackPlayer;
 				if(opposite != null)
@@ -195,8 +195,8 @@ public class GameState implements ItemListener {
 		Piece moving = move.getInitialSpace().getPiece();
 		
 		// set space variables
-		Space capturedSpace;
-		Space dest = move.getDestinationSpace();
+		SpacePresentation capturedSpace;
+		SpacePresentation dest = move.getDestinationSpace();
 		if(move.getClass() == MoveEnPassantRight.class || move.getClass() == MoveEnPassantLeft.class)
 			capturedSpace = (moving.getColor() == PieceColor.White) ? dest.getSpaceBackward() : dest.getSpaceForward();
 		else
@@ -218,12 +218,12 @@ public class GameState implements ItemListener {
 	/*
 	 * Set's everything back to the way it was before the last move.
 	 */
-	public static Space undoMove(ActualMove move, Piece captured, Boolean repaint){
+	public static SpacePresentation undoMove(ActualMove move, Piece captured, Boolean repaint){
 		Piece moving = move.getDestinationSpace().getPiece();
 		
 		// set spaces
-		Space capturedSpace;
-		Space dest = move.getDestinationSpace();
+		SpacePresentation capturedSpace;
+		SpacePresentation dest = move.getDestinationSpace();
 		if(move.getClass() == MoveEnPassantRight.class || move.getClass() == MoveEnPassantLeft.class)
 			capturedSpace = (moving.getColor() == PieceColor.White) ? dest.getSpaceBackward() : dest.getSpaceForward();
 		else
@@ -243,8 +243,8 @@ public class GameState implements ItemListener {
 	 * the opposite color. 
 	 */
 	public boolean meetsUniversalConstraints(ActualMove move, Turn turn, ErrorMessage message) {
-		Space init = move.getInitialSpace();
-		Space dest = move.getDestinationSpace();
+		SpacePresentation init = move.getInitialSpace();
+		SpacePresentation dest = move.getDestinationSpace();
 		Piece moving = init.getPiece();
 		Piece captured = dest.getPiece();
 		
@@ -272,7 +272,7 @@ public class GameState implements ItemListener {
 	}
 
 	// public getters
-	public Board getBoard() {
+	public BoardPresentation getBoard() {
 		return board;
 	}
 	

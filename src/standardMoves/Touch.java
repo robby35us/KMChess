@@ -1,7 +1,7 @@
 package standardMoves;
 
 import abstractClasses.Move;
-import gameComponents.Space;
+import gameComponents.SpacePresentation;
 
 /* Touch.java - Robert Reed
  * This class is a "concrete" class that extends
@@ -13,7 +13,7 @@ import gameComponents.Space;
  */
 
 public class Touch extends Move{
-   public Touch(Space initial, Space finalDest){
+   public Touch(SpacePresentation initial, SpacePresentation finalDest){
      super(0,0, initial, finalDest);
    }
 }

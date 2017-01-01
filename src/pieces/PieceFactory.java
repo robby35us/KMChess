@@ -32,7 +32,7 @@ public class PieceFactory {
 	 * Takes a copy of the Board state the GameState object and uses them to 
 	 * initialize the various constraints. 
 	 */
-	public PieceFactory(Board board, GameState gs){
+	public PieceFactory(BoardPresentation board, GameState gs){
 		if(singleMove == null){
 			singleMove = new SingleMove();
 			mustCapture = new MustCapture();

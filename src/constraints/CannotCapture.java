@@ -1,8 +1,8 @@
 package constraints;
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
-import gameComponents.Board;
-import gameComponents.Space;
+import gameComponents.BoardPresentation;
+import gameComponents.SpacePresentation;
 import interfaces.MoveConstraint;
 import pieces.Piece;
 
@@ -10,10 +10,10 @@ import pieces.Piece;
  * Verifies that a the move will not result in a capture.
  */
 public class CannotCapture implements MoveConstraint {
-	private Board board;
+	private BoardPresentation board;
 	
 	// This constraint requires the Board object.
-	public CannotCapture(Board board){
+	public CannotCapture(BoardPresentation board){
 		this.board = board;
 	}
 	
@@ -26,7 +26,7 @@ public class CannotCapture implements MoveConstraint {
 	 * is moving, or rather, the initial space of the proposed move.
 	 */
 	public boolean meetsConstraint(Move lastMove, ActualMove nextMove) {
-		Space nextSpace = board.getNextSpace(lastMove.getRankOffset() + nextMove.getRankOffset(), 
+		SpacePresentation nextSpace = board.getNextSpace(lastMove.getRankOffset() + nextMove.getRankOffset(), 
                 lastMove.getFileOffset() + nextMove.getFileOffset(), lastMove.getInitialSpace());
 		Piece defender = nextSpace.getPiece();
 		return defender == null;

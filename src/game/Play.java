@@ -10,7 +10,7 @@ import enums.PieceColor;
 import enums.PieceType;
 import enums.Timing;
 import enums.Turn;
-import gameComponents.Board;
+import gameComponents.BoardPresentation;
 import interfaces.IOFramework;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
@@ -39,7 +39,7 @@ public class Play {
 	 * through uncaught IOException.
 	 */
 	public static ErrorMessage playGame(IOFramework fw, GameState gs) throws IOException{
-		Board board = gs.getBoard(); 
+		BoardPresentation board = gs.getBoard(); 
 		ActualMove move = null;
 		MoveInput moveInput;
 		board.setTurn(Turn.Player1);

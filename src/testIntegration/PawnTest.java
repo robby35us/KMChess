@@ -9,7 +9,7 @@ import enums.PieceColor;
 import enums.PieceType;
 import enums.Rank;
 import game.*;
-import gameComponents.Board;
+import gameComponents.BoardPresentation;
 import test.TestIO;
 import test.TestUtility;
 
@@ -26,8 +26,8 @@ public class PawnTest {
 		beginningState[3] = new PieceInfo(PieceType.Pawn, PieceColor.Black, Rank.Seven, File.A);
 		beginningState[4] = new PieceInfo(PieceType.Pawn, PieceColor.Black, Rank.Seven, File.G);
 		beginningState[5] = new PieceInfo(PieceType.Pawn, PieceColor.Black, Rank.Seven, File.H);
-		GameState gs = new GameState(new Board());
-		Board board = TestUtility.makeBoard(beginningState, gs);
+		GameState gs = new GameState(new BoardPresentation());
+		BoardPresentation board = TestUtility.makeBoard(beginningState, gs);
 
 		TestIO tio = new TestIO(gs, "h2 h4 g7 g5 h4 g5 h7 h6 g5 h6 a7 a5 b2 b4 a5 b4 a2 a3 b4 a3 q", test.Test.SHOW_DISPLAY);
 		try {

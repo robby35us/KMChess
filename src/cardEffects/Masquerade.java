@@ -8,8 +8,8 @@ import enums.MoveType;
 import enums.PieceType;
 import game.GameState;
 import game.MoveBuilder;
-import gameComponents.Board;
-import gameComponents.Space;
+import gameComponents.BoardPresentation;
+import gameComponents.SpacePresentation;
 import interfaces.MoveConstraint;
 import pieces.Piece;
 import pieces.PieceFactory;
@@ -20,9 +20,9 @@ public class Masquerade extends CardEffect {
 	
 	@Override
 	public void initiateImmediateEffect(GameState gs) {
-		Board board = gs.getBoard();	
+		BoardPresentation board = gs.getBoard();	
 		ErrorMessage message = new ErrorMessage();
-		Space startSpace = null;
+		SpacePresentation startSpace = null;
 		Piece selected = null;
 		do{
 			if(message.hasError())

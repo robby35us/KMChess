@@ -10,21 +10,21 @@ import enums.MoveType;
 import enums.PieceType;
 import enums.Rank;
 import game.GameState;
-import gameComponents.Board;
-import gameComponents.Space;
+import gameComponents.BoardPresentation;
+import gameComponents.SpacePresentation;
 import graphics.SpaceBorder;
 import pieces.Piece;
 
 public class Fatal_Attraction extends ContEffect {
 
 	private Piece magnet;
-	private Space magnetSpace;
+	private SpacePresentation magnetSpace;
 	private DisabledMove disabled;
 	
 
 	@Override
 	public synchronized void startContEffect(GameState gs) {
-		Board board = gs.getBoard();
+		BoardPresentation board = gs.getBoard();
 		board.infoBox("Select a piece to become a magnet!", getName());
 		board.setStartSpace(null);
 		board.setEndSpace(null);
@@ -53,25 +53,25 @@ public class Fatal_Attraction extends ContEffect {
 		//				"\nadjacent squares can move until the magnet moves or is captured.", contEffectName);
 		
 		board.setStartSpace(null);
-		Space.activeSpace.setButtonState(Space.UNARMED);
-		Space.activeSpace = null;
+		SpacePresentation.activeSpace.setButtonState(SpacePresentation.UNARMED);
+		SpacePresentation.activeSpace = null;
 	}
 		
 	private ArrayList<Piece> getAdjacentPieces() {
 		ArrayList<Piece> pieces = new ArrayList<Piece>();
-		ArrayList<Space> spaces = getAdjacentSpaces();
-		for(Space s : spaces){
+		ArrayList<SpacePresentation> spaces = getAdjacentSpaces();
+		for(SpacePresentation s : spaces){
 			if(s.getPiece() != null)
 				pieces.add(s.getPiece());
 		}
 		return pieces;
 	}
 
-	private ArrayList<Space> getAdjacentSpaces() {
-		ArrayList<Space> spaces = new ArrayList<Space>();
+	private ArrayList<SpacePresentation> getAdjacentSpaces() {
+		ArrayList<SpacePresentation> spaces = new ArrayList<SpacePresentation>();
 		Rank mRank = magnetSpace.getRank();
 		File mFile = magnetSpace.getFile();
-		Space adjacentSpace;
+		SpacePresentation adjacentSpace;
 		
 		// get top row pieces
 		if(mRank != Rank.Eight){
@@ -80,12 +80,12 @@ public class Fatal_Attraction extends ContEffect {
 			spaces.add(adjacentSpace);
 			if(mFile != File.A){
 				// get top left
-				Space left = adjacentSpace.getSpaceLeft();
+				SpacePresentation left = adjacentSpace.getSpaceLeft();
 				spaces.add(left);
 			}
 			if(mFile != File.H){
 				// get top right
-				Space right = adjacentSpace.getSpaceRight();
+				SpacePresentation right = adjacentSpace.getSpaceRight();
 				spaces.add(right);
 			}
 		}
@@ -106,12 +106,12 @@ public class Fatal_Attraction extends ContEffect {
 			spaces.add(adjacentSpace);
 			if(mFile != File.A){
 				// get top left
-				Space left = adjacentSpace.getSpaceLeft();
+				SpacePresentation left = adjacentSpace.getSpaceLeft();
 				spaces.add(left);
 			}
 			if(mFile != File.H){
 				// get top right
-				Space right = adjacentSpace.getSpaceRight();
+				SpacePresentation right = adjacentSpace.getSpaceRight();
 				spaces.add(right);
 			}
 		}
@@ -164,9 +164,9 @@ public class Fatal_Attraction extends ContEffect {
 							  "\n" + magnetSpace.getFile() + 
 							  magnetSpace.getRank() + " is the magenet."
 							  , getName());
-		ArrayList<Space> adjacentSpaces = getAdjacentSpaces();
+		ArrayList<SpacePresentation> adjacentSpaces = getAdjacentSpaces();
 		SpaceBorder adjacentBorder = new SpaceBorder(Color.YELLOW);
-		for(Space as: adjacentSpaces){
+		for(SpacePresentation as: adjacentSpaces){
 			as.setArmedBorder(adjacentBorder);
 			as.setUnarmedBorder(adjacentBorder);
 			as.repaint();
@@ -178,13 +178,13 @@ public class Fatal_Attraction extends ContEffect {
 
 	@Override
 	public void endHighlightChange(GameState gs) {
-		magnetSpace.setArmedBorder(Space.defaultArmedBorder);
-		magnetSpace.setUnarmedBorder(Space.defaultUnarmedBorder);
+		magnetSpace.setArmedBorder(SpacePresentation.defaultArmedBorder);
+		magnetSpace.setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
 		magnetSpace.repaint();
-		ArrayList<Space> adjacentSpaces = getAdjacentSpaces();
-		for(Space as: adjacentSpaces) {
-			as.setArmedBorder(Space.defaultArmedBorder);
-			as.setUnarmedBorder(Space.defaultUnarmedBorder);
+		ArrayList<SpacePresentation> adjacentSpaces = getAdjacentSpaces();
+		for(SpacePresentation as: adjacentSpaces) {
+			as.setArmedBorder(SpacePresentation.defaultArmedBorder);
+			as.setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
 			as.repaint();
 		}
 	}

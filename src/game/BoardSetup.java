@@ -17,7 +17,7 @@ public class BoardSetup {
 	 * assumes the each set is organized by first row, from File A to File H, 
 	 * and then the eight pawns.
 	 */
-	public static Board setupChessBoard(PlayerSet whiteSet, PlayerSet blackSet, Board board){
+	public static BoardPresentation setupChessBoard(PlayerSet whiteSet, PlayerSet blackSet, BoardPresentation board){
 		placeWhitePieces(whiteSet, board);
 		placeBlackPieces(blackSet, board);
 		return board;
@@ -26,8 +26,8 @@ public class BoardSetup {
 	/*
 	 * Sets the black pieces on the board
 	 */
-	private static void placeBlackPieces(PlayerSet blackSet, Board board) {
-		Space currentSpace = board.getSpace(Rank.Eight, File.A);
+	private static void placeBlackPieces(PlayerSet blackSet, BoardPresentation board) {
+		SpacePresentation currentSpace = board.getSpace(Rank.Eight, File.A);
 		Iterator<Piece> it = blackSet.iterator();
 		
 		// set the "first" row(Rank 8) of black pieces from left to right
@@ -48,8 +48,8 @@ public class BoardSetup {
 	/*
 	 * Sets the white Pieces on the board
 	 */
-	private static void placeWhitePieces(PlayerSet whiteSet, Board board) {
-		Space currentSpace = board.getSpace(Rank.One, File.A);
+	private static void placeWhitePieces(PlayerSet whiteSet, BoardPresentation board) {
+		SpacePresentation currentSpace = board.getSpace(Rank.One, File.A);
 		Iterator<Piece> it = whiteSet.iterator();
 		
 		// set the "first" row (Rank 1) of white pieces left to right

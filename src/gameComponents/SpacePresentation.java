@@ -9,37 +9,31 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.MediaTracker;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 
-import enums.File;
 import enums.MoveType;
-import enums.PieceColor;
-import enums.Rank;
 import enums.SpaceColor;
-import enums.Turn;
-import gameComponents.Board;
-import gameComponents.Space;
+import gameComponents.SpacePresentation;
 import graphics.SpaceBorder;
 import pieces.Piece;
 
 
-public class Space extends Canvas implements MouseListener{
+public class SpacePresentation extends Canvas{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	Piece p;
 	   
-    public static final int UNARMED = 0;
+	public static final int UNARMED = 0;
     public static final int ARMED = 1;
     public static final int OVER = 2;
     public static final int DISABLED = 3;
-    public static final Dimension MINIMUM_SIZE = new Dimension(50,50);
-    public static final Dimension MAXIMUM_SIZE = new Dimension(100,100);
-    public static Space activeSpace = null;
+    //public static final Dimension MINIMUM_SIZE = new Dimension(50,50);
+    //public static final Dimension MAXIMUM_SIZE = new Dimension(100,100);
+    public static SpacePresentation activeSpace = null;
    
     
     private int buttonState = UNARMED;
@@ -49,14 +43,10 @@ public class Space extends Canvas implements MouseListener{
 	
 	@SuppressWarnings("unused")
 	private boolean generatedDisabled;
-	private boolean mousedown;
-	private boolean mouseInBounds = false;
 	
-	private Rank rank;
-	private File file;
-	private SpaceColor color;
-	private Piece piece; // null means no piece
-	private Board board;
+	
+	
+	private BoardAbstraction board;
 
 	
 	public static final SpaceBorder defaultUnarmedBorder =
@@ -66,25 +56,22 @@ public class Space extends Canvas implements MouseListener{
 	    
 	    
 	 
-	 
-	 private Space(Rank rank, File file, Board board) {
+	public SpacePresentation( SpaceColor background, Image image ) {
+        this();
+        if(background == SpaceColor.White)
+        	setBackground(Color.WHITE);
+        else
+           setBackground(Color.LIGHT_GRAY);
+        setUnarmedImage( image );
+    } 
+	
+	private SpacePresentation() {
 	        tracker = new MediaTracker( this );
 	        setUnarmedBorder( defaultUnarmedBorder );
 	        setArmedBorder( defaultArmedBorder );
 	        
-	        this.setMinimumSize(MINIMUM_SIZE);
-	        this.setMaximumSize(MAXIMUM_SIZE);
-	        this.addMouseListener(this);
-	        
-	        this.rank = rank;
-			this.file = file;
-			
-			// The color is set by taking the sum of the coordinates and querying 
-			// whether it is odd or even;
-			this.color = ((rank.ordinal() + file.ordinal()) & 1) == 0 ? SpaceColor.Gray : SpaceColor.White;
-			
-			this.piece = null; 
-			this.board = board;
+	        //this.setMinimumSize(MINIMUM_SIZE);
+	        //this.setMaximumSize(MAXIMUM_SIZE);        
 	 }
 
 	    public void setArmedBorder(SpaceBorder border) {
@@ -98,41 +85,6 @@ public class Space extends Canvas implements MouseListener{
 			borders[DISABLED] = border;
 		
 	}
-
-		public Space( Rank rank, File file, Board board, SpaceColor background, Image image ) {
-	        this(rank, file, board);
-	        if(color == SpaceColor.White)
-	        	setBackground(Color.WHITE);
-	        else
-	           setBackground(Color.LIGHT_GRAY);
-	        setUnarmedImage( image );
-	    } 
-		
-
-		//Public getters
-		public Rank getRank(){
-			return rank;
-		}
-		
-		public File getFile(){
-			return file;
-		}
-		
-		public SpaceColor getColor(){
-			return color;
-		}
-		
-		public Piece getPiece(){
-			return piece;
-		}
-		
-		/*
-		 * Returns true if there is a piece in this Space,
-		 * false otherwise.
-		 */
-		public boolean hasPiece(){
-			return piece != null;
-		}
 		
 		/*
 		 * The setter method for Piece. Returns whether or
@@ -140,28 +92,13 @@ public class Space extends Canvas implements MouseListener{
 		 * to represent that a piece has been moved from 
 		 * this space without a replacement.
 		 */
-		public boolean changePiece(Piece newPiece, Boolean repaint){
-			//System.out.println("Repaint == " + repaint);
-			boolean wasPrevPiece = piece != null;
-			piece = newPiece;
-			if(newPiece != null){
-				piece.setSpace(this);
-				
-				Image img = piece.getImage(this.getColor());
-				setUnarmedImage(img);
-				setArmedImage(img);
-				setOverImage(img);
-				setDisabledImage(img);
-			}else{
-				setUnarmedImage(null);
-				setArmedImage(null);
-				setOverImage(null);
-				setDisabledImage(null);
-			}
+		public void updateImage(Image img, boolean repaint){
+			setUnarmedImage(img);
+			setArmedImage(img);
+			setOverImage(img);
+			setDisabledImage(img);
 			if(repaint)
 				repaint();
-			return wasPrevPiece;
-
 		}
 		
 		/*
@@ -169,7 +106,7 @@ public class Space extends Canvas implements MouseListener{
 		 * rather, the Space on the same Rank one file less. Returns 
 		 * null if no such Space exists
 		 */
-		public Space getSpaceLeft(){
+		public SpacePresentation getSpaceLeft(){
 			return board.getNextSpace(MoveType.Left.getRankOffset(), 
 					                  MoveType.Left.getFileOffset(),this);
 		}
@@ -179,7 +116,7 @@ public class Space extends Canvas implements MouseListener{
 		 * rather, the Space on the same Rank one file greater. Returns
 		 * null if no such Space exists.
 		 */
-		public Space getSpaceRight(){
+		public SpacePresentation getSpaceRight(){
 			return board.getNextSpace(MoveType.Right.getRankOffset(), 
 	                				  MoveType.Right.getFileOffset(),this);
 		}
@@ -189,7 +126,7 @@ public class Space extends Canvas implements MouseListener{
 		 * rather, the Space on the same File one Rank greater. Returns null
 		 * if no such Space exists.
 		 */
-		public Space getSpaceForward(){
+		public SpacePresentation getSpaceForward(){
 			return board.getNextSpace(MoveType.Forward.getRankOffset(), 
 	                				  MoveType.Forward.getFileOffset(),this);
 		}
@@ -199,7 +136,7 @@ public class Space extends Canvas implements MouseListener{
 		 * the Space on the Same File one Rank lesser. Returns null if no such 
 		 * Space exists.
 		 */
-		public Space getSpaceBackward(){
+		public SpacePresentation getSpaceBackward(){
 			return board.getNextSpace(MoveType.Backward.getRankOffset(), 
 	                				  MoveType.Backward.getFileOffset(),this);
 			
@@ -366,73 +303,9 @@ public class Space extends Canvas implements MouseListener{
         }
     } 
     
-    
+}
 
        
 
 
-      
-
-		@Override
-		public void mouseClicked(MouseEvent e) { 
-			mousedown = false;
-			
-			if(activeSpace != null){
-				activeSpace.setButtonState(UNARMED);
-				if(activeSpace != this){
-					((Board) this.getParent()).setEndSpace(this);
-					activeSpace = null;
-					return;
-				}
-			}
-			if(activeSpace == this){
-				activeSpace = null;
-				((Board) this.getParent()).setStartSpace(null);
-			}
-			else {
-				if(this.piece != null &&
-				   ((this.board.getTurn() == Turn.Player1 && piece.getColor() == PieceColor.White) ||
-					(this.board.getTurn() == Turn.Player2 && piece.getColor() == PieceColor.Black))) { 	   
-						activeSpace = this;
-						setButtonState( ARMED );
-						((Board) this.getParent()).setStartSpace(this);
-				}
-			}
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-            this.mouseInBounds = true;
-			if ( mousedown ) {
-                setButtonState( ARMED );
-            }
-            else {
-                setButtonState( OVER );
-            }
-           
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			this.mouseInBounds = false;
-            if( this != activeSpace)
-            	setButtonState( UNARMED );
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			mousedown = true;
-			setButtonState(ARMED);
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-		   mousedown = false;
-		   if(mouseInBounds)
-			   setButtonState( OVER );
-		   else
-			   setButtonState(UNARMED);
-			
-		}
- }   
-   
+     

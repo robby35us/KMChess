@@ -20,19 +20,19 @@ import enums.Turn;
  * the spaces it contains, and how to return one of
  * it's Space objects.
  */
-public class Board extends Panel {
+public class BoardPresentation extends Panel {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	// The 2-D Space array that makes up a Board object.
-	private Space[][] spaces;
+	
 	private Label[] rowLabels;
 	private Label cornerLabel;
 	private Label[] colLabels;
-	volatile private Space startSpace = null;
-	volatile private Space endSpace = null;
+	volatile private SpacePresentation startSpace = null;
+	volatile private SpacePresentation endSpace = null;
 	volatile private Turn turn = null;
 	private static final Dimension d = new Dimension(15,15);
 	
@@ -41,19 +41,8 @@ public class Board extends Panel {
 	 * Rank and File. The size of the board is dictated by the number
 	 * of values in these enums.
 	 */
-	public Board(){
-		spaces = new Space[Rank.values().length][File.values().length];
-		for(Rank r : Rank.values())
-			for(File f : File.values()){
-				int ro = r.ordinal();
-				int fo = f.ordinal();
-				SpaceColor color = null;
-				if((ro + fo ) % 2 == 0)
-					color = SpaceColor.White;
-				else
-					color = SpaceColor.Gray;
-				spaces[ro][fo] = new Space(r,f, this, color, null);
-			}
+	public BoardPresentation(){
+		
 		
 		setLayout(new GridLayout(9,9,0,0));
 		rowLabels = new Label[8];
@@ -66,7 +55,7 @@ public class Board extends Panel {
 				Rank r = Rank.values()[7-i];
 				File f = File.values()[j];
 				
-				Space space = this.getSpace(r, f);
+				SpacePresentation space = this.getSpace(r, f);
 				space.setSize(d);
 				add(space);
 				
@@ -85,53 +74,36 @@ public class Board extends Panel {
 	
 	}
 	
-	public void setStartSpace(Space space){
+	public void setStartSpace(SpacePresentation space){
 		if(startSpace != null)
-			startSpace.setButtonState(Space.UNARMED);
+			startSpace.setButtonState(SpacePresentation.UNARMED);
 		if(space != null)
-			space.setButtonState(Space.ARMED);
+			space.setButtonState(SpacePresentation.ARMED);
 		startSpace = space;
 	}
 	
-	public Space getStartSpace(){
+	public SpacePresentation getStartSpace(){
 		return startSpace;
 	}
 	
-	public void setEndSpace(Space space){
+	public void setEndSpace(SpacePresentation space){
 		if(endSpace != null)
-			endSpace.setButtonState(Space.UNARMED);
+			endSpace.setButtonState(SpacePresentation.UNARMED);
 		if(space != null)
-			space.setButtonState(Space.ARMED);
+			space.setButtonState(SpacePresentation.ARMED);
 		endSpace = space;
 	}
 
-	public Space getEndSpace(){
+	public SpacePresentation getEndSpace(){
 		return endSpace;
 	}
 	
-	/*
-	 * This function finds another space(the next space) on the board in relation to
-	 * a given space (initialSpace) using the rankOffset and fileOffset. It returns 
-	 * null if there is no such space. 
-	 */
-	public Space getNextSpace(int rankOffset, int fileOffset, Space initialSpace){
-		if(initialSpace == null)
-			return null;
-		int newRank = initialSpace.getRank().ordinal() + rankOffset;
-		int newFile = initialSpace.getFile().ordinal() + fileOffset;
-		if(newRank >= 0 && newRank < Rank.values().length &&
-		   newFile >= 0 && newFile < File.values().length)
-			return spaces[newRank][newFile];
-		else{
-			// No such space exists!!!
-			return null;
-		}
-	}
+
 	
 	/*
 	 * Returns the Space on the Board at the given coordinates.
 	 */
-	public Space getSpace(Rank rank, File file){
+	public SpacePresentation getSpace(Rank rank, File file){
 		if(rank == null || file == null)
 			return null;
 		return spaces[rank.ordinal()][file.ordinal()];

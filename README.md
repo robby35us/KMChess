@@ -25,11 +25,7 @@ using an gui representation of the board or play "Knightmare Chess" with a small
 subset of the cards implemented. It doesn't recognize draws or stale-mates. 
 This of course will be changed in future versions of the code. It does however 
 implement all other restrictions on piece movements and allows special moves(like 
-castle and "En Passant"). Over the next few iterations, I will complete the 
-implementation of standard chesss, add an undo feature, and improve the user 
-interface. I will also be doing research on the card game and begin providing some 
-of the additional back-end support needed to make a good implemention of a subset 
-of the Knightmare chess rules. 
+castle and "En Passant"). 
 
 The code, as it stands now, was developed from the ground up with the intention
 of having to support the needs of Knightmare chess. This effected the design decisions

@@ -8,7 +8,7 @@ import enums.MoveType;
 import enums.PieceType;
 import game.GameState;
 import game.MoveBuilder;
-import gameComponents.Board;
+import gameComponents.BoardPresentation;
 import gameComponents.PlayerSet;
 import pieces.Piece;
 import utilityContainers.ErrorMessage;
@@ -18,7 +18,7 @@ public class Cathedral extends CardEffect {
 	@Override
 	public void initiateImmediateEffect(GameState gs) {
 		
-		Board board = gs.getBoard();
+		BoardPresentation board = gs.getBoard();
 		board.setStartSpace(null);
 		board.setEndSpace(null);
 		do{

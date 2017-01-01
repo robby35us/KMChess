@@ -8,18 +8,18 @@ import enums.File;
 import enums.PieceColor;
 import enums.Rank;
 import game.GameState;
-import gameComponents.Board;
-import gameComponents.Space;
+import gameComponents.BoardPresentation;
+import gameComponents.SpacePresentation;
 import pieces.Piece;
 import pieces.PieceFactory;
 
 public class TestUtility {
 	
-	public static Board makeBoard(PieceInfo[] info, GameState gs){
-		Board board = gs.getBoard();
+	public static BoardPresentation makeBoard(PieceInfo[] info, GameState gs){
+		BoardPresentation board = gs.getBoard();
 		PieceFactory factory = new PieceFactory(board, gs);
 		for(int i = 0; i < info.length; i++){
-			Space space = board.getSpace(info[i].getRank(), info[i].getFile());
+			SpacePresentation space = board.getSpace(info[i].getRank(), info[i].getFile());
 			if(space.getPiece() == null) // verify space is empty
 				space.changePiece(factory.makePiece(info[i].getType(), info[i].getType(), info[i].getColor()), true);
 			else
@@ -28,13 +28,13 @@ public class TestUtility {
 		return board;
 	}
 	
-	public static void verifyBoardState(Board board, PieceInfo[] state){
+	public static void verifyBoardState(BoardPresentation board, PieceInfo[] state){
 		PieceInfo[][] expectedState = new PieceInfo[8][8];
 		for(int i = 0; i < state.length; i++){
 			expectedState[state[i].getRank().ordinal()][state[i].getFile().ordinal()] = state[i];
 		}
-		Space head = board.getSpace(Rank.One, File.A);
-		Space current = head;
+		SpacePresentation head = board.getSpace(Rank.One, File.A);
+		SpacePresentation current = head;
 		for(int rankValue = 0; rankValue < 8; rankValue++){
 			for(int fileValue = 0; fileValue < 8; fileValue++){
 				if(current.getPiece() == null){

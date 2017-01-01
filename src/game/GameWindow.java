@@ -11,8 +11,8 @@ import utilityContainers.MoveInput;
 import enums.PieceColor;
 import enums.PieceType;
 import enums.Turn;
-import gameComponents.Board;
-import gameComponents.Space;
+import gameComponents.BoardPresentation;
+import gameComponents.SpacePresentation;
 import guiComponent.CardArea;
 
 public class GameWindow extends Frame implements WindowListener, IOFramework{
@@ -108,7 +108,7 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 
 	@Override
 	public synchronized MoveInput getMoveInput(PieceColor color, ErrorMessage message) {
-		Board board = gs.getBoard();
+		BoardPresentation board = gs.getBoard();
 		CardArea ca = gs.getCardArea();
 		while((board.getStartSpace() == null || board.getEndSpace() == null) &&
 			  (ca.getExecutingCard() == null)){
@@ -120,8 +120,8 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 			}
 		}
 		if(board.getStartSpace() != null && board.getEndSpace() != null){
-			Space start = board.getStartSpace();
-			Space end = board.getEndSpace();
+			SpacePresentation start = board.getStartSpace();
+			SpacePresentation end = board.getEndSpace();
 			board.setStartSpace(null);
 			board.setEndSpace(null);
 			return new MoveInput(start, end);

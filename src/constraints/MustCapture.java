@@ -2,7 +2,7 @@ package constraints;
 
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
-import gameComponents.Space;
+import gameComponents.SpacePresentation;
 import interfaces.MoveConstraint;
 import pieces.Piece;
 
@@ -24,8 +24,8 @@ public class MustCapture implements MoveConstraint {
 	 * is moving, or rather, the initial space of the proposed move.
 	 */
 	public boolean meetsConstraint(Move lastMove, ActualMove nextMove) {
-		Space initialSpace = lastMove.getInitialSpace();
-		Space finalDestSpace = lastMove.getFinalDestSpace();
+		SpacePresentation initialSpace = lastMove.getInitialSpace();
+		SpacePresentation finalDestSpace = lastMove.getFinalDestSpace();
 		Piece defender = finalDestSpace.getPiece();
 		return defender != null && defender.getColor() != initialSpace.getPiece().getColor();
 	}

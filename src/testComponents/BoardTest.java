@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import enums.File;
 import enums.Rank;
 import enums.SpaceColor;
-import gameComponents.Board;
-import gameComponents.Space;
+import gameComponents.BoardPresentation;
+import gameComponents.SpacePresentation;
 
-public class BoardTest extends Board {
+public class BoardTest extends BoardPresentation {
 
 	/**
 	 * 
@@ -20,10 +20,10 @@ public class BoardTest extends Board {
 
 	@Test
 	public void testGetSpace(){
-		Board board = new Board();
-		ArrayList<Space> spaces = new ArrayList<Space>();
+		BoardPresentation board = new BoardPresentation();
+		ArrayList<SpacePresentation> spaces = new ArrayList<SpacePresentation>();
 		SpaceColor color = SpaceColor.Gray;
-		Space space;
+		SpacePresentation space;
 		for(Rank r : Rank.values())
 			for(File f : File.values()){
 				space = board.getSpace(r,f);
@@ -42,12 +42,12 @@ public class BoardTest extends Board {
 
 	@Test
 	public void testGetNextSpace(){
-		Board board = new Board();
-		ArrayList<Space> spaces = new ArrayList<Space>();
+		BoardPresentation board = new BoardPresentation();
+		ArrayList<SpacePresentation> spaces = new ArrayList<SpacePresentation>();
 		for(Rank r : Rank.values())
 			for(File f : File.values())
 				spaces.add(board.getSpace(r, f));
-		Space space;
+		SpacePresentation space;
 		for(int spaceNum = 0; spaceNum < spaces.size(); spaceNum++){
 			space = spaces.get(spaceNum);
 			int rankOrdinal = spaceNum / 8;
@@ -71,7 +71,7 @@ public class BoardTest extends Board {
 	
 	@Test
 	public void testGetNextSpaceOutOfBounds(){
-		Board board = new Board();
+		BoardPresentation board = new BoardPresentation();
 		assertNull(board.getNextSpace(0, 0, null));
 		assertNull(board.getNextSpace(-1, -1, board.getSpace(Rank.One, File.A)));
 		assertNull(board.getNextSpace(1, 1, board.getSpace(Rank.Eight, File.H)));
@@ -81,7 +81,7 @@ public class BoardTest extends Board {
 	
 	@Test
 	public void testGetSpaceNullValue(){
-		Board board = new Board();
+		BoardPresentation board = new BoardPresentation();
 		assertNull(board.getSpace(null, File.A));
 		assertNull(board.getSpace(Rank.Eight, null));
 		assertNull(board.getSpace(null, null));
