@@ -105,4 +105,10 @@ public class ConsoleIO implements IOFramework {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void infoBox(String message, String title) {
+		// TODO Auto-generated method stub
+		
+	}
 }

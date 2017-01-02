@@ -103,4 +103,10 @@ public class TestIO implements IOFramework {
 		
 	}
 
+	@Override
+	public void infoBox(String message, String title) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

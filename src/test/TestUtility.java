@@ -4,22 +4,22 @@ import testIntegration.PieceInfo;
 import org.junit.Assert;
 
 import abstractClasses.Move;
+import control.BoardControl;
+import control.SpaceControl;
 import enums.File;
 import enums.PieceColor;
 import enums.Rank;
 import game.GameState;
 import pieces.Piece;
 import pieces.PieceFactory;
-import presentation.BoardPresentation;
-import presentation.SpacePresentation;
 
 public class TestUtility {
 	
-	public static BoardPresentation makeBoard(PieceInfo[] info, GameState gs){
-		BoardPresentation board = gs.getBoard();
+	public static BoardControl makeBoard(PieceInfo[] info, GameState gs){
+		BoardControl board = gs.getBoard();
 		PieceFactory factory = new PieceFactory(board, gs);
 		for(int i = 0; i < info.length; i++){
-			SpacePresentation space = board.getSpace(info[i].getRank(), info[i].getFile());
+			SpaceControl space = board.getSpace(info[i].getRank(), info[i].getFile());
 			if(space.getPiece() == null) // verify space is empty
 				space.changePiece(factory.makePiece(info[i].getType(), info[i].getType(), info[i].getColor()), true);
 			else
@@ -28,13 +28,13 @@ public class TestUtility {
 		return board;
 	}
 	
-	public static void verifyBoardState(BoardPresentation board, PieceInfo[] state){
+	public static void verifyBoardState(BoardControl board, PieceInfo[] state){
 		PieceInfo[][] expectedState = new PieceInfo[8][8];
 		for(int i = 0; i < state.length; i++){
 			expectedState[state[i].getRank().ordinal()][state[i].getFile().ordinal()] = state[i];
 		}
-		SpacePresentation head = board.getSpace(Rank.One, File.A);
-		SpacePresentation current = head;
+		SpaceControl head = board.getSpace(Rank.One, File.A);
+		SpaceControl current = head;
 		for(int rankValue = 0; rankValue < 8; rankValue++){
 			for(int fileValue = 0; fileValue < 8; fileValue++){
 				if(current.getPiece() == null){

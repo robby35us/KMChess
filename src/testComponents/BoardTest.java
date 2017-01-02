@@ -3,27 +3,24 @@ package testComponents;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import control.BoardControl;
+import control.SpaceControl;
+
 import java.util.ArrayList;
 
 import enums.File;
 import enums.Rank;
 import enums.SpaceColor;
-import presentation.BoardPresentation;
-import presentation.SpacePresentation;
 
-public class BoardTest extends BoardPresentation {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class BoardTest extends BoardControl {
 
 	@Test
 	public void testGetSpace(){
-		BoardPresentation board = new BoardPresentation();
-		ArrayList<SpacePresentation> spaces = new ArrayList<SpacePresentation>();
+		BoardControl board = new BoardControl();
+		ArrayList<SpaceControl> spaces = new ArrayList<SpaceControl>();
 		SpaceColor color = SpaceColor.Gray;
-		SpacePresentation space;
+		SpaceControl space;
 		for(Rank r : Rank.values())
 			for(File f : File.values()){
 				space = board.getSpace(r,f);
@@ -42,12 +39,12 @@ public class BoardTest extends BoardPresentation {
 
 	@Test
 	public void testGetNextSpace(){
-		BoardPresentation board = new BoardPresentation();
-		ArrayList<SpacePresentation> spaces = new ArrayList<SpacePresentation>();
+		BoardControl board = new BoardControl();
+		ArrayList<SpaceControl> spaces = new ArrayList<SpaceControl>();
 		for(Rank r : Rank.values())
 			for(File f : File.values())
 				spaces.add(board.getSpace(r, f));
-		SpacePresentation space;
+		SpaceControl space;
 		for(int spaceNum = 0; spaceNum < spaces.size(); spaceNum++){
 			space = spaces.get(spaceNum);
 			int rankOrdinal = spaceNum / 8;
@@ -71,7 +68,7 @@ public class BoardTest extends BoardPresentation {
 	
 	@Test
 	public void testGetNextSpaceOutOfBounds(){
-		BoardPresentation board = new BoardPresentation();
+		BoardControl board = new BoardControl();
 		assertNull(board.getNextSpace(0, 0, null));
 		assertNull(board.getNextSpace(-1, -1, board.getSpace(Rank.One, File.A)));
 		assertNull(board.getNextSpace(1, 1, board.getSpace(Rank.Eight, File.H)));
@@ -81,7 +78,7 @@ public class BoardTest extends BoardPresentation {
 	
 	@Test
 	public void testGetSpaceNullValue(){
-		BoardPresentation board = new BoardPresentation();
+		BoardControl board = new BoardControl();
 		assertNull(board.getSpace(null, File.A));
 		assertNull(board.getSpace(Rank.Eight, null));
 		assertNull(board.getSpace(null, null));
