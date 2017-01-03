@@ -14,16 +14,12 @@ import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 import enums.SpaceColor;
 import graphics.SpaceBorder;
-import pieces.Piece;
 import presentation.SpacePresentation;
 
 
 public class SpacePresentation extends Canvas{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
-	Piece p;
 	   
 	public static final int UNARMED = 0;
     public static final int ARMED = 1;
