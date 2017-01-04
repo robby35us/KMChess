@@ -31,11 +31,11 @@ public class SpaceController extends Controller implements MouseListener {
 	public SpaceController(SpaceView view, SpaceModel model, BoardController parent){
 		
 		this.view = view;
-		view.addMouseListener(this);
 		this.model = model;
 		view.setBackground(model.getColor().getAWTColor());
 		this.parent = parent;
 		this.parentModel = parent.getModel();
+		view.addMouseListener(this);
 	}
 	
 	//Public getters
@@ -191,7 +191,7 @@ public class SpaceController extends Controller implements MouseListener {
 	}
 
 	public void changePiece(Piece newPiece, boolean b) {
-		this.changePiece(newPiece, b);		
+		this.model.replacePiece(newPiece, b);		
 	}
 
 	public boolean hasPiece() {

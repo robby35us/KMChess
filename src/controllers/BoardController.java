@@ -25,14 +25,18 @@ public class BoardController extends Controller implements Visitable {
 	private BoardModel model;
 	
 	public BoardController(){
+
 		childControllers = new ArrayList<Controller>(numRanks * numFiles);
-		for(int i = numRanks - 1;  i >=0 ; i--)
+		for(int i = numRanks - 1;  i >=0 ; i--){
+			rank = Rank.values()[i];
 			for(int j = 0; j < numFiles; j++){
+				file = File.values()[j];
 				createChildTriad();
 				childControllers.add(currentChild);
 			}
+		}
 		view = new BoardView(childControllers.iterator());
-		model = new BoardModel(view);
+		model = new BoardModel(view);		
 	}
 	
 	/*

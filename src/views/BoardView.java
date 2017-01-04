@@ -46,9 +46,8 @@ public class BoardView extends Panel {
 			l.setSize(d );
 			add(l);
 			for(int j = 0; j < numFiles; j++){
-				SpaceView spacePres = ((SpaceController) iterator.next()).getSpaceView();
-				add(spacePres);
-				
+				SpaceView spaceView = ((SpaceController) iterator.next()).getSpaceView();
+				add(spaceView);	
 			}	
 		}
 		Label corner = new Label();
