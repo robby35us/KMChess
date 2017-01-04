@@ -15,7 +15,7 @@ import game.GameState;
 import game.GameWindow;
 import graphics.SpaceBorder;
 import pieces.Piece;
-import presentation.SpaceView;
+import static constants.Constants.*;
 
 public class Fatal_Attraction extends ContEffect {
 
@@ -159,7 +159,7 @@ public class Fatal_Attraction extends ContEffect {
 	@Override
 	public void highlightChange(GameState gs) {
 		SpaceBorder magnetBorder = new SpaceBorder(Color.RED);
-		magnetSpace.getSpaceView().setArmedBorder(magnetBorder);
+		//magnetSpace.getSpaceView().setArmedBorder(magnetBorder);
 		magnetSpace.getSpaceView().setUnarmedBorder(magnetBorder);
 		magnetSpace.getSpaceView().repaint();
 		GameWindow.globalGW.infoBox("The " + magnet.getType() + " at the red space " + 
@@ -169,7 +169,7 @@ public class Fatal_Attraction extends ContEffect {
 		ArrayList<SpaceController> adjacentSpaces = getAdjacentSpaces();
 		SpaceBorder adjacentBorder = new SpaceBorder(Color.YELLOW);
 		for(SpaceController as: adjacentSpaces){
-			as.getSpaceView().setArmedBorder(adjacentBorder);
+			//as.getSpaceView().setArmedBorder(adjacentBorder);
 			as.getSpaceView().setUnarmedBorder(adjacentBorder);
 			as.getSpaceView().repaint();
 		}
@@ -180,13 +180,13 @@ public class Fatal_Attraction extends ContEffect {
 
 	@Override
 	public void endHighlightChange(GameState gs) {
-		magnetSpace.getSpaceView().setArmedBorder(SpaceView.defaultArmedBorder);
-		magnetSpace.getSpaceView().setUnarmedBorder(SpaceView.defaultUnarmedBorder);
+		//magnetSpace.getSpaceView().setArmedBorder(defaultArmedBorder);
+		magnetSpace.getSpaceView().setUnarmedBorder(defaultUnarmedBorder);
 		magnetSpace.getSpaceView().repaint();
 		ArrayList<SpaceController> adjacentSpaces = getAdjacentSpaces();
 		for(SpaceController as: adjacentSpaces) {
-			as.getSpaceView().setArmedBorder(SpaceView.defaultArmedBorder);
-			as.getSpaceView().setUnarmedBorder(SpaceView.defaultUnarmedBorder);
+			//as.getSpaceView().setArmedBorder(efaultArmedBorder);
+			as.getSpaceView().setUnarmedBorder(defaultUnarmedBorder);
 			as.getSpaceView().repaint();
 		}
 	}

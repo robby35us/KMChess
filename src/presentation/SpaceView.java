@@ -2,8 +2,6 @@ package presentation;
 
 import java.awt.Canvas;
 
-import java.awt.Color;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -14,7 +12,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import abstraction.SpaceModel;
-import enums.SpaceColor;
 import graphics.SpaceBorder;
 import pieces.Piece;
 import pieces.PieceImages;
@@ -36,17 +33,13 @@ public class SpaceView extends Canvas implements Observer{
 	private MediaTracker tracker;
 	private SpaceBorder[] borders = new SpaceBorder[4];
 	
-	public SpaceView(SpaceColor background) {
+	public SpaceView() {
         tracker = new MediaTracker( this );
         setUnarmedBorder(defaultUnarmedBorder );
         setArmedBorder( defaultArmedBorder );
         
         this.setMinimumSize(MINIMUM_SIZE);
         this.setMaximumSize(MAXIMUM_SIZE);
-        if(background == SpaceColor.White)
-        	setBackground(Color.WHITE);
-        else
-           setBackground(Color.LIGHT_GRAY);
         updateImage(null, true);
 	 }
 
@@ -55,7 +48,7 @@ public class SpaceView extends Canvas implements Observer{
     	borders[OVER] = border;
 	}
 
-	private void setUnarmedBorder(SpaceBorder border) {
+	public void setUnarmedBorder(SpaceBorder border) {
 		borders[UNARMED] = border;
 		borders[DISABLED] = border;
 	}

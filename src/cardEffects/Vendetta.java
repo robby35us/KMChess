@@ -15,9 +15,9 @@ import game.MoveBuilder;
 import gameComponents.PlayerSet;
 import graphics.SpaceBorder;
 import pieces.Piece;
-import presentation.SpaceView;
 import control.SpaceController;
 import utilityContainers.ErrorMessage;
+import static constants.Constants.*;
 
 public class Vendetta extends ContEffect {
 	
@@ -67,18 +67,18 @@ public class Vendetta extends ContEffect {
 			for(SpaceController s : movable){
 				if(!highlighted.contains(s)){
 					highlighted.add(s);
-					s.getSpaceView().setArmedBorder(highlight);
+					//s.getSpaceView().setArmedBorder(highlight);
 					s.getSpaceView().setUnarmedBorder(highlight);
-					s.armSpace();
+					//s.armSpace();
 					s.getSpaceView().repaint();
 				}
 			}
 			ArrayList<SpaceController> unHighlight = new ArrayList<SpaceController>();
 			for(SpaceController s : highlighted){
 				if(!movable.contains(s)){
-					s.getSpaceView().setArmedBorder(SpaceView.defaultArmedBorder);
-					s.getSpaceView().setUnarmedBorder(SpaceView.defaultUnarmedBorder);
-					s.unarmSpace();
+					//s.getSpaceView().setArmedBorder(defaultArmedBorder);
+					s.getSpaceView().setUnarmedBorder(defaultUnarmedBorder);
+					//s.unarmSpace();
 					unHighlight.add(s);
 					s.getSpaceView().repaint();
 				}
@@ -142,9 +142,9 @@ public class Vendetta extends ContEffect {
 		highlightingOn = true;
 		highlighted = new ArrayList<SpaceController>();
 		for(SpaceController space: movable){
-			space.getSpaceView().setArmedBorder(highlight);
+			//space.getSpaceView().setArmedBorder(highlight);
 			space.getSpaceView().setUnarmedBorder(highlight);
-			space.armSpace();
+			//space.armSpace();
 			highlighted.add(space);
 			space.getSpaceView().repaint();
 		}
@@ -158,9 +158,9 @@ public class Vendetta extends ContEffect {
 	public void endHighlightChange(GameState gs) {
 		highlightingOn = false;
 		for(SpaceController s : highlighted){
-			s.getSpaceView().setArmedBorder(SpaceView.defaultArmedBorder);
-			s.getSpaceView().setUnarmedBorder(SpaceView.defaultUnarmedBorder);
-			s.unarmSpace();
+			//s.getSpaceView().setArmedBorder(defaultArmedBorder);
+			s.getSpaceView().setUnarmedBorder(defaultUnarmedBorder);
+			//s.unarmSpace();
 			s.getSpaceView()
 			.repaint();
 		}

@@ -1,5 +1,7 @@
 package enums;
 
+import java.awt.Color;
+
 /*This is a substitution for the standard Color enum. The idea is 
  * to enforce the restriction to two color. This enum is coupled 
  * tightly with the Turn enum, such that Color.White.ordinal() returns
@@ -10,4 +12,11 @@ package enums;
  */
 public enum SpaceColor {
 	White, Gray;
+	
+	public Color getAWTColor(){
+		if(this == SpaceColor.White)
+			return Color.WHITE;
+		else
+			return Color.LIGHT_GRAY;
+	}
 }

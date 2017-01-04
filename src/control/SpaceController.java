@@ -26,9 +26,10 @@ public class SpaceController implements MouseListener {
 
 	public SpaceController(Rank rank, File file, BoardControl parent){
 		
-		view = new SpaceView(model.getColor());
+		view = new SpaceView();
 		view.addMouseListener(this);
 		model = new SpaceModel(rank, file, view);
+		view.setBackground(model.getColor().getAWTColor());
 		this.parent = parent;
 	}
 	
