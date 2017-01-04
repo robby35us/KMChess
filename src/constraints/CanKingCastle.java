@@ -1,7 +1,7 @@
 package constraints;
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
-import control.SpaceControl;
+import control.SpaceController;
 import enums.PieceType;
 import interfaces.MoveConstraint;
 import pieces.King;
@@ -24,7 +24,7 @@ public class CanKingCastle implements MoveConstraint{
 	 * is moving, or rather, the initial space of the proposed move.
 	 */
 	public boolean meetsConstraint(Move lastMove, ActualMove nextMove) {
-		SpaceControl initial = lastMove.getInitialSpace();
+		SpaceController initial = lastMove.getInitialSpace();
 		
 		// verify that the initial piece is, in fact, a King object
 		Piece piece = initial.getPiece();
@@ -37,9 +37,9 @@ public class CanKingCastle implements MoveConstraint{
 			return false;
 		
 		// get the three spaces to the right of this one( from the white players perspective)
-		SpaceControl oneToRight = initial.getSpaceRight();
-		SpaceControl twoToRight = oneToRight.getSpaceRight();
-		SpaceControl threeToRight = twoToRight.getSpaceRight();
+		SpaceController oneToRight = initial.getSpaceRight();
+		SpaceController twoToRight = oneToRight.getSpaceRight();
+		SpaceController threeToRight = twoToRight.getSpaceRight();
 		
 		// verify that the fist two spaces are empty, that the 3rd space has a rook, and that 
 		// the rook hasn't been moved. Also check that the king isn't moving through/into check.

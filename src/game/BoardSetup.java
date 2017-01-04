@@ -2,7 +2,7 @@ package game;
 import java.util.Iterator;
 
 import control.BoardControl;
-import control.SpaceControl;
+import control.SpaceController;
 import enums.*;
 import gameComponents.*;
 import pieces.Piece;
@@ -29,7 +29,7 @@ public class BoardSetup {
 	 * Sets the black pieces on the board
 	 */
 	private static void placeBlackPieces(PlayerSet blackSet, BoardControl board) {
-		SpaceControl currentSpace = board.getSpace(Rank.Eight, File.A);
+		SpaceController currentSpace = board.getSpace(Rank.Eight, File.A);
 		Iterator<Piece> it = blackSet.iterator();
 		
 		// set the "first" row(Rank 8) of black pieces from left to right
@@ -51,7 +51,7 @@ public class BoardSetup {
 	 * Sets the white Pieces on the board
 	 */
 	private static void placeWhitePieces(PlayerSet whiteSet, BoardControl board) {
-		SpaceControl currentSpace = board.getSpace(Rank.One, File.A);
+		SpaceController currentSpace = board.getSpace(Rank.One, File.A);
 		Iterator<Piece> it = whiteSet.iterator();
 		
 		// set the "first" row (Rank 1) of white pieces left to right

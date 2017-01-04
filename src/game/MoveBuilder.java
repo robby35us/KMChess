@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
-import control.SpaceControl;
+import control.SpaceController;
 import enums.*;
 import interfaces.MoveConstraint;
 import pieces.Piece;
@@ -25,7 +25,7 @@ public class MoveBuilder{
 	 * can be created. NOTE: THERE MAY BE AWAY TO CALLcompositeMoves() DIRECTLY FROM THIS 
 	 * FUNCTION.
 	 */
-	public static ActualMove buildMoveObject(SpaceControl space, MoveType moveType, int times, GameState gs, ErrorMessage message) {
+	public static ActualMove buildMoveObject(SpaceController space, MoveType moveType, int times, GameState gs, ErrorMessage message) {
 		PieceColor color = space.getPiece().getColor();
 		int rankOffset = moveType.times(times).getRankOffset();
 		int fileOffset = moveType.times(times).getFileOffset();
@@ -42,7 +42,7 @@ public class MoveBuilder{
 		//returncompositeMoves(new Touch(space), MoveFactory.makeMoveObject(moveType, color), message);
 		
 		/* The less efficient version */
-		SpaceControl destination = gs.getBoard().getNextSpace(rankOffset, fileOffset, space);
+		SpaceController destination = gs.getBoard().getNextSpace(rankOffset, fileOffset, space);
 		if(destination != null)
 			return buildMoveObject(space, destination, gs, message);
 		else
@@ -55,7 +55,7 @@ public class MoveBuilder{
 	 * is no Piece to move or if no legal move can be created from initial to destination for the 
 	 * Piece at initial.
 	 */
-	public static ActualMove buildMoveObject(SpaceControl initial, SpaceControl destination, GameState gs, ErrorMessage message){
+	public static ActualMove buildMoveObject(SpaceController initial, SpaceController destination, GameState gs, ErrorMessage message){
 		Move move = new Touch(initial, destination);
 		return (ActualMove) buildMoveObject(move,destination,gs,message);
 	}
@@ -68,7 +68,7 @@ public class MoveBuilder{
 	 * FUNCTION, BUT WHEN I TRIED IT THE CODE BROKE. SO, I CHANGED IT BACK.
 	 */
 	public static ActualMove buildMoveObject(ActualMove move, MoveType moveType, GameState gs, ErrorMessage message) {
-		SpaceControl dest = gs.getBoard().getNextSpace(moveType.getRankOffset(), moveType.getFileOffset(), move.getDestinationSpace());
+		SpaceController dest = gs.getBoard().getNextSpace(moveType.getRankOffset(), moveType.getFileOffset(), move.getDestinationSpace());
 		if(dest == null)
 			return null;
 		return buildMoveObject(move, dest, gs, message);
@@ -82,14 +82,14 @@ public class MoveBuilder{
 	 * ActualMove that would get "one step closer" to the destination Space and wraps it around the given
 	 * Move. Return's null if there is no Piece to move, or if a valid move cannot be created.
 	 */
-	public static ActualMove buildMoveObject(Move move, SpaceControl destination, GameState gs, ErrorMessage message){
+	public static ActualMove buildMoveObject(Move move, SpaceController destination, GameState gs, ErrorMessage message){
 		Piece pieceToMove = move.getInitialSpace().getPiece();
 		if(pieceToMove == null){
 			message.setNoPieceToMove();
 			return null;
 		}
 		
-		SpaceControl current = move.getDestinationSpace();
+		SpaceController current = move.getDestinationSpace();
 		Rank rank = current.getRank();
 		File file = current.getFile();
 		
@@ -120,7 +120,7 @@ public class MoveBuilder{
 	 * used to record information about any errors that occur. Returns null if an ActualMove
 	 * cannot be created.
 	 */
-	private static ActualMove selectMove(Move move, SpaceControl destination, GameState gs, ErrorMessage message){
+	private static ActualMove selectMove(Move move, SpaceController destination, GameState gs, ErrorMessage message){
 		Rank rank = move.getDestinationSpace().getRank();
 		File file = move.getDestinationSpace().getFile();
 		Rank destinationRank = destination.getRank();
@@ -145,7 +145,7 @@ public class MoveBuilder{
 	 * Takes a Move object, the destination, the ErrorMessage to record errors with, and returns
 	 * an ActualMove that is one of the LShape moves, if possible.
 	 */
-	private static ActualMove moveAlongLShape(Move move, SpaceControl destination, ErrorMessage message) {
+	private static ActualMove moveAlongLShape(Move move, SpaceController destination, ErrorMessage message) {
 		int rankOffset = destination.getRank().ordinal() - move.getDestinationSpace().getRank().ordinal();
 		int fileOffset = destination.getFile().ordinal() - move.getDestinationSpace().getFile().ordinal();
 		PieceColor pieceColor = move.getInitialSpace().getPiece().getColor();
@@ -187,7 +187,7 @@ public class MoveBuilder{
 	 * Called for diagonal moves. Takes a Move object, the destination, the 
 	 * ErrorMessage to record errors with, and returns an ActualMove that is one of the LShape moves, if possible.
 	 */
-	private static ActualMove moveAlongDiagonal(Move move, SpaceControl destination, ErrorMessage message) {
+	private static ActualMove moveAlongDiagonal(Move move, SpaceController destination, ErrorMessage message) {
 		int rankOffset = destination.getRank().ordinal() - move.getDestinationSpace().getRank().ordinal();
 		int fileOffset = destination.getFile().ordinal() - move.getDestinationSpace().getFile().ordinal();
 		PieceColor pieceColor = move.getInitialSpace().getPiece().getColor();
@@ -241,7 +241,7 @@ public class MoveBuilder{
 	 * given move that is "one step closer" along the file toward being at the given destination.
 	 * Returns null if such a move cannot be legally created.
 	 */
-	private static ActualMove moveAlongFile(Move move, SpaceControl destination, ErrorMessage message) {
+	private static ActualMove moveAlongFile(Move move, SpaceController destination, ErrorMessage message) {
 		int rankOffset = destination.getRank().ordinal() - move.getDestinationSpace().getRank().ordinal();
 		PieceColor pieceColor = move.getInitialSpace().getPiece().getColor();
 		
@@ -266,9 +266,9 @@ public class MoveBuilder{
 	 * given move that is "one step closer" along the Rank toward being at the given destination.
 	 * Returns null if such a move cannot be legally created.
 	 */
-	private static ActualMove moveAlongRank(Move move, SpaceControl destination, GameState gs, ErrorMessage message) {
+	private static ActualMove moveAlongRank(Move move, SpaceController destination, GameState gs, ErrorMessage message) {
 		int fileOffset = destination.getFile().ordinal() - move.getDestinationSpace().getFile().ordinal();
-		SpaceControl initial = move.getInitialSpace();
+		SpaceController initial = move.getInitialSpace();
 		PieceColor pieceColor = initial.getPiece().getColor();
 		
 		// check for castling
@@ -277,8 +277,8 @@ public class MoveBuilder{
 				ActualMove result =compositeMoves(move, MoveFactory.makeMoveObject(MoveType.KingSideCastle, pieceColor), message);
 				if(result != null){
 					// move the rook
-					SpaceControl rookDest = initial.getSpaceRight();
-					SpaceControl rookInit = destination.getSpaceRight();
+					SpaceController rookDest = initial.getSpaceRight();
+					SpaceController rookInit = destination.getSpaceRight();
 					ActualMove rookMove = buildMoveObject(rookInit, rookDest, gs, new ErrorMessage());
 					gs.makeMove(rookMove, pieceColor == PieceColor.White ? Turn.Player1 : Turn.Player2, message);
 				}
@@ -288,8 +288,8 @@ public class MoveBuilder{
 				ActualMove result = compositeMoves(move, MoveFactory.makeMoveObject(MoveType.QueenSideCastle, pieceColor), message);
 				if(result != null){
 					// move  the rook
-					SpaceControl rookDest = initial.getSpaceLeft();
-					SpaceControl rookInit = rookDest.getSpaceLeft().getSpaceLeft().getSpaceLeft();
+					SpaceController rookDest = initial.getSpaceLeft();
+					SpaceController rookInit = rookDest.getSpaceLeft().getSpaceLeft().getSpaceLeft();
 					ActualMove rookMove = buildMoveObject(rookInit, rookDest, gs, new ErrorMessage());
 					gs.makeMove(rookMove, pieceColor == PieceColor.White ? Turn.Player1 : Turn.Player2, message);
 				}

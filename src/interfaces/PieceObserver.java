@@ -1,6 +1,6 @@
 package interfaces;
 
-import control.SpaceControl;
+import control.SpaceController;
 
 /*
  * A PieceObserver alerts the king on the opposing side if
@@ -13,5 +13,5 @@ public interface PieceObserver {
 	 * know if this PieceObserver can attack the given destination, 
 	 * which would mean that the king is or would be in check.
 	 */
-	public boolean updateOpposingPiece(SpaceControl destination);
+	public boolean updateOpposingPiece(SpaceController destination);
 }

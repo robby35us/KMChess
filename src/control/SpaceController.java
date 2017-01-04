@@ -1,10 +1,10 @@
-package control;
+package control;		
 
-import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import abstraction.SpaceAbstraction;
+import abstraction.SpaceModel;
+import static constants.Constants.*;
 import enums.File;
 import enums.MoveType;
 import enums.PieceColor;
@@ -13,26 +13,28 @@ import enums.SpaceColor;
 import enums.Turn;
 import game.GameState;
 import pieces.Piece;
-import pieces.PieceImages;
-import presentation.SpacePresentation;
+import presentation.SpaceView;
 
-public class SpaceControl implements MouseListener {
-	private SpaceAbstraction abs;
-	private SpacePresentation pres;
+public class SpaceController implements MouseListener {
+	
+	
+	private SpaceModel model;
+	private SpaceView view;
 	private BoardControl parent;
 	private boolean mousedown;
 	private boolean mouseInBounds = false;
 
-	public SpaceControl(Rank rank, File file, BoardControl parent){
-		abs = new SpaceAbstraction(rank, file);
-		pres = new SpacePresentation(abs.getColor(), null);
-		pres.addMouseListener(this);
+	public SpaceController(Rank rank, File file, BoardControl parent){
+		
+		view = new SpaceView(model.getColor());
+		view.addMouseListener(this);
+		model = new SpaceModel(rank, file, view);
 		this.parent = parent;
 	}
 	
 	//Public getters
-	public SpacePresentation getSpacePres() {
-		return pres;
+	public SpaceView getSpaceView() {
+		return view;
 	}
 	
 	public BoardControl getParent(){
@@ -40,19 +42,19 @@ public class SpaceControl implements MouseListener {
 	}
 	
 	public Rank getRank(){
-		return abs.getRank();
+		return model.getRank();
 	}
 	
 	public File getFile(){
-		return abs.getFile();
+		return model.getFile();
 	}
 	
 	public SpaceColor getColor(){
-		return abs.getColor();
+		return model.getColor();
 	}
 	
 	public Piece getPiece(){
-		return abs.getPiece();
+		return model.getPiece();
 	}	
 	
 	
@@ -61,18 +63,11 @@ public class SpaceControl implements MouseListener {
 	 * false otherwise.
 	 */
 	public boolean hasPiece(){
-		return abs.hasPiece();
+		return model.hasPiece();
 	}
 	
-	public boolean changePiece(Piece newPiece, Boolean repaint){
-		Piece oldPiece = abs.replacePiece(newPiece);
-		Image img = null;
-		if(newPiece != null){
-			img = PieceImages.getImage(newPiece.getType(), newPiece.getColor(), abs.getColor());
-			newPiece.setSpace(this);
-		}
-		pres.updateImage(img, repaint);
-		return oldPiece != null;
+	public Piece changePiece(Piece newPiece, Boolean repaint){
+		return model.replacePiece(newPiece, repaint);
 	}
 	
 	/*
@@ -80,7 +75,7 @@ public class SpaceControl implements MouseListener {
 	 * rather, the Space on the same Rank one file less. Returns 
 	 * null if no such Space exists
 	 */
-	public SpaceControl getSpaceLeft(){
+	public SpaceController getSpaceLeft(){
 		return parent.getNextSpace(MoveType.Left.getRankOffset(), 
 				                  MoveType.Left.getFileOffset(),this);
 	}
@@ -90,7 +85,7 @@ public class SpaceControl implements MouseListener {
 	 * rather, the Space on the same Rank one file greater. Returns
 	 * null if no such Space exists.
 	 */
-	public SpaceControl getSpaceRight(){
+	public SpaceController getSpaceRight(){
 		return parent.getNextSpace(MoveType.Right.getRankOffset(), 
                 				  MoveType.Right.getFileOffset(),this);
 	}
@@ -100,7 +95,7 @@ public class SpaceControl implements MouseListener {
 	 * rather, the Space on the same File one Rank greater. Returns null
 	 * if no such Space exists.
 	 */
-	public SpaceControl getSpaceForward(){
+	public SpaceController getSpaceForward(){
 		return parent.getNextSpace(MoveType.Forward.getRankOffset(), 
                 				  MoveType.Forward.getFileOffset(),this);
 	}
@@ -110,26 +105,26 @@ public class SpaceControl implements MouseListener {
 	 * the Space on the Same File one Rank lesser. Returns null if no such 
 	 * Space exists.
 	 */
-	public SpaceControl getSpaceBackward(){
+	public SpaceController getSpaceBackward(){
 		return parent.getNextSpace(MoveType.Backward.getRankOffset(), 
                 				  MoveType.Backward.getFileOffset(),this);
 		
 	}
 
 	public void armSpace(){
-		this.pres.setButtonState(SpacePresentation.ARMED);
+		this.view.setButtonState(ARMED);
 	}
 	
 	public void unarmSpace(){
-		this.pres.setButtonState(SpacePresentation.UNARMED);
+		this.view.setButtonState(UNARMED);
 	}
 	
 	public void setSpaceToOver(){
-		this.pres.setButtonState(SpacePresentation.OVER);
+		this.view.setButtonState(OVER);
 	}
 	
 	public void setDisabled(){
-		this.pres.setButtonState(SpacePresentation.DISABLED);
+		this.view.setButtonState(DISABLED);
 	}
 	
 	@Override
@@ -149,9 +144,9 @@ public class SpaceControl implements MouseListener {
 			parent.setStartSpace(null);
 		}
 		else {
-			if(abs.getPiece() != null &&
-			    (GameState.globalGS.getTurn() == Turn.Player1 && abs.getPiece().getColor() == PieceColor.White ||
-				 GameState.globalGS.getTurn() == Turn.Player2 && abs.getPiece().getColor() == PieceColor.Black)) { 	   
+			if(model.getPiece() != null &&
+			    (GameState.globalGS.getTurn() == Turn.Player1 && model.getPiece().getColor() == PieceColor.White ||
+				 GameState.globalGS.getTurn() == Turn.Player2 && model.getPiece().getColor() == PieceColor.Black)) { 	   
 					parent.activeSpace = this;
 					this.armSpace();
 					parent.setStartSpace(this);

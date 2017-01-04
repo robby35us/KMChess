@@ -16,7 +16,7 @@ import abstractClasses.ActualMove;
 import abstractClasses.ContEffect;
 import cards.KMDeck;
 import control.BoardControl;
-import control.SpaceControl;
+import control.SpaceController;
 import enums.*;
 import gameComponents.*;
 import guiComponent.CInfoArea;
@@ -160,7 +160,7 @@ public class GameState implements ItemListener {
 		if(!moving.notifyKingObservers()){
 			
 			// reset everything to how it was before the move.
-			SpaceControl capturedSpace = undoMove(move, captured, true);
+			SpaceController capturedSpace = undoMove(move, captured, true);
 			if(captured != null){
 				opposite = captured.getColor() == PieceColor.White ? whitePlayer : blackPlayer;
 				if(opposite != null)
@@ -208,8 +208,8 @@ public class GameState implements ItemListener {
 		Piece moving = move.getInitialSpace().getPiece();
 		
 		// set space variables
-		SpaceControl capturedSpace;
-		SpaceControl dest = move.getDestinationSpace();
+		SpaceController capturedSpace;
+		SpaceController dest = move.getDestinationSpace();
 		if(move.getClass() == MoveEnPassantRight.class || move.getClass() == MoveEnPassantLeft.class)
 			capturedSpace = (moving.getColor() == PieceColor.White) ? dest.getSpaceBackward() : dest.getSpaceForward();
 		else
@@ -231,12 +231,12 @@ public class GameState implements ItemListener {
 	/*
 	 * Set's everything back to the way it was before the last move.
 	 */
-	public static SpaceControl undoMove(ActualMove move, Piece captured, Boolean repaint){
+	public static SpaceController undoMove(ActualMove move, Piece captured, Boolean repaint){
 		Piece moving = move.getDestinationSpace().getPiece();
 		
 		// set spaces
-		SpaceControl capturedSpace;
-		SpaceControl dest = move.getDestinationSpace();
+		SpaceController capturedSpace;
+		SpaceController dest = move.getDestinationSpace();
 		if(move.getClass() == MoveEnPassantRight.class || move.getClass() == MoveEnPassantLeft.class)
 			capturedSpace = (moving.getColor() == PieceColor.White) ? dest.getSpaceBackward() : dest.getSpaceForward();
 		else
@@ -256,8 +256,8 @@ public class GameState implements ItemListener {
 	 * the opposite color. 
 	 */
 	public boolean meetsUniversalConstraints(ActualMove move, Turn turn, ErrorMessage message) {
-		SpaceControl init = move.getInitialSpace();
-		SpaceControl dest = move.getDestinationSpace();
+		SpaceController init = move.getInitialSpace();
+		SpaceController dest = move.getDestinationSpace();
 		Piece moving = init.getPiece();
 		Piece captured = dest.getPiece();
 		

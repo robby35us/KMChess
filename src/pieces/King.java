@@ -1,7 +1,7 @@
 package pieces;
 import java.util.ArrayList;
 
-import control.SpaceControl;
+import control.SpaceController;
 import enums.*;
 import interfaces.KingObserver;
 import interfaces.KingSubject;
@@ -71,7 +71,7 @@ public class King extends Piece implements KingSubject, KingObserver {
 	 * no piece can attack the king, and false if the king is
 	 * indeed in check.
 	 */
-	public boolean notifyOpposingPieceObservers(SpaceControl dest) {
+	public boolean notifyOpposingPieceObservers(SpaceController dest) {
 		
 		// THIS CODE WAS CAUSING BUGS WITH THE PAWNS. 
 		//I took it out removing the king and they went away. 

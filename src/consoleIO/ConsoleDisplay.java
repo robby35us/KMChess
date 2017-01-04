@@ -1,7 +1,7 @@
 package consoleIO;
 
 import control.BoardControl;
-import control.SpaceControl;
+import control.SpaceController;
 import enums.*;
 import pieces.Piece;
 import utilityContainers.ErrorMessage;
@@ -15,8 +15,8 @@ public class ConsoleDisplay{
 	 * Displays a pretty print version of a chess board.
 	 */
 	public static void displayBoard(BoardControl board){
-		SpaceControl head = board.getSpace(Rank.Eight, File.A);
-		SpaceControl current = head;
+		SpaceController head = board.getSpace(Rank.Eight, File.A);
+		SpaceController current = head;
 		System.out.println(" Rank    ----   ----   ----   ----   ----   ----   ----   ----");
 		for(int i = 8; i >= 1; i--){
 			if(current.getColor() == SpaceColor.White)
@@ -47,7 +47,7 @@ public class ConsoleDisplay{
 	/*
 	 * Displays the 2-character code that identifies the color and piece type in the display.
 	 */
-	private static void printPieceCode(SpaceControl current) {
+	private static void printPieceCode(SpaceController current) {
 		Piece piece = current.getPiece();
 		if(piece == null)
 			System.out.print("  ");

@@ -8,7 +8,7 @@ import enums.File;
 import enums.Rank;
 import enums.SpaceColor;
 import presentation.BoardPresentation;
-import presentation.SpacePresentation;
+import presentation.SpaceView;
 
 @SuppressWarnings("unused")
 public class SpaceTest{

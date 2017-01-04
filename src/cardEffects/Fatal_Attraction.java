@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import abstractClasses.ContEffect;
 import constraints.DisabledMove;
 import control.BoardControl;
-import control.SpaceControl;
+import control.SpaceController;
 import enums.File;
 import enums.MoveType;
 import enums.PieceType;
@@ -15,12 +15,12 @@ import game.GameState;
 import game.GameWindow;
 import graphics.SpaceBorder;
 import pieces.Piece;
-import presentation.SpacePresentation;
+import presentation.SpaceView;
 
 public class Fatal_Attraction extends ContEffect {
 
 	private Piece magnet;
-	private SpaceControl magnetSpace;
+	private SpaceController magnetSpace;
 	private DisabledMove disabled;
 	
 
@@ -61,19 +61,19 @@ public class Fatal_Attraction extends ContEffect {
 		
 	private ArrayList<Piece> getAdjacentPieces() {
 		ArrayList<Piece> pieces = new ArrayList<Piece>();
-		ArrayList<SpaceControl> spaces = getAdjacentSpaces();
-		for(SpaceControl s : spaces){
+		ArrayList<SpaceController> spaces = getAdjacentSpaces();
+		for(SpaceController s : spaces){
 			if(s.getPiece() != null)
 				pieces.add(s.getPiece());
 		}
 		return pieces;
 	}
 
-	private ArrayList<SpaceControl> getAdjacentSpaces() {
-		ArrayList<SpaceControl> spaces = new ArrayList<SpaceControl>();
+	private ArrayList<SpaceController> getAdjacentSpaces() {
+		ArrayList<SpaceController> spaces = new ArrayList<SpaceController>();
 		Rank mRank = magnetSpace.getRank();
 		File mFile = magnetSpace.getFile();
-		SpaceControl adjacentSpace;
+		SpaceController adjacentSpace;
 		
 		// get top row pieces
 		if(mRank != Rank.Eight){
@@ -82,12 +82,12 @@ public class Fatal_Attraction extends ContEffect {
 			spaces.add(adjacentSpace);
 			if(mFile != File.A){
 				// get top left
-				SpaceControl left = adjacentSpace.getSpaceLeft();
+				SpaceController left = adjacentSpace.getSpaceLeft();
 				spaces.add(left);
 			}
 			if(mFile != File.H){
 				// get top right
-				SpaceControl right = adjacentSpace.getSpaceRight();
+				SpaceController right = adjacentSpace.getSpaceRight();
 				spaces.add(right);
 			}
 		}
@@ -108,12 +108,12 @@ public class Fatal_Attraction extends ContEffect {
 			spaces.add(adjacentSpace);
 			if(mFile != File.A){
 				// get top left
-				SpaceControl left = adjacentSpace.getSpaceLeft();
+				SpaceController left = adjacentSpace.getSpaceLeft();
 				spaces.add(left);
 			}
 			if(mFile != File.H){
 				// get top right
-				SpaceControl right = adjacentSpace.getSpaceRight();
+				SpaceController right = adjacentSpace.getSpaceRight();
 				spaces.add(right);
 			}
 		}
@@ -159,19 +159,19 @@ public class Fatal_Attraction extends ContEffect {
 	@Override
 	public void highlightChange(GameState gs) {
 		SpaceBorder magnetBorder = new SpaceBorder(Color.RED);
-		magnetSpace.getSpacePres().setArmedBorder(magnetBorder);
-		magnetSpace.getSpacePres().setUnarmedBorder(magnetBorder);
-		magnetSpace.getSpacePres().repaint();
+		magnetSpace.getSpaceView().setArmedBorder(magnetBorder);
+		magnetSpace.getSpaceView().setUnarmedBorder(magnetBorder);
+		magnetSpace.getSpaceView().repaint();
 		GameWindow.globalGW.infoBox("The " + magnet.getType() + " at the red space " + 
 							  "\n" + magnetSpace.getFile() + 
 							  magnetSpace.getRank() + " is the magenet."
 							  , getName());
-		ArrayList<SpaceControl> adjacentSpaces = getAdjacentSpaces();
+		ArrayList<SpaceController> adjacentSpaces = getAdjacentSpaces();
 		SpaceBorder adjacentBorder = new SpaceBorder(Color.YELLOW);
-		for(SpaceControl as: adjacentSpaces){
-			as.getSpacePres().setArmedBorder(adjacentBorder);
-			as.getSpacePres().setUnarmedBorder(adjacentBorder);
-			as.getSpacePres().repaint();
+		for(SpaceController as: adjacentSpaces){
+			as.getSpaceView().setArmedBorder(adjacentBorder);
+			as.getSpaceView().setUnarmedBorder(adjacentBorder);
+			as.getSpaceView().repaint();
 		}
 		GameWindow.globalGW.infoBox("The pieces in the adjacent yellow spaces " +
 							   "\n(except for kings) are stuck until the " + 
@@ -180,14 +180,14 @@ public class Fatal_Attraction extends ContEffect {
 
 	@Override
 	public void endHighlightChange(GameState gs) {
-		magnetSpace.getSpacePres().setArmedBorder(SpacePresentation.defaultArmedBorder);
-		magnetSpace.getSpacePres().setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
-		magnetSpace.getSpacePres().repaint();
-		ArrayList<SpaceControl> adjacentSpaces = getAdjacentSpaces();
-		for(SpaceControl as: adjacentSpaces) {
-			as.getSpacePres().setArmedBorder(SpacePresentation.defaultArmedBorder);
-			as.getSpacePres().setUnarmedBorder(SpacePresentation.defaultUnarmedBorder);
-			as.getSpacePres().repaint();
+		magnetSpace.getSpaceView().setArmedBorder(SpaceView.defaultArmedBorder);
+		magnetSpace.getSpaceView().setUnarmedBorder(SpaceView.defaultUnarmedBorder);
+		magnetSpace.getSpaceView().repaint();
+		ArrayList<SpaceController> adjacentSpaces = getAdjacentSpaces();
+		for(SpaceController as: adjacentSpaces) {
+			as.getSpaceView().setArmedBorder(SpaceView.defaultArmedBorder);
+			as.getSpaceView().setUnarmedBorder(SpaceView.defaultUnarmedBorder);
+			as.getSpaceView().repaint();
 		}
 	}
 

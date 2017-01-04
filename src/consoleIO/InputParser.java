@@ -3,7 +3,7 @@ package consoleIO;
 import java.util.Scanner;
 
 import control.BoardControl;
-import control.SpaceControl;
+import control.SpaceController;
 import enums.File;
 import enums.PieceColor;
 import enums.PieceType;
@@ -25,7 +25,7 @@ public class InputParser {
 		
 		// get the initial Space
 		input = in.next();
-		SpaceControl init = getSpace(input, board);
+		SpaceController init = getSpace(input, board);
 		if(init == null){
 			if(!exitCondition(input)){
 				message.setInvalidInput();
@@ -35,7 +35,7 @@ public class InputParser {
 		
 		// get the destination Space
 		input = in.next();
-		SpaceControl dest = getSpace(input, board);
+		SpaceController dest = getSpace(input, board);
 		if(dest == null){
 			message.setInvalidInput();
 			return null;
@@ -81,7 +81,7 @@ public class InputParser {
 	 * A helper method to translate Space input into a Space object.
 	 * Returns null if the input is invalid.
 	 */
-	private static SpaceControl getSpace(String input, BoardControl board) {
+	private static SpaceController getSpace(String input, BoardControl board) {
 		if(input == null || input.length() != 2)
 			return null;
 		char fileInput = input.toLowerCase().charAt(0);

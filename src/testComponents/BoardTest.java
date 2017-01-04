@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import control.BoardControl;
-import control.SpaceControl;
+import control.SpaceController;
 
 import java.util.ArrayList;
 
@@ -18,9 +18,9 @@ public class BoardTest extends BoardControl {
 	@Test
 	public void testGetSpace(){
 		BoardControl board = new BoardControl();
-		ArrayList<SpaceControl> spaces = new ArrayList<SpaceControl>();
+		ArrayList<SpaceController> spaces = new ArrayList<SpaceController>();
 		SpaceColor color = SpaceColor.Gray;
-		SpaceControl space;
+		SpaceController space;
 		for(Rank r : Rank.values())
 			for(File f : File.values()){
 				space = board.getSpace(r,f);
@@ -40,11 +40,11 @@ public class BoardTest extends BoardControl {
 	@Test
 	public void testGetNextSpace(){
 		BoardControl board = new BoardControl();
-		ArrayList<SpaceControl> spaces = new ArrayList<SpaceControl>();
+		ArrayList<SpaceController> spaces = new ArrayList<SpaceController>();
 		for(Rank r : Rank.values())
 			for(File f : File.values())
 				spaces.add(board.getSpace(r, f));
-		SpaceControl space;
+		SpaceController space;
 		for(int spaceNum = 0; spaceNum < spaces.size(); spaceNum++){
 			space = spaces.get(spaceNum);
 			int rankOrdinal = spaceNum / 8;

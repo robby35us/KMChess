@@ -3,7 +3,7 @@ package constraints;
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
 import control.BoardControl;
-import control.SpaceControl;
+import control.SpaceController;
 import enums.PieceColor;
 import interfaces.MoveConstraint;
 
@@ -28,10 +28,10 @@ public class NoPieceBehind implements MoveConstraint {
 	 * is moving, or rather, the initial space of the proposed move.
 	 */
 	public boolean meetsConstraint(Move lastMove, ActualMove nextMove) {
-		SpaceControl destination = board.getNextSpace(lastMove.getRankOffset() + nextMove.getRankOffset(), 
+		SpaceController destination = board.getNextSpace(lastMove.getRankOffset() + nextMove.getRankOffset(), 
 				                          lastMove.getFileOffset() + nextMove.getFileOffset(), 
 				                          lastMove.getInitialSpace());
-		SpaceControl behind = lastMove.getInitialSpace().getPiece().getColor() == PieceColor.White ? destination.getSpaceBackward()
+		SpaceController behind = lastMove.getInitialSpace().getPiece().getColor() == PieceColor.White ? destination.getSpaceBackward()
 				                                                    : destination.getSpaceForward();
 		return !behind.hasPiece();
 	}

@@ -1,17 +1,21 @@
 package abstraction;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import enums.File;
 import enums.Rank;
 import enums.SpaceColor;
 import pieces.Piece;
 
-public class SpaceAbstraction {
+public class SpaceModel extends Observable{
+	
 	private Rank rank;
 	private File file;
 	private SpaceColor color;
 	private Piece piece; // null means no piece
 	
-	public SpaceAbstraction (Rank rank, File file){
+	public SpaceModel (Rank rank, File file, Observer view){
 		this.rank = rank;
 		this.file = file;
 		// The color is set by taking the sum of the coordinates and querying 
@@ -19,6 +23,7 @@ public class SpaceAbstraction {
 		this.color = ((rank.ordinal() + file.ordinal()) & 1) == 0 ? SpaceColor.Gray : SpaceColor.White;
 	
 		this.piece = null; 
+		this.addObserver(view);
 	}
 	
 	//Public getters
@@ -38,9 +43,20 @@ public class SpaceAbstraction {
 		return piece;
 	}
 	
-	public Piece replacePiece(Piece newPiece){
+
+	/*
+	 * The setter method for Piece. Returns whether or
+	 * not a piece was replaced. Set the value to null
+	 * to represent that a piece has been moved from 
+	 * this space without a replacement.
+	 */
+	public Piece replacePiece(Piece newPiece, boolean repaint){
 		Piece oldPiece = piece;
 		piece = newPiece;
+		if(repaint)
+			this.setChanged();
+		this.notifyObservers(piece);
+		this.clearChanged();
 		return oldPiece;
 	}
 	
@@ -51,4 +67,5 @@ public class SpaceAbstraction {
 	public boolean hasPiece(){
 		return piece != null;
 	}
+
 }

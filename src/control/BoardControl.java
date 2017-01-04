@@ -10,23 +10,23 @@ import presentation.BoardPresentation;
 public class BoardControl {
 	public static final int numRanks = Rank.values().length;
 	public static final int numFiles = File.values().length;
-	public SpaceControl activeSpace = null;
+	public SpaceController activeSpace = null;
 	   
 	
-	volatile private SpaceControl startSpace = null;
-	volatile private SpaceControl endSpace = null;
+	volatile private SpaceController startSpace = null;
+	volatile private SpaceController endSpace = null;
 	
 	
 	private BoardPresentation pres;
 	//private BoardAbstraction abs;
 	
-	private List<SpaceControl> spaces;
+	private List<SpaceController> spaces;
 	
 	public BoardControl(){
-		spaces = new ArrayList<SpaceControl>(numRanks * numFiles);
+		spaces = new ArrayList<SpaceController>(numRanks * numFiles);
 		for(int i = numRanks - 1;  i >=0 ; i--)
 			for(int j = 0; j < numFiles; j++)
-				spaces.add(new SpaceControl(Rank.values()[i], File.values()[j], this));
+				spaces.add(new SpaceController(Rank.values()[i], File.values()[j], this));
 		pres = new BoardPresentation(spaces.iterator());
 		//abs = new BoardAbstraction();
 	}
@@ -34,7 +34,7 @@ public class BoardControl {
 	/*
 	 * Returns the Space on the Board at the given coordinates.
 	 */
-	public SpaceControl getSpace(Rank rank, File file){
+	public SpaceController getSpace(Rank rank, File file){
 		if(rank == null || file == null)
 			return null;
 		return spaces.get((numRanks - (rank.ordinal() + 1)) * numFiles + file.ordinal());
@@ -45,7 +45,7 @@ public class BoardControl {
 	 * a given space (initialSpace) using the rankOffset and fileOffset. It returns 
 	 * null if there is no such space. 
 	 */
-	public SpaceControl getNextSpace(int rankOffset, int fileOffset, SpaceControl initialSpace){
+	public SpaceController getNextSpace(int rankOffset, int fileOffset, SpaceController initialSpace){
 		if(initialSpace == null)
 			return null;
 		int newRank = initialSpace.getRank().ordinal() + rankOffset;
@@ -58,7 +58,7 @@ public class BoardControl {
 			return null;
 	}
 	
-	public void setStartSpace(SpaceControl space){
+	public void setStartSpace(SpaceController space){
 		if(startSpace != null)
 			startSpace.unarmSpace();
 		if(space != null)
@@ -66,11 +66,11 @@ public class BoardControl {
 		startSpace = space;
 	}
 	
-	public SpaceControl getStartSpace(){
+	public SpaceController getStartSpace(){
 		return startSpace;
 	}
 	
-	public void setEndSpace(SpaceControl space){
+	public void setEndSpace(SpaceController space){
 		if(endSpace != null)
 			endSpace.unarmSpace();
 		if(space != null)
@@ -78,7 +78,7 @@ public class BoardControl {
 		endSpace = space;
 	}
 
-	public SpaceControl getEndSpace(){
+	public SpaceController getEndSpace(){
 		return endSpace;
 	}	
 	

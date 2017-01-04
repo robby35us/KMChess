@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import abstractClasses.ActualMove;
 import constraints.MustCapture;
 import constraints.SingleMove;
-import control.SpaceControl;
+import control.SpaceController;
 import enums.*;
 
 /*
@@ -36,7 +36,7 @@ public class Piece implements PieceSubject, PieceObserver{
 	protected PieceType type;
 	protected PieceType displayType;
 	protected PieceColor color;
-	protected SpaceControl space;
+	protected SpaceController space;
 	protected Image whiteImg;
 	protected Image greyImg;
 	
@@ -84,12 +84,12 @@ public class Piece implements PieceSubject, PieceObserver{
 		else
 			return java.awt.Color.BLACK;
 	}
-	public SpaceControl getSpace(){
+	public SpaceController getSpace(){
 		return space;
 	}
 	
 	// public setters
-	public void setSpace(SpaceControl space){
+	public void setSpace(SpaceController space){
 		this.space = space;
 	}
 	
@@ -143,7 +143,7 @@ public class Piece implements PieceSubject, PieceObserver{
 	 * location of the opposing King. Returns true if it
 	 * cannot capture the king, false otherwise.
 	 */
-	public boolean updateOpposingPiece(SpaceControl destination) {
+	public boolean updateOpposingPiece(SpaceController destination) {
 		ErrorMessage message = new ErrorMessage();
 		Turn turn = color == PieceColor.White ? Turn.Player1 : Turn.Player2;
 		ActualMove move = MoveBuilder.buildMoveObject(space, destination, gs, message);
@@ -214,7 +214,7 @@ public class Piece implements PieceSubject, PieceObserver{
 			//System.out.println("CheckDistantSpaces = " + checkDistantSpaces);
 			
 			int times = 1;
-			SpaceControl finalDest = this.getSpace().getParent()
+			SpaceController finalDest = this.getSpace().getParent()
 								.getNextSpace(mAndC.getMoveType().times(times).getRankOffset(),
 											  mAndC.getMoveType().times(times++).getFileOffset(),
 											  this.getSpace());

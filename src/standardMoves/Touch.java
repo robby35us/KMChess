@@ -1,7 +1,7 @@
 package standardMoves;
 
 import abstractClasses.Move;
-import control.SpaceControl;
+import control.SpaceController;
 
 /* Touch.java - Robert Reed
  * This class is a "concrete" class that extends
@@ -13,7 +13,7 @@ import control.SpaceControl;
  */
 
 public class Touch extends Move{
-   public Touch(SpaceControl initial, SpaceControl finalDest){
+   public Touch(SpaceController initial, SpaceController finalDest){
      super(0,0, initial, finalDest);
    }
 }

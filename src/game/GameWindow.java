@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 import cards.KMCard;
 import control.BoardControl;
-import control.SpaceControl;
+import control.SpaceController;
 import interfaces.IOFramework;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
@@ -122,8 +122,8 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 			}
 		}
 		if(board.getStartSpace() != null && board.getEndSpace() != null){
-			SpaceControl start = board.getStartSpace();
-			SpaceControl end = board.getEndSpace();
+			SpaceController start = board.getStartSpace();
+			SpaceController end = board.getEndSpace();
 			board.setStartSpace(null);
 			board.setEndSpace(null);
 			return new MoveInput(start, end);

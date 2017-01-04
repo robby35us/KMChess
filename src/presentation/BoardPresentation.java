@@ -8,7 +8,7 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 import control.BoardControl;
-import control.SpaceControl;
+import control.SpaceController;
 import enums.File;
 import enums.Rank;
 import enums.Timing;
@@ -36,7 +36,7 @@ public class BoardPresentation extends Panel {
 	 * Rank and File. The size of the board is dictated by the number
 	 * of values in these enums.
 	 */
-	public BoardPresentation(Iterator<SpaceControl> spaces){
+	public BoardPresentation(Iterator<SpaceController> spaces){
 		
 		
 		setLayout(new GridLayout(BoardControl.numRanks + 1, BoardControl.numFiles + 1, 0, 0));
@@ -45,7 +45,7 @@ public class BoardPresentation extends Panel {
 			l.setSize(d );
 			add(l);
 			for(int j = 0; j < BoardControl.numFiles; j++){
-				SpacePresentation spacePres = spaces.next().getSpacePres();
+				SpaceView spacePres = spaces.next().getSpaceView();
 				add(spacePres);
 				
 			}	

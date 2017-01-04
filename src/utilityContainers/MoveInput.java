@@ -1,26 +1,26 @@
 package utilityContainers;
 
-import control.SpaceControl;
+import control.SpaceController;
 
 /*
  * A transporter object used to return information about the
  * initial Space and destination space for a proposed move.
  */
 public class MoveInput {
-	private SpaceControl init;
-	private SpaceControl dest;
+	private SpaceController init;
+	private SpaceController dest;
 	
-	public MoveInput(SpaceControl init, SpaceControl dest){
+	public MoveInput(SpaceController init, SpaceController dest){
 		this.init = init;
 		this.dest = dest;
 	}
 	
 	// public getters
-	public SpaceControl getInit(){
+	public SpaceController getInit(){
 		return init;
 	}
 	
-	public SpaceControl getDest(){
+	public SpaceController getDest(){
 		return dest;
 	}
 }

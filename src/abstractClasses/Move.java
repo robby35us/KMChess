@@ -1,6 +1,6 @@
 package abstractClasses;
 
-import control.SpaceControl;
+import control.SpaceController;
 
 
 /* Move.java 
@@ -14,14 +14,14 @@ import control.SpaceControl;
 public abstract class Move {
   protected int rankOffset;
   protected int fileOffset;
-  protected SpaceControl initialSpace;
-  protected SpaceControl destinationSpace;
-  protected SpaceControl finalDestinationSpace;
+  protected SpaceController initialSpace;
+  protected SpaceController destinationSpace;
+  protected SpaceController finalDestinationSpace;
   
   /*
    * The super constructor for all Move objects
    */
-  protected Move(int rankOffset, int fileOffset, SpaceControl initial, SpaceControl finalDest){
+  protected Move(int rankOffset, int fileOffset, SpaceController initial, SpaceController finalDest){
 	this.rankOffset = rankOffset;
 	this.fileOffset = fileOffset;
 	initialSpace = initial;
@@ -36,7 +36,7 @@ public abstract class Move {
   protected void setDestination() {
 	int ro = rankOffset;
 	int fo = fileOffset;
-	SpaceControl space = initialSpace;
+	SpaceController space = initialSpace;
 	while(space != null && (ro != 0 || fo != 0 )){
 		if(ro > 0){ 
 			space = space.getSpaceForward();
@@ -68,16 +68,16 @@ public abstract class Move {
 	return fileOffset;
   }
   
-  public SpaceControl getInitialSpace(){
+  public SpaceController getInitialSpace(){
 	return initialSpace;
   } 
   
 
-  public SpaceControl getDestinationSpace() {
+  public SpaceController getDestinationSpace() {
 	return destinationSpace;
   }
 
-public SpaceControl getFinalDestSpace() {
+public SpaceController getFinalDestSpace() {
 	return finalDestinationSpace;
 }
 }
