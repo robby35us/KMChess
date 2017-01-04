@@ -2,7 +2,7 @@ package constraints;
 
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
-import control.SpaceController;
+import controllers.SpaceController;
 import interfaces.MoveConstraint;
 import pieces.Piece;
 

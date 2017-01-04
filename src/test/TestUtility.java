@@ -4,8 +4,8 @@ import testIntegration.PieceInfo;
 import org.junit.Assert;
 
 import abstractClasses.Move;
-import control.BoardController;
-import control.SpaceController;
+import controllers.BoardController;
+import controllers.SpaceController;
 import enums.File;
 import enums.PieceColor;
 import enums.Rank;

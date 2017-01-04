@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import abstractClasses.ActualMove;
 import constraints.MustCapture;
 import constraints.SingleMove;
-import control.SpaceController;
+import controllers.SpaceController;
 import enums.*;
 
 /*

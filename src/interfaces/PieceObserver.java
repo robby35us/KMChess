@@ -1,6 +1,6 @@
 package interfaces;
 
-import control.SpaceController;
+import controllers.SpaceController;
 
 /*
  * A PieceObserver alerts the king on the opposing side if

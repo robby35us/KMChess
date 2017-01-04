@@ -1,7 +1,7 @@
 package consoleIO;
 
-import control.BoardController;
-import control.SpaceController;
+import controllers.BoardController;
+import controllers.SpaceController;
 import enums.*;
 import pieces.Piece;
 import utilityContainers.ErrorMessage;

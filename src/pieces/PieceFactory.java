@@ -1,6 +1,6 @@
 package pieces;
 import constraints.*;
-import control.BoardController;
+import controllers.BoardController;
 import enums.*;
 import game.GameState;
 import interfaces.MoveConstraint;

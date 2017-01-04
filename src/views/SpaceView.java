@@ -1,4 +1,4 @@
-package presentation;
+package views;
 
 import java.awt.Canvas;
 
@@ -11,8 +11,8 @@ import java.awt.MediaTracker;
 import java.util.Observable;
 import java.util.Observer;
 
-import abstraction.SpaceModel;
 import graphics.SpaceBorder;
+import models.SpaceModel;
 import pieces.Piece;
 import pieces.PieceImages;
 

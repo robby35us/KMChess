@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import abstractClasses.ContEffect;
 import cards.KMCard;
 import constraints.MustCapture;
+import controllers.SpaceController;
 import enums.MoveType;
 import enums.Timing;
 import enums.Turn;
@@ -15,7 +16,6 @@ import game.MoveBuilder;
 import gameComponents.PlayerSet;
 import graphics.SpaceBorder;
 import pieces.Piece;
-import control.SpaceController;
 import utilityContainers.ErrorMessage;
 import static constants.Constants.*;
 

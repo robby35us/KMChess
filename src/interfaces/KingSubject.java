@@ -1,6 +1,6 @@
 package interfaces;
 
-import control.SpaceController;
+import controllers.SpaceController;
 
 
 /*

@@ -2,8 +2,8 @@ package consoleIO;
 
 import java.util.Scanner;
 
-import control.BoardController;
-import control.SpaceController;
+import controllers.BoardController;
+import controllers.SpaceController;
 import enums.File;
 import enums.PieceColor;
 import enums.PieceType;

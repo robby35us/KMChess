@@ -1,6 +1,6 @@
 package abstractClasses;
 
-import control.SpaceController;
+import controllers.SpaceController;
 
 
 /* Move.java 

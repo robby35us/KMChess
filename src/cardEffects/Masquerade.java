@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import abstractClasses.CardEffect;
 import constraints.CannotCapture;
-import control.BoardController;
-import control.SpaceController;
+import controllers.SpaceController;
 import enums.MoveType;
 import enums.PieceType;
 import game.GameState;
 import game.GameWindow;
 import game.MoveBuilder;
 import interfaces.MoveConstraint;
+import models.BoardModel;
 import pieces.Piece;
 import pieces.PieceFactory;
 import utilityContainers.ErrorMessage;
@@ -21,7 +21,7 @@ public class Masquerade extends CardEffect {
 	
 	@Override
 	public void initiateImmediateEffect(GameState gs) {
-		BoardController board = gs.getBoard();	
+		BoardModel board = gs.getBoard().getModel();	
 		ErrorMessage message = new ErrorMessage();
 		SpaceController startSpace = null;
 		Piece selected = null;
@@ -46,11 +46,11 @@ public class Masquerade extends CardEffect {
 			
 			startSpace = board.getStartSpace();
 			selected = startSpace.getPiece();
-			Piece modifiedQueen = (new PieceFactory(board, gs)).makePiece(PieceType.Queen, selected.getType(), gs.getTurn().getColor());
+			Piece modifiedQueen = (new PieceFactory(gs.getBoard(), gs)).makePiece(PieceType.Queen, selected.getType(), gs.getTurn().getColor());
 			ArrayList<MoveType> moves = modifiedQueen.getMoveTypes();
 			for(MoveType mt : moves){
 				ArrayList<MoveConstraint> constraints = modifiedQueen.getConstraints(mt);
-				constraints.add(new CannotCapture(board));
+				constraints.add(new CannotCapture(gs.getBoard()));
 			}
 			startSpace.changePiece(modifiedQueen, false);
 			message = new ErrorMessage();

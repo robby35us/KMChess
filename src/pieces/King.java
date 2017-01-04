@@ -1,7 +1,7 @@
 package pieces;
 import java.util.ArrayList;
 
-import control.SpaceController;
+import controllers.SpaceController;
 import enums.*;
 import interfaces.KingObserver;
 import interfaces.KingSubject;

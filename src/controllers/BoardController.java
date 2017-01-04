@@ -1,27 +1,21 @@
-package control;
+package controllers;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import abstractClasses.AppEvent;
-import abstraction.BoardModel;
-import abstraction.SpaceModel;
 
 import static constants.Constants.*;
 import enums.File;
 import enums.Rank;
 import interfaces.Visitable;
 import interfaces.Visitor;
-import presentation.BoardView;
-import presentation.SpaceView;
+import models.BoardModel;
+import models.SpaceModel;
+import views.BoardView;
+import views.SpaceView;
 
 public class BoardController extends Controller implements Visitable {
 	
-	public SpaceController activeSpace = null;
 	   
 	
-	volatile private SpaceController startSpace = null;
-	volatile private SpaceController endSpace = null;
 	
 	private Rank rank;
 	private File file;
@@ -68,37 +62,19 @@ public class BoardController extends Controller implements Visitable {
 			return null;
 	}
 	
-	public void setStartSpace(SpaceController space){
-		if(startSpace != null)
-			startSpace.unarmSpace();
-		if(space != null)
-			space.armSpace();
-		startSpace = space;
-	}
-	
-	public SpaceController getStartSpace(){
-		return startSpace;
-	}
-	
-	public void setEndSpace(SpaceController space){
-		if(endSpace != null)
-			endSpace.unarmSpace();
-		if(space != null)
-			space.armSpace();
-		endSpace = space;
-	}
 
-	public SpaceController getEndSpace(){
-		return endSpace;
-	}	
 	
-	public BoardView getPresentation(){
+	public BoardView getView(){
 		return view;
+	}
+	
+	public BoardModel getModel(){
+		return model;
 	}
 
 	@Override
-	public void accept(AppEvent e) {
-		e.setData(model);
+	public Object accept(Visitor e) {
+		return model;
 	}
 
 	@Override
@@ -106,10 +82,5 @@ public class BoardController extends Controller implements Visitable {
 		SpaceView sView = new SpaceView();
 		SpaceModel sModel = new SpaceModel(rank, file, sView);
 		currentChild = new SpaceController(sView, sModel, this);
-	}
-
-	@Override
-	public void handleEvent(AppEvent e) {
-		
 	}
 }

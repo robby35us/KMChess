@@ -1,6 +1,6 @@
 package utilityContainers;
 
-import control.SpaceController;
+import controllers.SpaceController;
 
 /*
  * A transporter object used to return information about the

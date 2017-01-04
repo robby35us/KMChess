@@ -1,8 +1,8 @@
 package game;
 import java.util.Iterator;
 
-import control.BoardController;
-import control.SpaceController;
+import controllers.BoardController;
+import controllers.SpaceController;
 import enums.*;
 import gameComponents.*;
 import pieces.Piece;

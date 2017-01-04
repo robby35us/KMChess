@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import control.BoardController;
-import control.SpaceController;
+import controllers.BoardController;
+import controllers.SpaceController;
 
 import java.util.ArrayList;
 

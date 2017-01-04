@@ -5,9 +5,9 @@ import java.awt.event.*;
 import javax.swing.JOptionPane;
 
 import cards.KMCard;
-import control.BoardController;
-import control.SpaceController;
+import controllers.SpaceController;
 import interfaces.IOFramework;
+import models.BoardModel;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
 import enums.PieceColor;
@@ -33,7 +33,7 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 		//addComponents(gs.getBoard());
 		add(gs.getMessageBox(), BorderLayout.NORTH);
 		gs.getMessageBox().setSize(this.getWidth(), this.getHeight()/5);
-		add(gs.getBoard().getPresentation(), BorderLayout.CENTER);
+		add(gs.getBoard().getView(), BorderLayout.CENTER);
 		add(gs.getCInfoArea(), BorderLayout.SOUTH);
 		add(gs.getCardArea(), BorderLayout.WEST);
 		add(gs.getSelectedCardArea(), BorderLayout.EAST);
@@ -104,13 +104,13 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 
 	@Override
 	public void displayBoard() {
-		gs.getBoard().getPresentation().repaint();
+		gs.getBoard().getView().repaint();
 	}
 
 
 	@Override
 	public synchronized MoveInput getMoveInput(PieceColor color, ErrorMessage message) {
-		BoardController board = gs.getBoard();
+		BoardModel board = gs.getBoard().getModel();
 		CardArea ca = gs.getCardArea();
 		while((board.getStartSpace() == null || board.getEndSpace() == null) &&
 			  (ca.getExecutingCard() == null)){

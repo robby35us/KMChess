@@ -2,7 +2,7 @@ package testIntegration;
 
 import org.junit.Test;
 
-import control.BoardController;
+import controllers.BoardController;
 
 import java.io.IOException;
 

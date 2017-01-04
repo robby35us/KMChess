@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
-import control.SpaceController;
+import controllers.SpaceController;
 import enums.*;
 import interfaces.MoveConstraint;
 import pieces.Piece;

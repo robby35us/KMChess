@@ -1,19 +1,22 @@
-package control;		
+package controllers;		
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import abstractClasses.AppEvent;
-import abstraction.SpaceModel;
 import static constants.Constants.*;
 
 import enums.File;
 import enums.MoveType;
 import enums.PieceColor;
 import enums.Rank;
+import enums.SpaceColor;
 import enums.Turn;
 import game.GameState;
-import presentation.SpaceView;
+import interfaces.Visitor;
+import models.BoardModel;
+import models.SpaceModel;
+import pieces.Piece;
+import views.SpaceView;
 
 public class SpaceController extends Controller implements MouseListener {
 	
@@ -21,6 +24,7 @@ public class SpaceController extends Controller implements MouseListener {
 	private SpaceModel model;
 	private SpaceView view;
 	private BoardController parent;
+	private BoardModel parentModel;
 	private boolean mousedown;
 	private boolean mouseInBounds = false;
 
@@ -31,6 +35,7 @@ public class SpaceController extends Controller implements MouseListener {
 		this.model = model;
 		view.setBackground(model.getColor().getAWTColor());
 		this.parent = parent;
+		this.parentModel = parent.getModel();
 	}
 	
 	//Public getters
@@ -104,25 +109,25 @@ public class SpaceController extends Controller implements MouseListener {
 	public void mouseClicked(MouseEvent e) { 
 		mousedown = false;
 		
-		if(parent.activeSpace != null){
-			parent.activeSpace.unarmSpace();
-			if(parent.activeSpace != this){
-				parent.setEndSpace(this);
-				parent.activeSpace = null;
+		if(parentModel.activeSpace != null){
+			parentModel.activeSpace.unarmSpace();
+			if(parentModel.activeSpace != this){
+				parentModel.setEndSpace(this);
+				parentModel.activeSpace = null;
 				return;
 			}
 		}
-		if(parent.activeSpace == this){
-			parent.activeSpace = null;
-			parent.setStartSpace(null);
+		if(parentModel.activeSpace == this){
+			parentModel.activeSpace = null;
+			parentModel.setStartSpace(null);
 		}
 		else {
 			if(model.getPiece() != null &&
 			    (GameState.globalGS.getTurn() == Turn.Player1 && model.getPiece().getColor() == PieceColor.White ||
 				 GameState.globalGS.getTurn() == Turn.Player2 && model.getPiece().getColor() == PieceColor.Black)) { 	   
-					parent.activeSpace = this;
+					parentModel.activeSpace = this;
 					this.armSpace();
-					parent.setStartSpace(this);
+					parentModel.setStartSpace(this);
 			}
 		}
 	}
@@ -142,7 +147,7 @@ public class SpaceController extends Controller implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		this.mouseInBounds = false;
-        if( this != parent.activeSpace)
+        if( this != parentModel.activeSpace)
         	this.unarmSpace();
 	}
 
@@ -169,12 +174,8 @@ public class SpaceController extends Controller implements MouseListener {
 	}
 
 	@Override
-	public void accept(AppEvent e) {
-		e.setData(model);
-	}
-
-	@Override
-	public void handleEvent(AppEvent e) {
+	public Object accept(Visitor v) {
+		return model;
 	}
 
 	public File getFile() {
@@ -183,6 +184,22 @@ public class SpaceController extends Controller implements MouseListener {
 	
 	public Rank getRank(){
 		return this.model.getRank();
+	}
+
+	public Piece getPiece() {
+		return this.model.getPiece();
+	}
+
+	public void changePiece(Piece newPiece, boolean b) {
+		this.changePiece(newPiece, b);		
+	}
+
+	public boolean hasPiece() {
+		return this.model.hasPiece();
+	}
+
+	public SpaceColor getColor() {
+		return this.model.getColor();
 	}
 	
 }   

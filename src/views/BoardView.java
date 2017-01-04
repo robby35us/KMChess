@@ -1,4 +1,4 @@
-package presentation;
+package views;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Label;
@@ -7,8 +7,8 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
-import control.Controller;
-import control.SpaceController;
+import controllers.Controller;
+import controllers.SpaceController;
 import enums.File;
 import enums.Rank;
 import enums.Timing;

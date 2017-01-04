@@ -1,7 +1,7 @@
 package interfaces;
 
-import control.BoardController;
-import control.SpaceController;
+import controllers.BoardController;
+import controllers.SpaceController;
 
 public interface Visitor {
 	
