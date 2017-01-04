@@ -1,5 +1,7 @@
 package interfaces;
 
+import abstractClasses.AppEvent;
+
 public interface Visitable {
-	public Object accept(Visitor visitor);
+	public void accept(AppEvent e);
 }

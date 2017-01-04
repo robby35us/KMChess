@@ -3,7 +3,9 @@ package control;
 import java.util.ArrayList;
 import java.util.List;
 
+import abstractClasses.AppEvent;
 import abstraction.BoardModel;
+import abstraction.SpaceModel;
 
 import static constants.Constants.*;
 import enums.File;
@@ -11,8 +13,9 @@ import enums.Rank;
 import interfaces.Visitable;
 import interfaces.Visitor;
 import presentation.BoardView;
+import presentation.SpaceView;
 
-public class BoardController implements Visitable {
+public class BoardController extends Controller implements Visitable {
 	
 	public SpaceController activeSpace = null;
 	   
@@ -20,13 +23,21 @@ public class BoardController implements Visitable {
 	volatile private SpaceController startSpace = null;
 	volatile private SpaceController endSpace = null;
 	
+	private Rank rank;
+	private File file;
+	private SpaceController currentChild = null;
 	
 	private BoardView view;
 	private BoardModel model;
 	
 	public BoardController(){
-		
-		view = new BoardView(spaces.iterator());
+		childControllers = new ArrayList<Controller>(numRanks * numFiles);
+		for(int i = numRanks - 1;  i >=0 ; i--)
+			for(int j = 0; j < numFiles; j++){
+				createChildTriad();
+				childControllers.add(currentChild);
+			}
+		view = new BoardView(childControllers.iterator());
 		model = new BoardModel(view);
 	}
 	
@@ -36,7 +47,7 @@ public class BoardController implements Visitable {
 	public SpaceController getSpace(Rank rank, File file){
 		if(rank == null || file == null)
 			return null;
-		return spaces.get((numRanks - (rank.ordinal() + 1)) * numFiles + file.ordinal());
+		return (SpaceController) childControllers.get((numRanks - (rank.ordinal() + 1)) * numFiles + file.ordinal());
 	}
 	
 	/*
@@ -86,8 +97,19 @@ public class BoardController implements Visitable {
 	}
 
 	@Override
-	public Object accept(Visitor visitor) {
-		// TODO Auto-generated method stub
-		return null;
+	public void accept(AppEvent e) {
+		e.setData(model);
+	}
+
+	@Override
+	public void createChildTriad() {
+		SpaceView sView = new SpaceView();
+		SpaceModel sModel = new SpaceModel(rank, file, sView);
+		currentChild = new SpaceController(sView, sModel, this);
+	}
+
+	@Override
+	public void handleEvent(AppEvent e) {
+		
 	}
 }

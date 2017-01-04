@@ -3,15 +3,17 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import abstractClasses.AppEvent;
 import abstraction.SpaceModel;
 import static constants.Constants.*;
+
+import enums.File;
 import enums.MoveType;
 import enums.PieceColor;
+import enums.Rank;
 import enums.Turn;
 import game.GameState;
-import interfaces.Visitor;
 import presentation.SpaceView;
-import utilityContainers.AppEvent;
 
 public class SpaceController extends Controller implements MouseListener {
 	
@@ -167,14 +169,20 @@ public class SpaceController extends Controller implements MouseListener {
 	}
 
 	@Override
-	public void handleEvent(AppEvent e) {
-		
+	public void accept(AppEvent e) {
+		e.setData(model);
 	}
 
 	@Override
-	public Object accept(Visitor visitor) {
-		return model;
+	public void handleEvent(AppEvent e) {
 	}
 
+	public File getFile() {
+		return this.model.getFile();
+	}
+	
+	public Rank getRank(){
+		return this.model.getRank();
+	}
 	
 }   
