@@ -2,7 +2,7 @@ package constraints;
 
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import enums.PieceColor;
 import interfaces.MoveConstraint;
@@ -13,9 +13,9 @@ import interfaces.MoveConstraint;
  * point of view after the move.
  */
 public class NoPieceBehind implements MoveConstraint {
-	private BoardControl board;
+	private BoardController board;
 	
-	public NoPieceBehind(BoardControl board){
+	public NoPieceBehind(BoardController board){
 		this.board = board;
 	}
 

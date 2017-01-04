@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import enums.File;
 import enums.Rank;
 import enums.SpaceColor;
-import presentation.BoardPresentation;
+import presentation.BoardView;
 import presentation.SpaceView;
 
 @SuppressWarnings("unused")

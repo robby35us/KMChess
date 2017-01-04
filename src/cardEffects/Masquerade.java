@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import abstractClasses.CardEffect;
 import constraints.CannotCapture;
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import enums.MoveType;
 import enums.PieceType;
@@ -21,7 +21,7 @@ public class Masquerade extends CardEffect {
 	
 	@Override
 	public void initiateImmediateEffect(GameState gs) {
-		BoardControl board = gs.getBoard();	
+		BoardController board = gs.getBoard();	
 		ErrorMessage message = new ErrorMessage();
 		SpaceController startSpace = null;
 		Piece selected = null;

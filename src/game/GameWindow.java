@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.JOptionPane;
 
 import cards.KMCard;
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import interfaces.IOFramework;
 import utilityContainers.ErrorMessage;
@@ -110,7 +110,7 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 
 	@Override
 	public synchronized MoveInput getMoveInput(PieceColor color, ErrorMessage message) {
-		BoardControl board = gs.getBoard();
+		BoardController board = gs.getBoard();
 		CardArea ca = gs.getCardArea();
 		while((board.getStartSpace() == null || board.getEndSpace() == null) &&
 			  (ca.getExecutingCard() == null)){

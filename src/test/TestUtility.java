@@ -4,7 +4,7 @@ import testIntegration.PieceInfo;
 import org.junit.Assert;
 
 import abstractClasses.Move;
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import enums.File;
 import enums.PieceColor;
@@ -15,8 +15,8 @@ import pieces.PieceFactory;
 
 public class TestUtility {
 	
-	public static BoardControl makeBoard(PieceInfo[] info, GameState gs){
-		BoardControl board = gs.getBoard();
+	public static BoardController makeBoard(PieceInfo[] info, GameState gs){
+		BoardController board = gs.getBoard();
 		PieceFactory factory = new PieceFactory(board, gs);
 		for(int i = 0; i < info.length; i++){
 			SpaceController space = board.getSpace(info[i].getRank(), info[i].getFile());
@@ -28,7 +28,7 @@ public class TestUtility {
 		return board;
 	}
 	
-	public static void verifyBoardState(BoardControl board, PieceInfo[] state){
+	public static void verifyBoardState(BoardController board, PieceInfo[] state){
 		PieceInfo[][] expectedState = new PieceInfo[8][8];
 		for(int i = 0; i < state.length; i++){
 			expectedState[state[i].getRank().ordinal()][state[i].getFile().ordinal()] = state[i];

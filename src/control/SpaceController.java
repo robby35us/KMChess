@@ -5,30 +5,28 @@ import java.awt.event.MouseListener;
 
 import abstraction.SpaceModel;
 import static constants.Constants.*;
-import enums.File;
 import enums.MoveType;
 import enums.PieceColor;
-import enums.Rank;
-import enums.SpaceColor;
 import enums.Turn;
 import game.GameState;
-import pieces.Piece;
+import interfaces.Visitor;
 import presentation.SpaceView;
+import utilityContainers.AppEvent;
 
-public class SpaceController implements MouseListener {
+public class SpaceController extends Controller implements MouseListener {
 	
 	
 	private SpaceModel model;
 	private SpaceView view;
-	private BoardControl parent;
+	private BoardController parent;
 	private boolean mousedown;
 	private boolean mouseInBounds = false;
 
-	public SpaceController(Rank rank, File file, BoardControl parent){
+	public SpaceController(SpaceView view, SpaceModel model, BoardController parent){
 		
-		view = new SpaceView();
+		this.view = view;
 		view.addMouseListener(this);
-		model = new SpaceModel(rank, file, view);
+		this.model = model;
 		view.setBackground(model.getColor().getAWTColor());
 		this.parent = parent;
 	}
@@ -38,38 +36,10 @@ public class SpaceController implements MouseListener {
 		return view;
 	}
 	
-	public BoardControl getParent(){
+	public BoardController getParent(){
 		return parent;
 	}
 	
-	public Rank getRank(){
-		return model.getRank();
-	}
-	
-	public File getFile(){
-		return model.getFile();
-	}
-	
-	public SpaceColor getColor(){
-		return model.getColor();
-	}
-	
-	public Piece getPiece(){
-		return model.getPiece();
-	}	
-	
-	
-	/*
-	 * Returns true if there is a piece in this Space,
-	 * false otherwise.
-	 */
-	public boolean hasPiece(){
-		return model.hasPiece();
-	}
-	
-	public Piece changePiece(Piece newPiece, Boolean repaint){
-		return model.replacePiece(newPiece, repaint);
-	}
 	
 	/*
 	 * Returns the Space on the board to the left of this one, or 
@@ -188,6 +158,22 @@ public class SpaceController implements MouseListener {
 	   else
 		   this.unarmSpace();
 		
+	}
+
+	@Override
+	public void createChildTriad() {
+		// do nothing
+		
+	}
+
+	@Override
+	public void handleEvent(AppEvent e) {
+		
+	}
+
+	@Override
+	public Object accept(Visitor visitor) {
+		return model;
 	}
 
 	

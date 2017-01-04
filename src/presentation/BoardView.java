@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import enums.File;
 import enums.Rank;
@@ -21,7 +21,7 @@ import enums.Timing;
  * the spaces it contains, and how to return one of
  * it's Space objects.
  */
-public class BoardPresentation extends Panel {
+public class BoardView extends Panel {
 	
 	/**
 	 * 
@@ -36,15 +36,15 @@ public class BoardPresentation extends Panel {
 	 * Rank and File. The size of the board is dictated by the number
 	 * of values in these enums.
 	 */
-	public BoardPresentation(Iterator<SpaceController> spaces){
+	public BoardView(Iterator<SpaceController> spaces){
 		
 		
-		setLayout(new GridLayout(BoardControl.numRanks + 1, BoardControl.numFiles + 1, 0, 0));
-		for(int i = 0; i < BoardControl.numRanks; i++){
+		setLayout(new GridLayout(BoardController.numRanks + 1, BoardController.numFiles + 1, 0, 0));
+		for(int i = 0; i < BoardController.numRanks; i++){
 			Label l = new Label(Rank.values()[7 - i].toString(), Label.CENTER);
 			l.setSize(d );
 			add(l);
-			for(int j = 0; j < BoardControl.numFiles; j++){
+			for(int j = 0; j < BoardController.numFiles; j++){
 				SpaceView spacePres = spaces.next().getSpaceView();
 				add(spacePres);
 				
@@ -53,7 +53,7 @@ public class BoardPresentation extends Panel {
 		Label corner = new Label();
 		corner.setSize(d);
 		add(corner);
-		for(int i = 0; i < BoardControl.numFiles; i++){
+		for(int i = 0; i < BoardController.numFiles; i++){
 			Label l = new Label(File.values()[0].toString(), Label.CENTER);
 			l.setSize(d);
 			add(l);

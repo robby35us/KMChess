@@ -1,6 +1,6 @@
 package consoleIO;
 
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import enums.*;
 import pieces.Piece;
@@ -14,7 +14,7 @@ public class ConsoleDisplay{
 	/*
 	 * Displays a pretty print version of a chess board.
 	 */
-	public static void displayBoard(BoardControl board){
+	public static void displayBoard(BoardController board){
 		SpaceController head = board.getSpace(Rank.Eight, File.A);
 		SpaceController current = head;
 		System.out.println(" Rank    ----   ----   ----   ----   ----   ----   ----   ----");

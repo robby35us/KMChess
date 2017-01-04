@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 
 import java.util.ArrayList;
@@ -13,11 +13,11 @@ import enums.File;
 import enums.Rank;
 import enums.SpaceColor;
 
-public class BoardTest extends BoardControl {
+public class BoardTest extends BoardController {
 
 	@Test
 	public void testGetSpace(){
-		BoardControl board = new BoardControl();
+		BoardController board = new BoardController();
 		ArrayList<SpaceController> spaces = new ArrayList<SpaceController>();
 		SpaceColor color = SpaceColor.Gray;
 		SpaceController space;
@@ -39,7 +39,7 @@ public class BoardTest extends BoardControl {
 
 	@Test
 	public void testGetNextSpace(){
-		BoardControl board = new BoardControl();
+		BoardController board = new BoardController();
 		ArrayList<SpaceController> spaces = new ArrayList<SpaceController>();
 		for(Rank r : Rank.values())
 			for(File f : File.values())
@@ -68,7 +68,7 @@ public class BoardTest extends BoardControl {
 	
 	@Test
 	public void testGetNextSpaceOutOfBounds(){
-		BoardControl board = new BoardControl();
+		BoardController board = new BoardController();
 		assertNull(board.getNextSpace(0, 0, null));
 		assertNull(board.getNextSpace(-1, -1, board.getSpace(Rank.One, File.A)));
 		assertNull(board.getNextSpace(1, 1, board.getSpace(Rank.Eight, File.H)));
@@ -78,7 +78,7 @@ public class BoardTest extends BoardControl {
 	
 	@Test
 	public void testGetSpaceNullValue(){
-		BoardControl board = new BoardControl();
+		BoardController board = new BoardController();
 		assertNull(board.getSpace(null, File.A));
 		assertNull(board.getSpace(Rank.Eight, null));
 		assertNull(board.getSpace(null, null));

@@ -1,6 +1,6 @@
 package pieces;
 import constraints.*;
-import control.BoardControl;
+import control.BoardController;
 import enums.*;
 import game.GameState;
 import interfaces.MoveConstraint;
@@ -32,7 +32,7 @@ public class PieceFactory {
 	 * Takes a copy of the Board state the GameState object and uses them to 
 	 * initialize the various constraints. 
 	 */
-	public PieceFactory(BoardControl board, GameState gs){
+	public PieceFactory(BoardController board, GameState gs){
 		if(singleMove == null){
 			singleMove = new SingleMove();
 			mustCapture = new MustCapture();

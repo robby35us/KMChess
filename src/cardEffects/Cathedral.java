@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import abstractClasses.CardEffect;
 import constraints.DisabledMove;
-import control.BoardControl;
+import control.BoardController;
 import enums.MoveType;
 import enums.PieceType;
 import game.GameState;
@@ -19,7 +19,7 @@ public class Cathedral extends CardEffect {
 	@Override
 	public void initiateImmediateEffect(GameState gs) {
 		
-		BoardControl board = gs.getBoard();
+		BoardController board = gs.getBoard();
 		board.setStartSpace(null);
 		board.setEndSpace(null);
 		do{

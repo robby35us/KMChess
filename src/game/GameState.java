@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import abstractClasses.ActualMove;
 import abstractClasses.ContEffect;
 import cards.KMDeck;
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import enums.*;
 import gameComponents.*;
@@ -36,7 +36,7 @@ import utilityContainers.ErrorMessage;
  * game state.
  */
 public class GameState implements ItemListener {
-	private BoardControl board;
+	private BoardController board;
 	private MessageBox messageBox;
 	private TextArea gameMessage;
 	private List contEffectsArea;
@@ -73,7 +73,7 @@ public class GameState implements ItemListener {
 	 * This constructor is used for testing with a irregular board. It 
 	 * does not place pieces on the given Board or create Player objects.
 	 */
-	public GameState(BoardControl board) {
+	public GameState(BoardController board) {
 		Piece.setGameState(this);
 		this.board = board;
 		
@@ -116,7 +116,7 @@ public class GameState implements ItemListener {
 	 * factory.
 	 */
 	public void setupGameState() {
-		board = new BoardControl();
+		board = new BoardController();
 		factory = new PieceFactory(board, this);
 		
 		PlayerSet [] sets = new PlayerSet[2];
@@ -285,7 +285,7 @@ public class GameState implements ItemListener {
 	}
 
 	// public getters
-	public BoardControl getBoard() {
+	public BoardController getBoard() {
 		return board;
 	}
 	

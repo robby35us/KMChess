@@ -1,7 +1,7 @@
 package game;
 import java.util.Iterator;
 
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import enums.*;
 import gameComponents.*;
@@ -19,7 +19,7 @@ public class BoardSetup {
 	 * assumes the each set is organized by first row, from File A to File H, 
 	 * and then the eight pawns.
 	 */
-	public static BoardControl setupChessBoard(PlayerSet whiteSet, PlayerSet blackSet, BoardControl board){
+	public static BoardController setupChessBoard(PlayerSet whiteSet, PlayerSet blackSet, BoardController board){
 		placeWhitePieces(whiteSet, board);
 		placeBlackPieces(blackSet, board);
 		return board;
@@ -28,21 +28,21 @@ public class BoardSetup {
 	/*
 	 * Sets the black pieces on the board
 	 */
-	private static void placeBlackPieces(PlayerSet blackSet, BoardControl board) {
+	private static void placeBlackPieces(PlayerSet blackSet, BoardController board) {
 		SpaceController currentSpace = board.getSpace(Rank.Eight, File.A);
 		Iterator<Piece> it = blackSet.iterator();
 		
 		// set the "first" row(Rank 8) of black pieces from left to right
-		currentSpace.changePiece(it.next(),false);
+		currentSpace.changePiece(it.next(),true);
 		for(int i = 0; i < 7; i++){
 			currentSpace = currentSpace.getSpaceRight();
-			currentSpace.changePiece(it.next(), false);
+			currentSpace.changePiece(it.next(), true);
 		}
 		currentSpace = currentSpace.getSpaceBackward();
 		
 		// set the "second" row(Rank 7) of black pieces from right to left
 		for(int i = 0; i < 8; i++){
-			currentSpace.changePiece(it.next(), false);
+			currentSpace.changePiece(it.next(), true);
 			currentSpace = currentSpace.getSpaceLeft();
 		}	
 	}
@@ -50,21 +50,21 @@ public class BoardSetup {
 	/*
 	 * Sets the white Pieces on the board
 	 */
-	private static void placeWhitePieces(PlayerSet whiteSet, BoardControl board) {
+	private static void placeWhitePieces(PlayerSet whiteSet, BoardController board) {
 		SpaceController currentSpace = board.getSpace(Rank.One, File.A);
 		Iterator<Piece> it = whiteSet.iterator();
 		
 		// set the "first" row (Rank 1) of white pieces left to right
-		currentSpace.changePiece(it.next(),false);
+		currentSpace.changePiece(it.next(),true);
 		for(int i = 0; i < 7; i++){
 			currentSpace = currentSpace.getSpaceRight();
-			currentSpace.changePiece(it.next(),false);
+			currentSpace.changePiece(it.next(),true);
 		}
 		currentSpace = currentSpace.getSpaceForward();
 		
 		// set the "second" row ("Rank 2) of white pieces from right to left
 		for(int i = 0; i < 8; i++){
-			currentSpace.changePiece(it.next(), false);
+			currentSpace.changePiece(it.next(), true);
 			currentSpace = currentSpace.getSpaceLeft();
 		}
 	}

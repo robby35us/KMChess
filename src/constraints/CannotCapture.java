@@ -1,7 +1,7 @@
 package constraints;
 import abstractClasses.ActualMove;
 import abstractClasses.Move;
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import interfaces.MoveConstraint;
 import pieces.Piece;
@@ -10,10 +10,10 @@ import pieces.Piece;
  * Verifies that a the move will not result in a capture.
  */
 public class CannotCapture implements MoveConstraint {
-	private BoardControl board;
+	private BoardController board;
 	
 	// This constraint requires the Board object.
-	public CannotCapture(BoardControl board){
+	public CannotCapture(BoardController board){
 		this.board = board;
 	}
 	

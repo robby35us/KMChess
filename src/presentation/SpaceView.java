@@ -69,9 +69,10 @@ public class SpaceView extends Canvas implements Observer{
                 tracker.addImage( image, id );
                 tracker.checkID( id, true );
             }
-        if(repaint && buttonState == id )
-            repaint();
-        }
+ 			
+            if(repaint && buttonState == id )
+            	repaint();
+ 		}
     }
 
  	public void setButtonState(int id){
@@ -144,8 +145,12 @@ public class SpaceView extends Canvas implements Observer{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		if(arg1 != null) {
 			Piece p = (Piece) arg1;
 			this.updateImage(PieceImages.getImage(p.getType(), p.getColor(), ((SpaceModel)arg0).getColor()), arg0.hasChanged());
+		}
+		else
+			this.updateImage(null, arg0.hasChanged());
 	}
     
 }

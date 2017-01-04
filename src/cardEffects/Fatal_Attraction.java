@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import abstractClasses.ContEffect;
 import constraints.DisabledMove;
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import enums.File;
 import enums.MoveType;
@@ -26,7 +26,7 @@ public class Fatal_Attraction extends ContEffect {
 
 	@Override
 	public synchronized void startContEffect(GameState gs) {
-		BoardControl board = gs.getBoard();
+		BoardController board = gs.getBoard();
 		GameWindow.globalGW.infoBox("Select a piece to become a magnet!", getName());
 		board.setStartSpace(null);
 		board.setEndSpace(null);

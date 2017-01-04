@@ -2,7 +2,7 @@ package consoleIO;
 
 import java.util.Scanner;
 
-import control.BoardControl;
+import control.BoardController;
 import control.SpaceController;
 import enums.File;
 import enums.PieceColor;
@@ -20,7 +20,7 @@ public class InputParser {
 	 * inputed move on the board. Returns null if either of the entered codes is invalid, or
 	 * if the exit condition is inputed as the fist result.
 	 */
-	public static MoveInput getMoveInput(PieceColor color, Scanner in, BoardControl board, ErrorMessage message) {
+	public static MoveInput getMoveInput(PieceColor color, Scanner in, BoardController board, ErrorMessage message) {
 		String input = null;
 		
 		// get the initial Space
@@ -81,7 +81,7 @@ public class InputParser {
 	 * A helper method to translate Space input into a Space object.
 	 * Returns null if the input is invalid.
 	 */
-	private static SpaceController getSpace(String input, BoardControl board) {
+	private static SpaceController getSpace(String input, BoardController board) {
 		if(input == null || input.length() != 2)
 			return null;
 		char fileInput = input.toLowerCase().charAt(0);
