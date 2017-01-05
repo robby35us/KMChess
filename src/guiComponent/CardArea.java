@@ -9,11 +9,11 @@ import java.awt.GridLayout;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import cardEffects.CardEffectFactory;
 import cards.KMCardImages;
 import cards.KMCardInfo;
-import cards.KMCardSlot;
 import cards.KMDeck;
 import controllers.CardController;
 import definitions.CardEffect;
@@ -29,25 +29,25 @@ public class CardArea extends Panel implements ActionListener  {
 	
 	private KMDeck deck;
 	private KMDeck discard;
-	private KMCardSlot[] hand;
-	private Panel cardSlots;
+	private ArrayList<CardController> hand;
+	private Panel availableCards;
 	private Button noCard;
 
 	//private static KMCardImages cardImages = new KMCardImages();
 	
 	public CardArea(KMDeck deck){
 		this.setLayout(new FlowLayout());
-		cardSlots = new Panel();
-		cardSlots.setLayout(new GridLayout(3,2,10,10));
+		availableCards = new Panel();
+		availableCards.setLayout(new GridLayout(3,2,10,10));
 		this.deck = deck;
 		this.discard = new KMDeck();
-		this.hand = new KMCardSlot[HAND_SIZE];
+		this.hand = new ArrayList<CardController>(HAND_SIZE);
 		for(int i = 0 ; i < HAND_SIZE; i++) {
-			this.hand[i] = new KMCardSlot(i);
-			
-			cardSlots.add(this.hand[i]);
+			CardController cc = new CardController(CardController.getEmpty());
+			hand.add(cc);
+			availableCards.add(cc.getView());
 		}
-		this.add(cardSlots);
+		this.add(availableCards);
 
 		
 		//System.out.println(this.getComponentCount());
@@ -95,26 +95,23 @@ public class CardArea extends Panel implements ActionListener  {
 			((ContEffect) effect).startContEffect(gs);
 			gs.addContEffect((ContEffect) effect);
 		}
-		
-		KMCardSlot cardSlot= (KMCardSlot) executingCard.getView().getParent();
-		int index = cardSlot.getIndex();
 		//cardSlots.remove(cardSlot);
 		discard.addCInfo(executingCard.getCInfo());
+		availableCards.remove(executingCard.getView());
+		hand.remove(executingCard);
 		
-		hand[index] = new KMCardSlot(index);
 		KMCardInfo cInfo = deck.removeCInfo();
 		if(cInfo != null){
-			cardSlot.remove(executingCard.getView());
 			CardView v = new CardView(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()));
 			CardModel m = new CardModel(cInfo, v);
 			CardController c = new CardController(m, v, this);
-			hand[index].replaceCard(c);
-			//hand[index].add(v);
+			hand.add(c);
+			availableCards.add(v);
 		}else{
-			cardSlots.remove(cardSlot);
-			hand[index] = new KMCardSlot(index);
-			hand[index].setEnabled(false);
-			cardSlots.add(hand[index]);
+			CardController cc = new CardController(CardController.getEmpty());
+			hand.add(cc);
+			cc.getView().setEnabled(false);
+			availableCards.add(cc.getView());
 		}
 		executingCard = null;
 		revalidate();
@@ -133,17 +130,20 @@ public class CardArea extends Panel implements ActionListener  {
 	}
 
 	public void refreshHand() {
-		//System.out.println("Refreshing the hand.");
-		for(int i = 0; i < HAND_SIZE; i++){
-			if(hand[i].isEmpty()){
-				//System.out.println("Grabing new card for hand!");
+		int numToCheck = hand.size();
+		for(int i = 0; i < numToCheck; i++){
+			if(hand.get(i).isEmpty()){
+				availableCards.remove(hand.get(i).getView());
+				hand.remove(i);
 				KMCardInfo cInfo = deck.removeCInfo();
 				CardView v = new CardView(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()));
 				CardModel m = new CardModel(cInfo, v);
 				CardController c = new CardController(m, v, this);
-				hand[i].replaceCard(c);
+				hand.add(c);
+				availableCards.add(v);
+				i--;
+				numToCheck--;
 			}
-			//System.out.println(hand[i].getCard().getCInfo().getName());
 		}
 		revalidate();
 		repaint();

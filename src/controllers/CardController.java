@@ -138,4 +138,9 @@ public class CardController extends Controller implements MouseListener {
 		// intentionally left empty
 	}
 
+
+	public boolean isEmpty() {
+		return this.model.getCInfo().getSetNumber() == 0;
+	}
+
 }

@@ -64,8 +64,6 @@ public class BoardView extends Panel {
 	}
 	
 
-	
-
 	public void infoBox(String infoMessage, String title) {
 		JOptionPane.showMessageDialog(null, infoMessage, title, JOptionPane.INFORMATION_MESSAGE);
 	}
