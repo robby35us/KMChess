@@ -1,9 +1,9 @@
 package test;
 import java.util.Scanner;
 
-import cards.CardController;
 import consoleIO.ConsoleDisplay;
 import consoleIO.InputParser;
+import controllers.CardController;
 import enums.PieceColor;
 import enums.PieceType;
 import enums.Turn;

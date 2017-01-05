@@ -1,7 +1,7 @@
 package consoleIO;
 import java.util.Scanner;
 
-import cards.CardController;
+import controllers.CardController;
 import enums.*;
 import game.GameState;
 import interfaces.IOFramework;

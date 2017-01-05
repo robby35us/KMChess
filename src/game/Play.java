@@ -5,7 +5,7 @@ import java.io.IOException;
 import abstractClasses.ActualMove;
 import abstractClasses.CardEffect;
 import cardEffects.CardEffectFactory;
-import cards.CardController;
+import controllers.CardController;
 import enums.PieceColor;
 import enums.PieceType;
 import enums.Timing;

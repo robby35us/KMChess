@@ -1,5 +1,5 @@
 package interfaces;
-import cards.CardController;
+import controllers.CardController;
 import enums.PieceColor;
 import enums.PieceType;
 import enums.Turn;

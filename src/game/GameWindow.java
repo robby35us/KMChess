@@ -4,7 +4,7 @@ import java.awt.event.*;
 
 import javax.swing.JOptionPane;
 
-import cards.CardController;
+import controllers.CardController;
 import controllers.SpaceController;
 import interfaces.IOFramework;
 import models.BoardModel;

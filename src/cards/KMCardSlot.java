@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Panel;
 
+import controllers.CardController;
+
 public class KMCardSlot extends Panel {
 	
 	

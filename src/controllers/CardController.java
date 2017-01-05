@@ -1,6 +1,5 @@
-package cards;
+package controllers;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -9,12 +8,13 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import controllers.Controller;
+import cards.KMCardInfo;
 import enums.Timing;
-import game.GameState;
 import guiComponent.CardArea;
 import interfaces.Visitor;
-import models.BoardModel;
+import models.CardModel;
+import views.CardView;
+
 import static constants.Constants.*;
 
 public class CardController extends Controller implements MouseListener {
@@ -34,26 +34,31 @@ public class CardController extends Controller implements MouseListener {
 		try {
 			CardView eView = new CardView(ImageIO.read(new java.io.File("C:\\Users\\robby35us\\Pictures\\KMChess\\Back.jpg")));
 			CardModel eModel = new CardModel(emptyCInfo, eView);
-			empty = new CardController(eModel, eView, GameState.globalGS);
+			empty = new CardController(eModel, eView, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public CardController(CardModel model, CardView view, GameState parent){
+	public CardController(CardModel model, CardView view, CardArea parent){
 		this.model = model;
 		this.view = view;
+		this.parent = parent;
 		view.addMouseListener(this);
 		this.childControllers = new ArrayList<Controller>();
 	}
 	
-
+	
     public CardController(CardController empty) {
-		
+		this.view = new CardView(empty.getImg());
+		this.model = new CardModel(empty.getCInfo(), this.view);
+		this.parent = empty.parent;
+		view.addMouseListener(this);
+		this.childControllers = new ArrayList<Controller>();
 	}
 
 		public static CardController getEmpty() {
-			return empty;
+			return new CardController(empty);
 		}
 
 		public KMCardInfo getCInfo() {

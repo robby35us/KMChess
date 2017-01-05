@@ -13,15 +13,15 @@ import java.awt.event.ActionListener;
 import abstractClasses.CardEffect;
 import abstractClasses.ContEffect;
 import cardEffects.CardEffectFactory;
-import cards.CardController;
-import cards.CardModel;
-import cards.CardView;
 import cards.KMCardImages;
 import cards.KMCardInfo;
 import cards.KMCardSlot;
 import cards.KMDeck;
+import controllers.CardController;
 import game.GameState;
 import game.GameWindow;
+import models.CardModel;
+import views.CardView;
 
 public class CardArea extends Panel implements ActionListener  {
 
@@ -88,16 +88,12 @@ public class CardArea extends Panel implements ActionListener  {
 	}
 	
 	public void completeCardExecution(GameState gs){
-		//System.out.println("Entered completeCardExecution");
 		CardEffect effect = CardEffectFactory.getCEffect(executingCard.getCInfo().getSetNumber(),
 												  executingCard.getCInfo().getCardNum());
 		effect.initiateImmediateEffect(gs);
-		//System.out.println(effect.getClass());
-		//System.out.println(effect.getClass().getSuperclass());
 		if(effect.getClass().getSuperclass().equals(ContEffect.class)){
 			((ContEffect) effect).startContEffect(gs);
 			gs.addContEffect((ContEffect) effect);
-			//System.out.println("Continuing effect registered!");
 		}
 		
 		KMCardSlot cardSlot= (KMCardSlot) executingCard.getView().getParent();
@@ -105,16 +101,15 @@ public class CardArea extends Panel implements ActionListener  {
 		//cardSlots.remove(cardSlot);
 		discard.addCInfo(executingCard.getCInfo());
 		
-		
 		hand[index] = new KMCardSlot(index);
 		KMCardInfo cInfo = deck.removeCInfo();
 		if(cInfo != null){
 			cardSlot.remove(executingCard.getView());
 			CardView v = new CardView(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()));
 			CardModel m = new CardModel(cInfo, v);
-			@SuppressWarnings("unused")
-			CardController c = new CardController(m, v, gs);
-			hand[index].add(v);
+			CardController c = new CardController(m, v, this);
+			hand[index].replaceCard(c);
+			//hand[index].add(v);
 		}else{
 			cardSlots.remove(cardSlot);
 			hand[index] = new KMCardSlot(index);
@@ -145,7 +140,7 @@ public class CardArea extends Panel implements ActionListener  {
 				KMCardInfo cInfo = deck.removeCInfo();
 				CardView v = new CardView(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()));
 				CardModel m = new CardModel(cInfo, v);
-				CardController c = new CardController(m, v, GameState.globalGS);
+				CardController c = new CardController(m, v, this);
 				hand[i].replaceCard(c);
 			}
 			//System.out.println(hand[i].getCard().getCInfo().getName());

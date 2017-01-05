@@ -1,4 +1,4 @@
-package cards;
+package views;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -73,7 +73,7 @@ public class CardView extends Canvas implements Observer{
         return buttonState;
     }
 
-    protected void setButtonState( int buttonState ) {
+    public void setButtonState( int buttonState ) {
         if ( buttonState != this.buttonState ) {
             this.buttonState = buttonState;
             repaint();
