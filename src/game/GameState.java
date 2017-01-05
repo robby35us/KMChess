@@ -12,7 +12,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-import cards.KMDeck;
+import cards.Deck;
 import controllers.BoardController;
 import controllers.SpaceController;
 import definitions.*;
@@ -101,7 +101,7 @@ public class GameState implements ItemListener {
 		
 		this.contEffects = new ArrayList<ContEffect>();
 		
-		this.cardArea = new CardArea(new KMDeck(KMDeck.FULL));
+		this.cardArea = new CardArea(new Deck(Deck.FULL));
 		
 		this.cInfoArea = new CInfoArea();
 		this.selectedCardArea = new SelectedCardArea();

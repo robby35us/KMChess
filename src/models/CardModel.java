@@ -2,18 +2,18 @@ package models;
 
 import java.util.Observable;
 
-import cards.KMCardInfo;
+import cards.CardInfo;
 import views.CardView;
 
 public class CardModel extends Observable {
-	private KMCardInfo cInfo;
+	private CardInfo cInfo;
 
-	public CardModel(KMCardInfo cInfo, CardView view){
+	public CardModel(CardInfo cInfo, CardView view){
 		this.addObserver(view);
 		this.cInfo = cInfo;
 	}
 
-	public KMCardInfo getCInfo() {
+	public CardInfo getCInfo() {
 		return cInfo;
 	}
 }

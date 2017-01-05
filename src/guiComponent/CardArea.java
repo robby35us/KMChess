@@ -12,9 +12,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import cardEffects.CardEffectFactory;
-import cards.KMCardImages;
-import cards.KMCardInfo;
-import cards.KMDeck;
+import cards.CardImageFactory;
+import cards.CardInfo;
+import cards.Deck;
 import controllers.CardController;
 import definitions.CardEffect;
 import definitions.ContEffect;
@@ -27,20 +27,20 @@ public class CardArea extends Panel implements ActionListener  {
 
 	private static final int HAND_SIZE = 6;
 	
-	private KMDeck deck;
-	private KMDeck discard;
+	private Deck deck;
+	private Deck discard;
 	private ArrayList<CardController> hand;
 	private Panel availableCards;
 	private Button noCard;
 
 	//private static KMCardImages cardImages = new KMCardImages();
 	
-	public CardArea(KMDeck deck){
+	public CardArea(Deck deck){
 		this.setLayout(new FlowLayout());
 		availableCards = new Panel();
 		availableCards.setLayout(new GridLayout(3,2,10,10));
 		this.deck = deck;
-		this.discard = new KMDeck();
+		this.discard = new Deck();
 		this.hand = new ArrayList<CardController>(HAND_SIZE);
 		for(int i = 0 ; i < HAND_SIZE; i++) {
 			CardController cc = new CardController(CardController.getEmpty());
@@ -100,9 +100,9 @@ public class CardArea extends Panel implements ActionListener  {
 		availableCards.remove(executingCard.getView());
 		hand.remove(executingCard);
 		
-		KMCardInfo cInfo = deck.removeCInfo();
+		CardInfo cInfo = deck.removeCInfo();
 		if(cInfo != null){
-			CardView v = new CardView(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()));
+			CardView v = new CardView(CardImageFactory.getImage(cInfo.getSetNumber(), cInfo.getCardNum()));
 			CardModel m = new CardModel(cInfo, v);
 			CardController c = new CardController(m, v, this);
 			hand.add(c);
@@ -135,8 +135,8 @@ public class CardArea extends Panel implements ActionListener  {
 			if(hand.get(i).isEmpty()){
 				availableCards.remove(hand.get(i).getView());
 				hand.remove(i);
-				KMCardInfo cInfo = deck.removeCInfo();
-				CardView v = new CardView(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()));
+				CardInfo cInfo = deck.removeCInfo();
+				CardView v = new CardView(CardImageFactory.getImage(cInfo.getSetNumber(), cInfo.getCardNum()));
 				CardModel m = new CardModel(cInfo, v);
 				CardController c = new CardController(m, v, this);
 				hand.add(c);

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import cards.KMCardInfo;
+import cards.CardInfo;
 import definitions.Controller;
 import definitions.Timing;
 import definitions.Visitor;
@@ -29,7 +29,7 @@ public class CardController extends Controller implements MouseListener {
 	private boolean mousedown;
 	private boolean mouseInBounds = false;
 	private static CardController empty;
-	private static final KMCardInfo emptyCInfo = new KMCardInfo(0, 0, null, null, 0, Timing.None, null);
+	private static final CardInfo emptyCInfo = new CardInfo(0, 0, null, null, 0, Timing.None, null);
 	    
 	static {
 		try {
@@ -62,7 +62,7 @@ public class CardController extends Controller implements MouseListener {
 			return new CardController(empty);
 		}
 
-		public KMCardInfo getCInfo() {
+		public CardInfo getCInfo() {
 			return model.getCInfo();
 		}
 

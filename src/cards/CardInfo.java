@@ -2,7 +2,7 @@ package cards;
 
 import definitions.Timing;
 
-public class KMCardInfo {
+public class CardInfo {
 	private int setNum;
 	private int cardNum;
 	private String name;
@@ -15,9 +15,8 @@ public class KMCardInfo {
 	public static final int set2Size = 0;//78;
 	
 	
-	public KMCardInfo(int setNum, int cardNum,
-			String name, String effect, int points,
-			Timing whenPlayed, String contEffect){
+	public CardInfo(int setNum, int cardNum, String name, 
+			String effect, int points, Timing whenPlayed, String contEffect){
 		this.setNum = setNum;
 		this.cardNum = cardNum;
 		this.name = name;

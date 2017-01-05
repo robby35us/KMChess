@@ -7,7 +7,7 @@ import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.TextField;
 
-import cards.KMCardInfo;
+import cards.CardInfo;
 import definitions.Timing;
 
 public class CInfoArea extends Panel {
@@ -16,7 +16,7 @@ public class CInfoArea extends Panel {
 	private Panel panel2;
 	
 	@SuppressWarnings("unused")
-	private KMCardInfo cInfo;
+	private CardInfo cInfo;
 	private TextField title;
 	private TextField isUnique;
 	private TextField points;
@@ -95,7 +95,7 @@ public class CInfoArea extends Panel {
 		return new Dimension((int) parentDim.getSize().getWidth() / 2 - 10, (int) parentDim.getSize().getHeight() / 5 );
 	}
 
-	public void setCardInfo(KMCardInfo cInfo) {
+	public void setCardInfo(CardInfo cInfo) {
 		this.cInfo = cInfo;
 		if(cInfo != null) {
 			title.setText(cInfo.getName());

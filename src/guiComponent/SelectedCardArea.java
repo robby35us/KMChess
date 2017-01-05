@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import cards.KMCardImages;
+import cards.CardImageFactory;
 
 public class SelectedCardArea extends Canvas {
 
@@ -45,7 +45,7 @@ public class SelectedCardArea extends Canvas {
 				e.printStackTrace();
 			}
 		else
-			selectedCard = KMCardImages.getImage(setNum, cardNum);
+			selectedCard = CardImageFactory.getImage(setNum, cardNum);
 		this.repaint();
 	}
 	
