@@ -1,7 +1,7 @@
 package test;
 import java.util.Scanner;
 
-import cards.KMCard;
+import cards.CardController;
 import consoleIO.ConsoleDisplay;
 import consoleIO.InputParser;
 import enums.PieceColor;
@@ -92,7 +92,7 @@ public class TestIO implements IOFramework {
 	}
 
 	@Override
-	public KMCard getExecutingCard() {
+	public CardController getExecutingCard() {
 		// TODO Auto-generated method stub
 		return null;
 	}

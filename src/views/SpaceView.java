@@ -35,8 +35,8 @@ public class SpaceView extends Canvas implements Observer{
 	
 	public SpaceView() {
         tracker = new MediaTracker( this );
-        setUnarmedBorder(defaultUnarmedBorder );
-        setArmedBorder( defaultArmedBorder );
+        setUnarmedBorder(defaultUnarmedSpaceBorder );
+        setArmedBorder( defaultArmedSpaceBorder );
         
         this.setMinimumSize(MINIMUM_SIZE);
         this.setMaximumSize(MAXIMUM_SIZE);

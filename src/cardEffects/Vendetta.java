@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import abstractClasses.ContEffect;
-import cards.KMCard;
 import constraints.MustCapture;
 import controllers.SpaceController;
 import enums.MoveType;
@@ -77,7 +76,7 @@ public class Vendetta extends ContEffect {
 			for(SpaceController s : highlighted){
 				if(!movable.contains(s)){
 					//s.getSpaceView().setArmedBorder(defaultArmedBorder);
-					s.getSpaceView().setUnarmedBorder(defaultUnarmedBorder);
+					s.getSpaceView().setUnarmedBorder(defaultUnarmedSpaceBorder);
 					//s.unarmSpace();
 					unHighlight.add(s);
 					s.getSpaceView().repaint();
@@ -91,7 +90,7 @@ public class Vendetta extends ContEffect {
 	private void resetMovable(GameState gs) {
 		movable = new ArrayList<SpaceController>();
 		PlayerSet current, other;
-		if(KMCard.CurrentTiming == Timing.Before){
+		if(gs.CurrentTiming == Timing.Before){
 			current = gs.getPlayerSet(gs.getTurn());
 			other = gs.getPlayerSet(gs.getTurn() == Turn.Player1 ? Turn.Player2 : Turn.Player1);
 		}else{ 
@@ -130,7 +129,7 @@ public class Vendetta extends ContEffect {
 			}
 		}
 		String player;
-		if(KMCard.CurrentTiming == Timing.Before)
+		if(gs.CurrentTiming == Timing.Before)
 			player = gs.getTurn().toString();
 		else
 			player = gs.getTurn() == Turn.Player1 ? Turn.Player2.toString() : Turn.Player1.toString();
@@ -159,7 +158,7 @@ public class Vendetta extends ContEffect {
 		highlightingOn = false;
 		for(SpaceController s : highlighted){
 			//s.getSpaceView().setArmedBorder(defaultArmedBorder);
-			s.getSpaceView().setUnarmedBorder(defaultUnarmedBorder);
+			s.getSpaceView().setUnarmedBorder(defaultUnarmedSpaceBorder);
 			//s.unarmSpace();
 			s.getSpaceView()
 			.repaint();

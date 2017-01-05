@@ -12,33 +12,33 @@ public class KMCardSlot extends Panel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private KMCard card;
+	private CardController card;
 	private int index;
 	private boolean isEmpty;
 	
 	public KMCardSlot (int index) {
 		setLayout(new GridLayout(1,1,10,10));
 		setBackground(Color.LIGHT_GRAY);
-		this.setCard(KMCard.getEmpty());
-		this.add(card);
+		this.setCard(CardController.getEmpty());
+		this.add(card.getView());
 		this.setIndex(index);
 		this.isEmpty = true;
 	}
 
-	private void setCard(KMCard card) {
+	private void setCard(CardController card) {
 		this.card = card;
 	}
 	
-	public KMCard getCard(){
+	public CardController getCard(){
 		return card;
 	}
 	
-	public KMCard replaceCard(KMCard newCard) {
+	public CardController replaceCard(CardController newCard) {
 		isEmpty = false;
-		KMCard oldCard = card;
+		CardController oldCard = card;
 		card = newCard;
 		this.removeAll();
-		this.add(card);
+		this.add(card.getView());
 		this.repaint();
 		return oldCard;
 	}

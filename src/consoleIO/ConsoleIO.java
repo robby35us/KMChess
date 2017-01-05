@@ -1,7 +1,7 @@
 package consoleIO;
 import java.util.Scanner;
 
-import cards.KMCard;
+import cards.CardController;
 import enums.*;
 import game.GameState;
 import interfaces.IOFramework;
@@ -95,7 +95,7 @@ public class ConsoleIO implements IOFramework {
 	}
 
 	@Override
-	public KMCard getExecutingCard() {
+	public CardController getExecutingCard() {
 		// TODO Auto-generated method stub
 		return null;
 	}

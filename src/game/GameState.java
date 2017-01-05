@@ -46,6 +46,7 @@ public class GameState implements ItemListener {
 	private static final int messageCols = 40;
 	
 	private static final String noContEffectsItem = "No Continuous Effects In Play";
+	public Timing CurrentTiming = null;
 	private Font textFont;
 	private Player whitePlayer;
 	private Player blackPlayer;

@@ -4,7 +4,7 @@ import java.awt.event.*;
 
 import javax.swing.JOptionPane;
 
-import cards.KMCard;
+import cards.CardController;
 import controllers.SpaceController;
 import interfaces.IOFramework;
 import models.BoardModel;
@@ -186,7 +186,7 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 	}
 
 
-	public void setSelectedCard(KMCard card) {
+	public void setSelectedCard(CardController card) {
 		gs.getSelectedCardArea().setCard(card.getCInfo().getSetNumber(),
 				                         card.getCInfo().getCardNum());
 		gs.getCInfoArea().setCardInfo(card.getCInfo());
@@ -201,7 +201,7 @@ public class GameWindow extends Frame implements WindowListener, IOFramework{
 	}
 
 	@Override
-	public KMCard getExecutingCard() {
+	public CardController getExecutingCard() {
 		return gs.getCardArea().getExecutingCard();
 	}
 }

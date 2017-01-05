@@ -194,6 +194,7 @@ public class SpaceController extends Controller implements MouseListener {
 	}
 
 	public void changePiece(Piece newPiece, boolean b) {
+		@SuppressWarnings("unused")
 		Piece oldPiece = this.model.replacePiece(newPiece, b);	
 		if(newPiece != null)
 			newPiece.setSpace(this);

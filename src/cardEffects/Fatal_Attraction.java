@@ -181,12 +181,12 @@ public class Fatal_Attraction extends ContEffect {
 	@Override
 	public void endHighlightChange(GameState gs) {
 		//magnetSpace.getSpaceView().setArmedBorder(defaultArmedBorder);
-		magnetSpace.getSpaceView().setUnarmedBorder(defaultUnarmedBorder);
+		magnetSpace.getSpaceView().setUnarmedBorder(defaultUnarmedSpaceBorder);
 		magnetSpace.getSpaceView().repaint();
 		ArrayList<SpaceController> adjacentSpaces = getAdjacentSpaces();
 		for(SpaceController as: adjacentSpaces) {
 			//as.getSpaceView().setArmedBorder(efaultArmedBorder);
-			as.getSpaceView().setUnarmedBorder(defaultUnarmedBorder);
+			as.getSpaceView().setUnarmedBorder(defaultUnarmedSpaceBorder);
 			as.getSpaceView().repaint();
 		}
 	}

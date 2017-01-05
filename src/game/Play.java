@@ -5,7 +5,7 @@ import java.io.IOException;
 import abstractClasses.ActualMove;
 import abstractClasses.CardEffect;
 import cardEffects.CardEffectFactory;
-import cards.KMCard;
+import cards.CardController;
 import enums.PieceColor;
 import enums.PieceType;
 import enums.Timing;
@@ -53,7 +53,7 @@ public class Play {
 				gs.getMessages().add(message);
 			message = new ErrorMessage();
 			//System.out.println("Displaying get move input text");
-			KMCard execCard = null;
+			CardController execCard = null;
 			CardEffect effect = null;
 			boolean playable = true;
 			do{
@@ -110,7 +110,7 @@ public class Play {
 				if(!message.hasError()){
 					
 					move.getDestinationSpace().getPiece().setBeenMoved(true);
-					KMCard.CurrentTiming = Timing.After;
+					gs.CurrentTiming = Timing.After;
 					gs.updateContEffects();
 					if(execCard == null){
 						playable = true;
@@ -142,7 +142,7 @@ public class Play {
 						gs.setTurn(Turn.Player2);
 					else
 						gs.setTurn(Turn.Player1);
-					KMCard.CurrentTiming = Timing.Before;
+				gs.CurrentTiming = Timing.Before;
 					gs.updateContEffects();
 					if(gs.checkForMate(gs.getTurn(), message).hasError()){
 						
@@ -170,7 +170,7 @@ public class Play {
 						gs.setTurn(Turn.Player2);
 					else
 						gs.setTurn(Turn.Player1);
-					KMCard.CurrentTiming = Timing.Before;
+					gs.CurrentTiming = Timing.Before;
 					gs.updateContEffects();
 					if(gs.checkForMate(gs.getTurn(), message).hasError()){
 						// if checkmate, exits the program, with current player in check

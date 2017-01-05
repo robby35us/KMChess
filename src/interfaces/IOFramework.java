@@ -1,5 +1,5 @@
 package interfaces;
-import cards.KMCard;
+import cards.CardController;
 import enums.PieceColor;
 import enums.PieceType;
 import enums.Turn;
@@ -51,7 +51,7 @@ public interface IOFramework {
 
 	public void refreshHand();
 
-	public KMCard getExecutingCard();
+	public CardController getExecutingCard();
 
 	public void getAfterExecutingCard();
 

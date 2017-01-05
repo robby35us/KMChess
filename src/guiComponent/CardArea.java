@@ -13,7 +13,9 @@ import java.awt.event.ActionListener;
 import abstractClasses.CardEffect;
 import abstractClasses.ContEffect;
 import cardEffects.CardEffectFactory;
-import cards.KMCard;
+import cards.CardController;
+import cards.CardModel;
+import cards.CardView;
 import cards.KMCardImages;
 import cards.KMCardInfo;
 import cards.KMCardSlot;
@@ -73,14 +75,14 @@ public class CardArea extends Panel implements ActionListener  {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private volatile KMCard executingCard;
+	private volatile CardController executingCard;
 
 	@SuppressWarnings("unused")
-	private volatile KMCard selectedCard;
+	private volatile CardController selectedCard;
 	
 	private volatile boolean noCardPlayed;
 
-	public void setExecutingCard( KMCard card) {
+	public void setExecutingCard(CardController card) {
 			setSelectedCard(card);
 			executingCard = card;
 	}
@@ -98,7 +100,7 @@ public class CardArea extends Panel implements ActionListener  {
 			//System.out.println("Continuing effect registered!");
 		}
 		
-		KMCardSlot cardSlot= (KMCardSlot) executingCard.getParent();
+		KMCardSlot cardSlot= (KMCardSlot) executingCard.getView().getParent();
 		int index = cardSlot.getIndex();
 		//cardSlots.remove(cardSlot);
 		discard.addCInfo(executingCard.getCInfo());
@@ -107,8 +109,12 @@ public class CardArea extends Panel implements ActionListener  {
 		hand[index] = new KMCardSlot(index);
 		KMCardInfo cInfo = deck.removeCInfo();
 		if(cInfo != null){
-			cardSlot.remove(executingCard);
-			hand[index].add(new KMCard(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()),cInfo));
+			cardSlot.remove(executingCard.getView());
+			CardView v = new CardView(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()));
+			CardModel m = new CardModel(cInfo, v);
+			@SuppressWarnings("unused")
+			CardController c = new CardController(m, v, gs);
+			hand[index].add(v);
 		}else{
 			cardSlots.remove(cardSlot);
 			hand[index] = new KMCardSlot(index);
@@ -120,10 +126,14 @@ public class CardArea extends Panel implements ActionListener  {
 		repaint();
 	}
 
-	public void setSelectedCard(KMCard card) {
+	@SuppressWarnings("unused")
+	private void createChildTriad() {
+	}
+
+	public void setSelectedCard(CardController card) {
 		selectedCard = card;
 		if(card == null)
-			card = new KMCard(KMCard.getEmpty());
+			card = new CardController(CardController.getEmpty());
 		((GameWindow) getParent()).setSelectedCard(card);
 	}
 
@@ -133,7 +143,10 @@ public class CardArea extends Panel implements ActionListener  {
 			if(hand[i].isEmpty()){
 				//System.out.println("Grabing new card for hand!");
 				KMCardInfo cInfo = deck.removeCInfo();
-				hand[i].replaceCard(new KMCard(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()), cInfo));
+				CardView v = new CardView(KMCardImages.getImage(cInfo.getSetNumber(), cInfo.getCardNum()));
+				CardModel m = new CardModel(cInfo, v);
+				CardController c = new CardController(m, v, GameState.globalGS);
+				hand[i].replaceCard(c);
 			}
 			//System.out.println(hand[i].getCard().getCInfo().getName());
 		}
@@ -141,7 +154,7 @@ public class CardArea extends Panel implements ActionListener  {
 		repaint();
 	}
 
-	public KMCard getExecutingCard() {
+	public CardController getExecutingCard() {
 		return executingCard;
 	}
 
