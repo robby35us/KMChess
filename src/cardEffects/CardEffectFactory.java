@@ -1,6 +1,6 @@
 package cardEffects;
 
-import abstractClasses.CardEffect;
+import definitions.CardEffect;
 
 public class CardEffectFactory {
 	public static CardEffect getCEffect(int set, int cardNum){

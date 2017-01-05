@@ -7,9 +7,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import enums.PieceColor;
-import enums.PieceType;
-import enums.SpaceColor;
+import definitions.PieceColor;
+import definitions.PieceType;
+import definitions.SpaceColor;
 
 public class PieceImages {
 	private static BufferedImage whitePawnWhite, whitePawnGrey, blackPawnWhite, blackPawnGrey,

@@ -1,8 +1,8 @@
 package constraints;
 
-import abstractClasses.ActualMove;
-import abstractClasses.Move;
-import interfaces.MoveConstraint;
+import definitions.ActualMove;
+import definitions.Move;
+import definitions.MoveConstraint;
 
 /*
  * Verifies that the Move object is not a subclass of move. This is to

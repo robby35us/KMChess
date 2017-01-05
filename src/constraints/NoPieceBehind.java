@@ -1,11 +1,11 @@
 package constraints;
 
-import abstractClasses.ActualMove;
-import abstractClasses.Move;
 import controllers.BoardController;
 import controllers.SpaceController;
-import enums.PieceColor;
-import interfaces.MoveConstraint;
+import definitions.ActualMove;
+import definitions.Move;
+import definitions.MoveConstraint;
+import definitions.PieceColor;
 
 /*
  * Verifies that a piece(typically a pawn when it tries to move

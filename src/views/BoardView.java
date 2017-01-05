@@ -1,4 +1,6 @@
 package views;
+import static definitions.Constants.*;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Label;
@@ -7,12 +9,11 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
-import controllers.Controller;
 import controllers.SpaceController;
-import enums.File;
-import enums.Rank;
-import enums.Timing;
-import static constants.Constants.*;
+import definitions.Controller;
+import definitions.File;
+import definitions.Rank;
+import definitions.Timing;
 
 /* Board.java
  * The board class represents the chess board.

@@ -1,5 +1,5 @@
 package gameComponents;
-import enums.PieceColor;
+import definitions.PieceColor;
 import pieces.King;
 import pieces.Piece;
 import utilityContainers.ErrorMessage;

@@ -1,7 +1,7 @@
 package standardMoves;
-import abstractClasses.ActualMove;
-import enums.MoveType;
-import enums.PieceColor;
+import definitions.ActualMove;
+import definitions.MoveType;
+import definitions.PieceColor;
 
 /* MoveBackwardLeft.java
  * This is a Move decorator that represents a piece

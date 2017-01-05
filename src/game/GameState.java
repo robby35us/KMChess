@@ -12,12 +12,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-import abstractClasses.ActualMove;
-import abstractClasses.ContEffect;
 import cards.KMDeck;
 import controllers.BoardController;
 import controllers.SpaceController;
-import enums.*;
+import definitions.*;
 import gameComponents.*;
 import guiComponent.CInfoArea;
 import guiComponent.CardArea;

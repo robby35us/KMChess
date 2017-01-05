@@ -3,13 +3,13 @@ package testIntegration;
 import org.junit.Test;
 
 import controllers.BoardController;
+import definitions.File;
+import definitions.PieceColor;
+import definitions.PieceType;
+import definitions.Rank;
 
 import java.io.IOException;
 
-import enums.File;
-import enums.PieceColor;
-import enums.PieceType;
-import enums.Rank;
 import game.*;
 import test.TestIO;
 import test.TestUtility;

@@ -1,7 +1,7 @@
 package gameComponents;
 import java.util.*;
 
-import enums.*;
+import definitions.*;
 import pieces.King;
 import pieces.Piece;
 import pieces.PieceFactory;

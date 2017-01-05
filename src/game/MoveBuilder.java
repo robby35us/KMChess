@@ -1,11 +1,8 @@
 package game;
 import java.util.ArrayList;
 
-import abstractClasses.ActualMove;
-import abstractClasses.Move;
 import controllers.SpaceController;
-import enums.*;
-import interfaces.MoveConstraint;
+import definitions.*;
 import pieces.Piece;
 import standardMoves.*;
 import utilityContainers.ErrorMessage;

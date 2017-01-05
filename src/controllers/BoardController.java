@@ -1,12 +1,14 @@
 package controllers;
 
+import static definitions.Constants.*;
+
 import java.util.ArrayList;
 
-import static constants.Constants.*;
-import enums.File;
-import enums.Rank;
-import interfaces.Visitable;
-import interfaces.Visitor;
+import definitions.Controller;
+import definitions.File;
+import definitions.Rank;
+import definitions.Visitable;
+import definitions.Visitor;
 import models.BoardModel;
 import models.SpaceModel;
 import views.BoardView;

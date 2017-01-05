@@ -1,21 +1,22 @@
 package cardEffects;
 
+import static definitions.Constants.*;
+
 import java.awt.Color;
 import java.util.ArrayList;
 
-import abstractClasses.ContEffect;
 import constraints.DisabledMove;
 import controllers.SpaceController;
-import enums.File;
-import enums.MoveType;
-import enums.PieceType;
-import enums.Rank;
+import definitions.ContEffect;
+import definitions.File;
+import definitions.MoveType;
+import definitions.PieceType;
+import definitions.Rank;
 import game.GameState;
 import game.GameWindow;
 import graphics.SpaceBorder;
 import models.BoardModel;
 import pieces.Piece;
-import static constants.Constants.*;
 
 public class Fatal_Attraction extends ContEffect {
 

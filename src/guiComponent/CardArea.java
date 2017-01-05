@@ -10,14 +10,14 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import abstractClasses.CardEffect;
-import abstractClasses.ContEffect;
 import cardEffects.CardEffectFactory;
 import cards.KMCardImages;
 import cards.KMCardInfo;
 import cards.KMCardSlot;
 import cards.KMDeck;
 import controllers.CardController;
+import definitions.CardEffect;
+import definitions.ContEffect;
 import game.GameState;
 import game.GameWindow;
 import models.CardModel;

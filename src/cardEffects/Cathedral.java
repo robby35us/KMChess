@@ -2,10 +2,10 @@ package cardEffects;
 
 import java.util.ArrayList;
 
-import abstractClasses.CardEffect;
 import constraints.DisabledMove;
-import enums.MoveType;
-import enums.PieceType;
+import definitions.CardEffect;
+import definitions.MoveType;
+import definitions.PieceType;
 import game.GameState;
 import game.GameWindow;
 import game.MoveBuilder;

@@ -1,5 +1,7 @@
 package views;
 
+import static definitions.Constants.*;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Container;
@@ -12,7 +14,6 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
-import static constants.Constants.*;
 
 import graphics.CardBorder;
 

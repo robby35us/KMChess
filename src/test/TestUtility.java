@@ -3,12 +3,12 @@ import testIntegration.PieceInfo;
 
 import org.junit.Assert;
 
-import abstractClasses.Move;
 import controllers.BoardController;
 import controllers.SpaceController;
-import enums.File;
-import enums.PieceColor;
-import enums.Rank;
+import definitions.File;
+import definitions.Move;
+import definitions.PieceColor;
+import definitions.Rank;
 import game.GameState;
 import pieces.Piece;
 import pieces.PieceFactory;

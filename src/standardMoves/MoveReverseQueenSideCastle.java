@@ -1,7 +1,7 @@
 package standardMoves;
-import abstractClasses.ActualMove;
-import enums.MoveType;
-import enums.PieceColor;
+import definitions.ActualMove;
+import definitions.MoveType;
+import definitions.PieceColor;
 
 /* MoveReverseQueenSideCastle.java
  * This is a Move decorator that represents a queen-side

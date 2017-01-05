@@ -1,8 +1,8 @@
 package events;
 
-import abstractClasses.AppEvent;
 import controllers.BoardController;
 import controllers.SpaceController;
+import definitions.AppEvent;
 import models.BoardModel;
 
 public class SetStartSpace extends AppEvent<BoardController> {

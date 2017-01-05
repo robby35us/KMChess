@@ -1,9 +1,8 @@
 package pieces;
 import constraints.*;
 import controllers.BoardController;
-import enums.*;
+import definitions.*;
 import game.GameState;
-import interfaces.MoveConstraint;
 
 /*
  * Used to create a piece of a given PieceType. Unlike the MoveFactory, 

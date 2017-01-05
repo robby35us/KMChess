@@ -1,8 +1,8 @@
 package utilityContainers;
 import java.util.ArrayList;
 
-import enums.MoveType;
-import interfaces.MoveConstraint;
+import definitions.MoveConstraint;
+import definitions.MoveType;
 
 /*
  * A transport object for a MoveType and the accompanying constraints.

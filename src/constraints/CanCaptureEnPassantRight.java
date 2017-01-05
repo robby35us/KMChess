@@ -1,11 +1,7 @@
 package constraints;
-import abstractClasses.ActualMove;
-import abstractClasses.Move;
 import controllers.SpaceController;
-import enums.*;
+import definitions.*;
 import game.GameState;
-
-import interfaces.MoveConstraint;
 import pieces.Piece;
 import standardMoves.*;
 

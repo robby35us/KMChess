@@ -1,18 +1,19 @@
 package controllers;		
 
+import static definitions.Constants.*;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import static constants.Constants.*;
-
-import enums.File;
-import enums.MoveType;
-import enums.PieceColor;
-import enums.Rank;
-import enums.SpaceColor;
-import enums.Turn;
+import definitions.Controller;
+import definitions.File;
+import definitions.MoveType;
+import definitions.PieceColor;
+import definitions.Rank;
+import definitions.SpaceColor;
+import definitions.Turn;
+import definitions.Visitor;
 import game.GameState;
-import interfaces.Visitor;
 import models.BoardModel;
 import models.SpaceModel;
 import pieces.Piece;

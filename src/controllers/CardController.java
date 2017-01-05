@@ -1,5 +1,7 @@
 package controllers;
 
+import static definitions.Constants.*;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -9,13 +11,12 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import cards.KMCardInfo;
-import enums.Timing;
+import definitions.Controller;
+import definitions.Timing;
+import definitions.Visitor;
 import guiComponent.CardArea;
-import interfaces.Visitor;
 import models.CardModel;
 import views.CardView;
-
-import static constants.Constants.*;
 
 public class CardController extends Controller implements MouseListener {
 

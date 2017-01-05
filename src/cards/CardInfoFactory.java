@@ -1,6 +1,6 @@
 package cards;
 
-import enums.Timing;
+import definitions.Timing;
 
 public class CardInfoFactory {
 	

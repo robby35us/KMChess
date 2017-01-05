@@ -4,11 +4,11 @@ import java.util.Scanner;
 import consoleIO.ConsoleDisplay;
 import consoleIO.InputParser;
 import controllers.CardController;
-import enums.PieceColor;
-import enums.PieceType;
-import enums.Turn;
+import definitions.IOFramework;
+import definitions.PieceColor;
+import definitions.PieceType;
+import definitions.Turn;
 import game.GameState;
-import interfaces.IOFramework;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
 

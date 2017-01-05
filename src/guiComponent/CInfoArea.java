@@ -8,7 +8,7 @@ import java.awt.TextArea;
 import java.awt.TextField;
 
 import cards.KMCardInfo;
-import enums.Timing;
+import definitions.Timing;
 
 public class CInfoArea extends Panel {
 	

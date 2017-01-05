@@ -1,7 +1,7 @@
 package events;
 
-import abstractClasses.AppEvent;
 import controllers.BoardController;
+import definitions.AppEvent;
 import models.BoardModel;
 
 public class GetStartSpace extends AppEvent<BoardController> {

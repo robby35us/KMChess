@@ -3,9 +3,9 @@ import test.TestUtility;
 
 import org.junit.Test;
 
-import abstractClasses.Move;
-import enums.MoveType;
-import enums.PieceColor;
+import definitions.Move;
+import definitions.MoveType;
+import definitions.PieceColor;
 import standardMoves.MoveFactory;
 
 

@@ -1,9 +1,9 @@
 package testIntegration;
 
-import enums.File;
-import enums.PieceColor;
-import enums.PieceType;
-import enums.Rank;
+import definitions.File;
+import definitions.PieceColor;
+import definitions.PieceType;
+import definitions.Rank;
 
 public class PieceInfo {
 	private PieceType type;

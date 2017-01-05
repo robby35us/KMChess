@@ -1,5 +1,7 @@
 package views;
 
+import static definitions.Constants.*;
+
 import java.awt.Canvas;
 
 import java.awt.Dimension;
@@ -15,8 +17,6 @@ import graphics.SpaceBorder;
 import models.SpaceModel;
 import pieces.Piece;
 import pieces.PieceImages;
-
-import static constants.Constants.*;
 
 
 public class SpaceView extends Canvas implements Observer{

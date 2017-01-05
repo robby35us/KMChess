@@ -1,9 +1,9 @@
 package constraints;
-import abstractClasses.ActualMove;
-import abstractClasses.Move;
 import controllers.BoardController;
 import controllers.SpaceController;
-import interfaces.MoveConstraint;
+import definitions.ActualMove;
+import definitions.Move;
+import definitions.MoveConstraint;
 import pieces.Piece;
 
 /*

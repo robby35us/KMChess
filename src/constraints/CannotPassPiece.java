@@ -1,8 +1,8 @@
 package constraints;
 
-import abstractClasses.ActualMove;
-import abstractClasses.Move;
-import interfaces.MoveConstraint;
+import definitions.ActualMove;
+import definitions.Move;
+import definitions.MoveConstraint;
 
 /*
  * Verifies that this move will not "pass through" another 

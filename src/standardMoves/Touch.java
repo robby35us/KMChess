@@ -1,7 +1,7 @@
 package standardMoves;
 
-import abstractClasses.Move;
 import controllers.SpaceController;
+import definitions.Move;
 
 /* Touch.java - Robert Reed
  * This class is a "concrete" class that extends

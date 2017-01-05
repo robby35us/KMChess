@@ -2,15 +2,15 @@ package game;
 
 import java.io.IOException;
 
-import abstractClasses.ActualMove;
-import abstractClasses.CardEffect;
 import cardEffects.CardEffectFactory;
 import controllers.CardController;
-import enums.PieceColor;
-import enums.PieceType;
-import enums.Timing;
-import enums.Turn;
-import interfaces.IOFramework;
+import definitions.ActualMove;
+import definitions.CardEffect;
+import definitions.IOFramework;
+import definitions.PieceColor;
+import definitions.PieceType;
+import definitions.Timing;
+import definitions.Turn;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
 

@@ -1,20 +1,15 @@
 package pieces;
 import game.GameState;
 import game.MoveBuilder;
-import interfaces.KingObserver;
-import interfaces.MoveConstraint;
-import interfaces.PieceObserver;
-import interfaces.PieceSubject;
 import utilityContainers.*;
 
 import java.awt.Image;
 import java.util.ArrayList;
 
-import abstractClasses.ActualMove;
 import constraints.MustCapture;
 import constraints.SingleMove;
 import controllers.SpaceController;
-import enums.*;
+import definitions.*;
 
 /*
  * Piece.java

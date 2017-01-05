@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 import controllers.BoardController;
 import controllers.SpaceController;
-import enums.File;
-import enums.PieceColor;
-import enums.PieceType;
-import enums.Rank;
+import definitions.File;
+import definitions.PieceColor;
+import definitions.PieceType;
+import definitions.Rank;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
 

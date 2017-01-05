@@ -3,9 +3,9 @@ package models;
 import java.util.Observable;
 import java.util.Observer;
 
-import enums.File;
-import enums.Rank;
-import enums.SpaceColor;
+import definitions.File;
+import definitions.Rank;
+import definitions.SpaceColor;
 import pieces.Piece;
 
 public class SpaceModel extends Observable{

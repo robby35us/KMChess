@@ -6,12 +6,11 @@ import org.junit.Test;
 
 import controllers.BoardController;
 import controllers.SpaceController;
+import definitions.File;
+import definitions.Rank;
+import definitions.SpaceColor;
 
 import java.util.ArrayList;
-
-import enums.File;
-import enums.Rank;
-import enums.SpaceColor;
 
 public class BoardTest extends BoardController {
 

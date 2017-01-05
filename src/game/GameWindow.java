@@ -6,13 +6,13 @@ import javax.swing.JOptionPane;
 
 import controllers.CardController;
 import controllers.SpaceController;
-import interfaces.IOFramework;
+import definitions.IOFramework;
+import definitions.PieceColor;
+import definitions.PieceType;
+import definitions.Turn;
 import models.BoardModel;
 import utilityContainers.ErrorMessage;
 import utilityContainers.MoveInput;
-import enums.PieceColor;
-import enums.PieceType;
-import enums.Turn;
 import guiComponent.CardArea;
 
 public class GameWindow extends Frame implements WindowListener, IOFramework{

@@ -3,7 +3,7 @@ import java.util.Iterator;
 
 import controllers.BoardController;
 import controllers.SpaceController;
-import enums.*;
+import definitions.*;
 import gameComponents.*;
 import pieces.Piece;
 

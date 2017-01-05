@@ -2,10 +2,7 @@ package pieces;
 import java.util.ArrayList;
 
 import controllers.SpaceController;
-import enums.*;
-import interfaces.KingObserver;
-import interfaces.KingSubject;
-import interfaces.PieceObserver;
+import definitions.*;
 
 /*
  * A king represents a King piece and, as such, extends the Piece class. 

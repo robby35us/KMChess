@@ -1,7 +1,7 @@
 package constraints;
-import abstractClasses.ActualMove;
-import abstractClasses.Move;
-import interfaces.MoveConstraint;
+import definitions.ActualMove;
+import definitions.Move;
+import definitions.MoveConstraint;
 
 /*
  * Verifies that a piece has not been moved.
