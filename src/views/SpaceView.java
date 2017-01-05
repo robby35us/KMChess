@@ -146,14 +146,14 @@ public class SpaceView extends Canvas implements Observer{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		//System.out.println(arg0.hasChanged());
 		if(arg1 != null) {
 			Piece p = (Piece) arg1;
-			this.updateImage(PieceImages.getImage(p.getType(), p.getColor(), ((SpaceModel)arg0).getColor()), arg0.hasChanged());
+			this.updateImage(PieceImages.getImage(p.getType(), p.getColor(), ((SpaceModel)arg0).getColor()), true);
 		}
 		else
-			this.updateImage(null, arg0.hasChanged());
-	}
-    
+			this.updateImage(null, true);
+	}   
 }
 
        

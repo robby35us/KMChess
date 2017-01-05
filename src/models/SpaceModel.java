@@ -53,10 +53,12 @@ public class SpaceModel extends Observable{
 	public Piece replacePiece(Piece newPiece, boolean repaint){
 		Piece oldPiece = piece;
 		piece = newPiece;
-		if(repaint)
+		if(repaint){
 			this.setChanged();
+			//System.out.print("Changed == " + this.hasChanged());
+		}
 		this.notifyObservers(piece);
-		this.clearChanged();
+		//this.clearChanged();
 		return oldPiece;
 	}
 	
