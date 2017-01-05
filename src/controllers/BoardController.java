@@ -37,6 +37,9 @@ public class BoardController extends Controller implements Visitable {
 		}
 		view = new BoardView(childControllers.iterator());
 		model = new BoardModel(view);		
+		for(Controller sc : childControllers){
+			((SpaceController) sc).setParentModel();
+		}
 	}
 	
 	/*

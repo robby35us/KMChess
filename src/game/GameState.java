@@ -152,7 +152,7 @@ public class GameState implements ItemListener {
 		// remove the captured piece, if any, from the board
 		if(captured != null){
 			if(opposite != null)
-			opposite.losePiece(captured);
+				opposite.losePiece(captured);
 			captured.setSpace(null);
 		}
 		

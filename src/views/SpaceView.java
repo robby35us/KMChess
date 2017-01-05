@@ -66,7 +66,8 @@ public class SpaceView extends Canvas implements Observer{
             images[id] = image;
             if ( image != null ) {
             	image = image.getScaledInstance((int)this.getMinimumSize().getWidth(), (int)this.getMinimumSize().getHeight(),Image.SCALE_DEFAULT);
-                tracker.addImage( image, id );
+                images[id] = image;
+            	tracker.addImage( image, id );
                 tracker.checkID( id, true );
             }
  			

@@ -108,7 +108,10 @@ public class SpaceController extends Controller implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) { 
 		mousedown = false;
-		
+		if(parentModel == null){ 
+			System.out.println("Space.parentModel == null");
+			return;
+		}
 		if(parentModel.activeSpace != null){
 			parentModel.activeSpace.unarmSpace();
 			if(parentModel.activeSpace != this){
@@ -147,7 +150,7 @@ public class SpaceController extends Controller implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		this.mouseInBounds = false;
-        if( this != parentModel.activeSpace)
+        if( parentModel == null || this != parentModel.activeSpace)
         	this.unarmSpace();
 	}
 
@@ -191,7 +194,11 @@ public class SpaceController extends Controller implements MouseListener {
 	}
 
 	public void changePiece(Piece newPiece, boolean b) {
-		this.model.replacePiece(newPiece, b);		
+		Piece oldPiece = this.model.replacePiece(newPiece, b);	
+		if(newPiece != null)
+			newPiece.setSpace(this);
+		//if(oldPiece != null)
+		//	oldPiece.setSpace(null);
 	}
 
 	public boolean hasPiece() {
@@ -200,6 +207,10 @@ public class SpaceController extends Controller implements MouseListener {
 
 	public SpaceColor getColor() {
 		return this.model.getColor();
+	}
+
+	public void setParentModel() {
+		parentModel = parent.getModel();
 	}
 	
 }   
