@@ -32,8 +32,6 @@ public class CardArea extends Panel implements ActionListener  {
 	private ArrayList<CardController> hand;
 	private Panel availableCards;
 	private Button noCard;
-
-	//private static KMCardImages cardImages = new KMCardImages();
 	
 	public CardArea(Deck deck){
 		this.setLayout(new FlowLayout());
@@ -76,9 +74,6 @@ public class CardArea extends Panel implements ActionListener  {
 	private static final long serialVersionUID = 1L;
 	
 	private volatile CardController executingCard;
-
-	@SuppressWarnings("unused")
-	private volatile CardController selectedCard;
 	
 	private volatile boolean noCardPlayed;
 
@@ -123,7 +118,6 @@ public class CardArea extends Panel implements ActionListener  {
 	}
 
 	public void setSelectedCard(CardController card) {
-		selectedCard = card;
 		if(card == null)
 			card = new CardController(CardController.getEmpty());
 		((GameWindow) getParent()).setSelectedCard(card);
